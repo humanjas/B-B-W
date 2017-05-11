@@ -123,7 +123,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     /**
      * Adds a block to the blockchain
-     * @param block
+     * @param block the block you want to add
      */
     public void addBlock(Block block) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -180,7 +180,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
-     * Method to chech whether the blockchain contains a specific block,
+     * Method to check whether the blockchain contains a specific block,
      * uses the getBlock method to avoid duplication
      * @param owner the owner of the block you want
      * @param publicKey the publickey of the block you want
@@ -192,16 +192,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
+     * Method to check whether the blockchain contains a specific block,
+     * uses the getBlock method to avoid duplication
+     * @param owner the owner of the block you want
+     * @param publicKey the publickey of the block you want
+     * @return true if the blockchain contains the specified block, otherwise false
+     */
+    public boolean containsBlock(String owner, String publicKey) {
+        return this.getLatestBlock(owner, publicKey) != null;
+    }
+
+    /**
      * Method to get the latest sequence number of a block with a
      * certain owner and publickey
      * @param owner the owner of the block
      * @param publicKey the owner of the sequence number
      * @return the latest sequence number of the specified block
      */
-    public boolean containsBlock(String owner, String publicKey) {
-        return this.getLatestBlock(owner, publicKey) != null;
-    }
-
     public int getLatestSeqNum(String owner, String publicKey) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -220,6 +227,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Method to get the latest block in a blockchain using the
+     * owner and publickey
+     * @param owner the owner of the block
+     * @param publicKey the publickey of the block
+     * @return the latest block
+     */
     public Block getLatestBlock(String owner, String publicKey) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -254,6 +268,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return block;
     }
 
+    /**
+     * Method to get the block after a specified block
+     * @param owner the owner of the block before
+     * @param publicKey the owner of the block before
+     * @param sequenceNumber the sequencenumber of the block before
+     * @return the block after the specified one
+     */
     public Block getBlockAfter(String owner, String publicKey, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -286,6 +307,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return block;
     }
 
+    /**
+     * Method to get the block before a specified block
+     * @param owner the owner of the block after
+     * @param publicKey the owner of the block after
+     * @param sequenceNumber the sequencenumber of the block after
+     * @return the block before the specified one
+     */
     public Block getBlockBefore(String owner, String publicKey, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -318,6 +346,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return block;
     }
 
+    /**
+     * Method which puts all the blocks currently in the
+     * blockchain into a list
+     * @return List of all the blocks
+     */
     public List<Block> getAllBlocks() {
         List<Block> blocks = new ArrayList<>();
 

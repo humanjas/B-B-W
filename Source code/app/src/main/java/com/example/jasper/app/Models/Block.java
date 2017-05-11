@@ -2,14 +2,24 @@ package com.example.jasper.app.Models;
 
 /**
  * Block represents
+ *
  */
 
 public class Block {
 
+    //properties of a block
     private String owner, previous_hash, public_key;
     private boolean isRevoked;
     private int sequence_number;
 
+    /**
+     * Constructor to initialize a block
+     * @param _owner owner of a block
+     * @param _sequence_number sequence number of the block
+     * @param _previous_hash the hash value of the block before in the chain
+     * @param _public_key public key of the owner of the block
+     * @param _isRevoked boolean to check whether a block is revoked or not
+     */
     public Block(String _owner, int _sequence_number, String _previous_hash, String _public_key, boolean _isRevoked) {
         this.owner = _owner;
         this.previous_hash = _previous_hash;
@@ -18,46 +28,51 @@ public class Block {
         this.sequence_number = _sequence_number;
     }
 
+    /**
+     * Default getter for owner
+     * @return owner of the block
+     */
     public String getOwner() {
         return owner;
     }
 
-    public void setOwner(String _owner) {
-        this.owner = _owner;
-    }
-
+    /**
+     * Default getter for previous block hash
+     * @return previous hash
+     */
     public String getPrevious_hash() {
         return previous_hash;
     }
 
-    public void setPrevious_hash(String _previous_hash) {
-        this.previous_hash = _previous_hash;
-    }
-
+    /**
+     * Default getter for public key
+     * @return public key of the block
+     */
     public String getPublic_key() {
         return public_key;
     }
 
-    public void setPublic_key(String _public_key) {
-        this.public_key = _public_key;
-    }
-
+    /**
+     * Default getter for checking whether a block is revoked
+     * @return true or false
+     */
     public boolean isRevoked() {
         return isRevoked;
     }
 
-    public void setRevoked(boolean _revoked) {
-        isRevoked = _revoked;
-    }
-
+    /**
+     * Default getter for sequence number
+     * @return the sequence number of the block
+     */
     public int getSequence_number() {
         return sequence_number;
     }
 
-    public void setSequence_number(int _sequence_number) {
-        this.sequence_number = _sequence_number;
-    }
-
+    /**
+     * Equals methode to check whether two blocks match
+     * @param o The block you want to match with the current block
+     * @return true if blocks match, otherwise false
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

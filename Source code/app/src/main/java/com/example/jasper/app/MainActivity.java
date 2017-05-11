@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
+/**
+ * Default class
+ */
 public class MainActivity extends Activity {
 
     @Override
