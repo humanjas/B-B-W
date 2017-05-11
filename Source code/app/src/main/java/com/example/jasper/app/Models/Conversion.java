@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * Class to convert values into a hashed value
  * Created by Ashay on 01/05/2017.
  */
 

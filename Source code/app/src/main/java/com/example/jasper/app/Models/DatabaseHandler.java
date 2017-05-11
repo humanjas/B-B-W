@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
+ * Class to create and handle the Database.
  * Created by jasper on 30/04/2017.
  */
 
@@ -54,17 +55,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Singleton for creating only on instance of the database
+     * @param context context of the current state of the database
+     * @return the current state of the database
+     */
     public static synchronized DatabaseHandler getInstance(Context context) {
         if (_instance == null) _instance = new DatabaseHandler(context);
         return _instance;
     }
 
-        /**
-         * Called when the database is created for the first time. This is where the
-         * creation of tables and the initial population of the tables should happen.
-         *
-         * @param db The database.
-         */
+    /**
+    * Called when the database is created for the first time. This is where the
+    * creation of tables and the initial population of the tables should happen.
+    *
+    * @param db The database.
+    */
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String CREATE_BLOCKS_TABLE = "CREATE TABLE IF NOT EXISTS" + TABLE_NAME + "("
@@ -131,6 +137,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
+    /**
+     * Method to get a specific block
+     * @param owner The owner of the block you want
+     * @param publicKey The owner of the block you want
+     * @param sequenceNumber The number of the block in the sequence
+     * @return The block you were searching for
+     */
     public Block getBlock(String owner, String publicKey, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -157,10 +170,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return block;
     }
 
+    /**
+     * Method to chech whether the blockchain contains a specific block,
+     * uses the getBlock method to avoid duplication
+     * @param owner the owner of the block you want
+     * @param publicKey the publickey of the block you want
+     * @param sequenceNumber The number of the block in the sequence
+     * @return true if the blockchain contains the specified block, otherwise false
+     */
     public boolean containsBlock(String owner, String publicKey, int sequenceNumber) {
         return this.getBlock(owner, publicKey, sequenceNumber) != null;
     }
 
+    /**
+     * Method to get the latest sequence number of a block with a
+     * certain owner and publickey
+     * @param owner the owner of the block
+     * @param publicKey the owner of the sequence number
+     * @return the latest sequence number of the specified block
+     */
     public int getLatestSeqNum(String owner, String publicKey) {
         SQLiteDatabase db = this.getReadableDatabase();
 
