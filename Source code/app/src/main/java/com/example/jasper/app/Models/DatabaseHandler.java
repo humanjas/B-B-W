@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by jasper on 30/04/2017.
  */
@@ -167,6 +170,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return this.getBlock(owner, publicKey, sequenceNumber) != null;
     }
 
+    public boolean containsBlock(String owner, String publicKey) {
+        return this.getLatestBlock(owner, publicKey) != null;
+    }
+
     public int getLatestSeqNum(String owner, String publicKey) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -281,5 +288,35 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // return block
         return block;
+    }
+
+    public List<Block> getAllBlocks() {
+        List<Block> blocks = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+                Block block = new Block(
+                        cursor.getString(0),
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4) > 0
+                );
+                blocks.add(block);
+            } while (cursor.moveToNext());
+        }
+
+        // Close database connection
+        db.close();
+
+        // Close cursor
+        cursor.close();
+
+        return blocks;
     }
 }

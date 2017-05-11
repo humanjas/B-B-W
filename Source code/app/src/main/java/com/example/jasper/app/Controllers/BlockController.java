@@ -25,14 +25,27 @@ public class BlockController {
     }
 
     public Block addBlock(Block block) {
-        databaseHandler.addBlock(block);
+        // Check if the block already exists
+
+        Block latest = databaseHandler.getLatestBlock(block.getOwner(), block.getPublic_key());
+
+        if (latest == null) {
+            databaseHandler.addBlock(block);
+        } else {
+            if (latest.isRevoked()) throw new RuntimeException("Error - Block is already revoked");
+            else {
+                if (block.isRevoked()) databaseHandler.addBlock(block);
+                else throw new RuntimeException("Error - Block already exists");
+            }
+        }
 
         return block;
     }
 
     public List<Block> getBlocks() {
-        // TODO GETBLOCKS function
-        return null;
+        // TODO check blocks on revoke
+
+        return databaseHandler.getAllBlocks();
     }
 
 }
