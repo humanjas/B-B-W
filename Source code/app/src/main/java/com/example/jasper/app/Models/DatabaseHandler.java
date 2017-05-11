@@ -153,6 +153,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getInt(4) > 0
         );
 
+        // Close database connection
+        db.close();
+
+        // Close cursor
+        cursor.close();
+
         // return block
         return block;
     }
@@ -174,6 +180,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             c.moveToFirst();
             return c.getInt(0);
         } finally {
+            db.close();
             c.close();
         }
     }
@@ -202,6 +209,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getInt(4) > 0
         );
 
+        // Close database connection
+        db.close();
+
+        // Close cursor
+        cursor.close();
+
         // return block
         return block;
     }
@@ -228,6 +241,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getInt(4) > 0
         );
 
+        // Close database connection
+        db.close();
+
+        // Close cursor
+        cursor.close();
+
         // return block
         return block;
     }
@@ -253,6 +272,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(3),
                 cursor.getInt(4) > 0
         );
+
+        // Close database connection
+        db.close();
+
+        // Close cursor
+        cursor.close();
 
         // return block
         return block;
