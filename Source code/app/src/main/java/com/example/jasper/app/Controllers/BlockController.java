@@ -61,4 +61,9 @@ public class BlockController {
         return blocks;
     }
 
+    public Block removeBlock(Block block) {
+        return addBlock(new Block(block.getOwner(), block.getSequence_number(),
+                block.getPrevious_hash(), block.getPublic_key(), true));
+    }
+
 }
