@@ -10,7 +10,7 @@ public class Block {
     private boolean isRevoked;
     private int sequence_number;
 
-    public Block(String _owner, String _previous_hash, String _public_key, boolean _isRevoked, int _sequence_number) {
+    public Block(String _owner, int _sequence_number, String _previous_hash, String _public_key, boolean _isRevoked) {
         this.owner = _owner;
         this.previous_hash = _previous_hash;
         this.public_key = _public_key;

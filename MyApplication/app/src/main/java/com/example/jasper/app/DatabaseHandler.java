@@ -114,9 +114,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_OWNER, block.getOwner());
-        values.put(KEY_SEQ_NO, block.getSeqNo());
-        values.put(KEY_PREV_HASH, block.getPrevHash());
-        values.put(KEY_PUBLIC_KEY, block.getPublicKey());
+        values.put(KEY_SEQ_NO, block.getSequence_number());
+        values.put(KEY_PREV_HASH, block.getPrevious_hash());
+        values.put(KEY_PUBLIC_KEY, block.getPublic_key());
         values.put(KEY_REVOKE, block.isRevoked());
 
         // Inserting Row
