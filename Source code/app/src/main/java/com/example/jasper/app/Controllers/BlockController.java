@@ -43,9 +43,27 @@ public class BlockController {
     }
 
     public List<Block> getBlocks() {
-        // TODO check blocks on revoke
+        List<Block> blocks = databaseHandler.getAllBlocks();
 
-        return databaseHandler.getAllBlocks();
+        for (int i=0; i<blocks.size(); i++) {
+            Block loop_block = blocks.get(i);
+            if (loop_block.isRevoked()) {
+                for (int j=0; j<i; j++) {
+                    if (blocks.get(j).equals(loop_block)) {
+                        blocks.remove(j);
+                        blocks.remove(i);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return blocks;
+    }
+
+    public Block removeBlock(Block block) {
+        return addBlock(new Block(block.getOwner(), block.getSequence_number(),
+                block.getPrevious_hash(), block.getPublic_key(), true));
     }
 
 }
