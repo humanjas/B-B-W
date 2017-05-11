@@ -68,4 +68,22 @@ public class Block {
         return sequence_number;
     }
 
+    /**
+     * Equals methode to check whether two blocks match
+     * @param o The block you want to match with the current block
+     * @return true if blocks match, otherwise false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Block block = (Block) o;
+
+        if (sequence_number != block.sequence_number) return false;
+        if (!owner.equals(block.owner)) return false;
+        if (!previous_hash.equals(block.previous_hash)) return false;
+        return public_key.equals(block.public_key);
+
+    }
 }
