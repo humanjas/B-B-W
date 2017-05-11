@@ -12,6 +12,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
+    private static DatabaseHandler _instance;
+
     // All Static variables
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -47,16 +49,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * creates a database connection
      * @param context given context
      */
-    public DatabaseHandler(Context context) {
+    private DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    /**
-     * Called when the database is created for the first time. This is where the
-     * creation of tables and the initial population of the tables should happen.
-     *
-     * @param db The database.
-     */
+
+    public static synchronized DatabaseHandler getInstance(Context context) {
+        if (_instance == null) _instance = new DatabaseHandler(context);
+        return _instance;
+    }
+
+        /**
+         * Called when the database is created for the first time. This is where the
+         * creation of tables and the initial population of the tables should happen.
+         *
+         * @param db The database.
+         */
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String CREATE_BLOCKS_TABLE = "CREATE TABLE IF NOT EXISTS" + TABLE_NAME + "("
