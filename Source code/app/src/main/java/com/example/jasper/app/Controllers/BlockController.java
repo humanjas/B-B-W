@@ -9,6 +9,7 @@ import com.example.jasper.app.Models.User;
 import java.util.List;
 
 /**
+ * Performs the actions of the blockchain
  * Created by jasper on 11/05/2017.
  */
 
@@ -18,12 +19,21 @@ public class BlockController {
     private User user;
     private DatabaseHandler databaseHandler;
 
+    /**
+     * contructor to initialize all the involved entities
+     * @param _context the instance
+     */
     public BlockController(Context _context) {
         this.context = _context;
         this.user = User.getUser();
         this.databaseHandler = DatabaseHandler.getInstance(this.context);
     }
 
+    /**
+     * adding a block to the blockchain
+     * @param block Block you want to add
+     * @return returns the block you added
+     */
     public Block addBlock(Block block) {
         // Check if the block already exists
 

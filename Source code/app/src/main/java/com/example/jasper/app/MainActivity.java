@@ -3,6 +3,9 @@ package com.example.jasper.app;
 import android.app.Activity;
 import android.os.Bundle;
 
+/**
+ * Default class
+ */
 public class MainActivity extends Activity {
 
     @Override
