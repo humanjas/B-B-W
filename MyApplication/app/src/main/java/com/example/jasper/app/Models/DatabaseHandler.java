@@ -1,11 +1,10 @@
-package com.example.jasper.app;
+package com.example.jasper.app.Models;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BlockedNumberContract;
 
 /**
  * Created by jasper on 30/04/2017.

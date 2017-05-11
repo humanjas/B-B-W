@@ -1,6 +1,8 @@
 package com.example.jasper.app;
 
 
+import com.example.jasper.app.Models.Conversion;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

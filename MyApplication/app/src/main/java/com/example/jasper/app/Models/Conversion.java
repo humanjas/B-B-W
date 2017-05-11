@@ -1,4 +1,4 @@
-package com.example.jasper.app;
+package com.example.jasper.app.Models;
 
 import java.security.MessageDigest;
 import java.nio.charset.StandardCharsets;
