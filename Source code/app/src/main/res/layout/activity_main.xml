@@ -7,13 +7,37 @@
     android:layout_height="match_parent"
     tools:context="com.example.jasper.app.MainActivity">
 
+    <Button
+        android:id="@+id/generateKey"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:onClick="onGenerateKey"
+        android:text="Generate key"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <Button
+        android:id="@+id/myKeys"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:text="My Keys"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="64dp" />
+
+    <Button
+        android:id="@+id/contacts"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:text="Contacts"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="112dp" />
+
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="bbw alpha"
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="475dp" />
 
 </android.support.constraint.ConstraintLayout>
