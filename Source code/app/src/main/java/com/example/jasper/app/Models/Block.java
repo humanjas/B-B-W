@@ -57,4 +57,18 @@ public class Block {
     public void setSequence_number(int _sequence_number) {
         this.sequence_number = _sequence_number;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Block block = (Block) o;
+
+        if (sequence_number != block.sequence_number) return false;
+        if (!owner.equals(block.owner)) return false;
+        if (!previous_hash.equals(block.previous_hash)) return false;
+        return public_key.equals(block.public_key);
+
+    }
 }
