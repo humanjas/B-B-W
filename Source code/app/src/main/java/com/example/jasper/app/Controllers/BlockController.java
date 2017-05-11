@@ -43,8 +43,6 @@ public class BlockController {
     }
 
     public List<Block> getBlocks() {
-        // TODO check blocks on revoke
-
         List<Block> blocks = databaseHandler.getAllBlocks();
 
         for (int i=0; i<blocks.size(); i++) {
