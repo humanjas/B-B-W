@@ -1,0 +1,42 @@
+[
+    {
+        "merged": "D:\\Users\\nosleep\\Desktop\\Github\\MyApplication\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_enter.xml",
+        "source": "C:\\Users\\nosleep\\.android\\build-cache\\4a05ad452ce844f4c7ee52135121b27b1543e884\\output\\res\\anim\\abc_popup_enter.xml"
+    },
+    {
+        "merged": "D:\\Users\\nosleep\\Desktop\\Github\\MyApplication\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "C:\\Users\\nosleep\\.android\\build-cache\\4a05ad452ce844f4c7ee52135121b27b1543e884\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "D:\\Users\\nosleep\\Desktop\\Github\\MyApplication\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
+        "source": "C:\\Users\\nosleep\\.android\\build-cache\\4a05ad452ce844f4c7ee52135121b27b1543e884\\output\\res\\anim\\abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "D:\\Users\\nosleep\\Desktop\\Github\\MyApplication\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "C:\\Users\\nosleep\\.android\\build-cache\\4a05ad452ce844f4c7ee52135121b27b1543e884\\output\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "D:\\Users\\nosleep\\Desktop\\Github\\MyApplication\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_in.xml",
+        "source": "C:\\Users\\nosleep\\.android\\build-cache\\4a05ad452ce844f4c7ee52135121b27b1543e884\\output\\res\\anim\\abc_fade_in.xml"
+    },
+    {
+        "merged": "D:\\Users\\nosleep\\Desktop\\Github\\MyApplication\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_exit.xml",
+        "source": "C:\\Users\\nosleep\\.android\\build-cache\\4a05ad452ce844f4c7ee52135121b27b1543e884\\output\\res\\anim\\abc_popup_exit.xml"
+    },
+    {
+        "merged": "D:\\Users\\nosleep\\Desktop\\Github\\MyApplication\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_top.xml",
+        "source": "C:\\Users\\nosleep\\.android\\build-cache\\4a05ad452ce844f4c7ee52135121b27b1543e884\\output\\res\\anim\\abc_slide_in_top.xml"
+    },
+    {
+        "merged": "D:\\Users\\nosleep\\Desktop\\Github\\MyApplication\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_top.xml",
+        "source": "C:\\Users\\nosleep\\.android\\build-cache\\4a05ad452ce844f4c7ee52135121b27b1543e884\\output\\res\\anim\\abc_slide_out_top.xml"
+    },
+    {
+        "merged": "D:\\Users\\nosleep\\Desktop\\Github\\MyApplication\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_bottom.xml",
+        "source": "C:\\Users\\nosleep\\.android\\build-cache\\4a05ad452ce844f4c7ee52135121b27b1543e884\\output\\res\\anim\\abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "D:\\Users\\nosleep\\Desktop\\Github\\MyApplication\\app\\build\\intermediates\\res\\merged\\debug\\anim\\abc_fade_out.xml",
+        "source": "C:\\Users\\nosleep\\.android\\build-cache\\4a05ad452ce844f4c7ee52135121b27b1543e884\\output\\res\\anim\\abc_fade_out.xml"
+    }
+]
