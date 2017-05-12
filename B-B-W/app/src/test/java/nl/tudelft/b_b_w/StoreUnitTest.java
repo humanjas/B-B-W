@@ -1,9 +1,11 @@
 package nl.tudelft.b_b_w;
 
 
+import org.apache.maven.artifact.ant.shaded.FileUtils;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Set;
 import java.util.HashSet;
 
@@ -31,10 +33,14 @@ public class StoreUnitTest {
     @Test(expected = RuntimeException.class)
     public void testSaveIO() {
         Store store = new Store();
-        new File("keys.txt").mkdir();
-        store.save();
         File file = new File("keys.txt");
-        file.delete();
+        file.mkdir();
+        store.save();
+        try {
+            FileUtils.deleteDirectory(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
