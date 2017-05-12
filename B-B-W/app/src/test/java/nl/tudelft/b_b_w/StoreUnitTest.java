@@ -1,11 +1,13 @@
 package nl.tudelft.b_b_w;
 
+import org.junit.Before;
 import org.junit.Test;
 import java.io.FileWriter;
 import java.util.Set;
 import java.util.HashSet;
 import nl.tudelft.b_b_w.Store;
 
+import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -16,20 +18,20 @@ import static org.junit.Assert.assertTrue;
  */
 public class StoreUnitTest {
 
-
     /**
      * Test getStore method.
      */
     @Test
-    public void testGetStore(){
-        Store store = Store.getStore();
-    }
-
-    @Test
     public void testSave(){
-        String key = new String("hello");
+        String key = "hello";
+        Store store = new Store();
 
-        Store.getStore().addKey(key);
+        store.addKey(key);
 
+        store.save();
+
+        store = new Store();
+
+        assertNotNull(store);
     }
 }

@@ -46,13 +46,4 @@ public class Store {
     public void addKey(String key) {
         keys.add(key);
     }
-
-    // singleton nice
-    private static Store store;
-
-    public static Store getStore() {
-        if (store == null)
-            store = new Store();
-        return store;
-    }
 }
