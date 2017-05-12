@@ -40,7 +40,7 @@ public class BlockController {
     public Block addBlock(Block block) {
         // Check if the block already exists
 
-        Block latest = databaseHandler.getLates tBlock(block.getOwner(), block.getPublic_key());
+        Block latest = databaseHandler.getLatestBlock(block.getOwner(), block.getPublic_key());
 
         if (latest == null) {
             databaseHandler.addBlock(block);
