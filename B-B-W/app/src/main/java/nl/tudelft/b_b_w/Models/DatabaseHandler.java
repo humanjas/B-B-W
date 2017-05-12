@@ -76,7 +76,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        final String CREATE_BLOCKS_TABLE = "CREATE TABLE IF NOT EXISTS" + TABLE_NAME + "("
+        final String CREATE_BLOCKS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
                 + KEY_OWNER + " TEXT NOT NULL,"
                 + KEY_SEQ_NO + " INTEGER NOT NULL,"
                 + KEY_PREV_HASH + " TEXT NOT NULL,"
@@ -157,9 +157,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         owner, publicKey, String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
-        if (cursor != null)
-            cursor.moveToFirst();
-        else return null;
+        if (cursor.getCount() < 1) return null;
+
+        cursor.moveToFirst();
 
         Block block = new Block(
                 cursor.getString(0),
@@ -235,9 +235,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @return the latest block
      */
     public Block getLatestBlock(String owner, String publicKey) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
         int maxSeqNum = this.getLatestSeqNum(owner, publicKey);
+        SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
                 _columns2,
@@ -246,9 +245,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         owner, publicKey, String.valueOf(maxSeqNum)
                 }, null, null, null, null);
 
-        if (cursor != null)
-            cursor.moveToFirst();
-        else return null;
+        if (cursor.getCount() < 1) return null;
+
+        cursor.moveToFirst();
 
         Block block = new Block(
                 cursor.getString(0),
@@ -285,9 +284,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         owner, publicKey, String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
-        if (cursor != null)
-            cursor.moveToFirst();
-        else return null;
+        if (cursor.getCount() < 1) return null;
+
+        cursor.moveToFirst();
 
         Block block = new Block(
                 cursor.getString(0),
@@ -324,9 +323,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         owner, publicKey, String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
-        if (cursor != null)
-            cursor.moveToFirst();
-        else return null;
+        if (cursor.getCount() < 1) return null;
+
+        cursor.moveToFirst();
 
         Block block = new Block(
                 cursor.getString(0),
@@ -358,7 +357,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
-        if (cursor != null) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
                 Block block = new Block(
