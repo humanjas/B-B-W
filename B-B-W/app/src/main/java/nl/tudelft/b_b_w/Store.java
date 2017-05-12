@@ -25,7 +25,7 @@ public class Store {
                 Scanner sc = new Scanner("keys.txt");
                 while (sc.hasNext()) {
                     String key = sc.next();
-                    add(key);
+                    addKey(key);
                 }
                 sc.close();
             } catch (Exception e) {
@@ -42,7 +42,8 @@ public class Store {
         }
     }
 
-    public void add(String key) {
+
+    public void addKey(String key) {
         keys.add(key);
     }
 
