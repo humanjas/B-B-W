@@ -1,5 +1,6 @@
 package nl.tudelft.b_b_w.ModelsUnitTest;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.test.suitebuilder.annotation.LargeTest;
 
 import org.junit.After;
@@ -216,6 +217,16 @@ public class DatabaseHandlerUnitTest {
         result.add(block);
         result.add(block2);
         assertEquals(databaseHandler.getAllBlocks(), result);
+    }
+
+    /**
+     * Test for onUpgrade
+     */
+    @Test
+    public void onUpgrade() {
+        SQLiteDatabase database = databaseHandler.getReadableDatabase();
+        databaseHandler.onUpgrade(database, 0, 1);
+        assertEquals(databaseHandler.getReadableDatabase(), database);
     }
 
     /**
