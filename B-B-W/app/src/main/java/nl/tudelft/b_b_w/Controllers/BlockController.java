@@ -63,8 +63,8 @@ public class BlockController {
             if(block.isRevoked()) {
                 //if a block is revoked you dont want the revoked block
                 // and the original in your list.
-                res.remove(block);
                 res.remove(new Block(block.getOwner(), block.getSequence_number(), block.getPrevious_hash(), block.getPublic_key(), block.isRevoked()));
+                res.remove(block);
             } else {
                 res.add(block);
             }

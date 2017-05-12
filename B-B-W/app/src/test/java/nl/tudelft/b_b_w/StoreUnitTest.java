@@ -2,6 +2,7 @@ package nl.tudelft.b_b_w;
 
 
 import org.apache.maven.artifact.ant.shaded.FileUtils;
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
@@ -33,14 +34,8 @@ public class StoreUnitTest {
     @Test(expected = RuntimeException.class)
     public void testSaveIO() {
         Store store = new Store();
-        File file = new File("keys.txt");
-        file.mkdir();
+        new File("keys.txt").mkdir();
         store.save();
-        try {
-            FileUtils.deleteDirectory(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -58,9 +53,23 @@ public class StoreUnitTest {
         Set<String> result = new HashSet<String>();
         result.add(key);
 
-        File file = new File("keys.txt");
-        file.delete();
-
         assertEquals(result, store.getKeys());
+    }
+
+    /**
+     * Removes key.txt folder or file after test
+     */
+    @After
+    public void removeDirectory() {
+        try {
+            File f = new File("keys.txt");
+            if (f.exists()) {
+                f.delete();
+            } else if (f.isDirectory()) {
+                FileUtils.deleteDirectory(f);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

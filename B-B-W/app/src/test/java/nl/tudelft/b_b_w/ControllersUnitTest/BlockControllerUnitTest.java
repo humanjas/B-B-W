@@ -24,6 +24,9 @@ import static org.junit.Assert.assertEquals;
 @RunWith(RobolectricTestRunner.class)
 public class BlockControllerUnitTest {
 
+    /**
+     * Attributes
+     */
     private BlockController bc;
     private String _owner;
     private String _previous_hash;
@@ -32,6 +35,10 @@ public class BlockControllerUnitTest {
     private int _sequence_number;
     Block _block;
 
+    /**
+     * Initialize BlockController before every test
+     * And initialize a dummy block _block
+     */
     @Before
     public void setUp() {
         this.bc = new BlockController(RuntimeEnvironment.application);
@@ -43,6 +50,10 @@ public class BlockControllerUnitTest {
         this._block = new Block(_owner, _sequence_number, _previous_hash, _public_key, _isRevoked);
     }
 
+    /**
+     * Tests adding a block
+     * @throws Exception
+     */
     @Test
     public void testAddBlock() throws Exception {
         bc.addBlock(_block);
@@ -51,18 +62,30 @@ public class BlockControllerUnitTest {
         assertEquals(bc.getBlocks(), list);
     }
 
+    /**
+     * Tests adding a duplicate block
+     * @throws Exception RuntimeException
+     */
     @Test(expected=RuntimeException.class)
     public void testAddDupBlocks() {
         bc.addBlock(_block);
         bc.addBlock(_block);
     }
 
+    /**
+     * Tests adding an already revoked block
+     * @throws Exception RuntimeException
+     */
     @Test(expected=RuntimeException.class)
     public void alreadyRevoked() {
         bc.addBlock(new Block(_owner,_sequence_number,_previous_hash, _public_key, true));
         bc.addBlock(_block);
     }
 
+    /**
+     * Tests adding a revoke block
+     * @throws Exception
+     */
     @Test
     public void testRevokeBlock() throws Exception {
         bc.addBlock(_block);
@@ -72,6 +95,10 @@ public class BlockControllerUnitTest {
         assertEquals(list, bc.getBlocks());
     }
 
+    /**
+     * Tests filtering duplicates out of a list
+     * @throws Exception
+     */
     @Test
     public void testEmpList() {
         bc.addBlock(_block);
@@ -79,6 +106,5 @@ public class BlockControllerUnitTest {
         List<Block> list = new ArrayList<>();
         assertEquals(list, bc.getBlocks());
     }
-
 
 }
