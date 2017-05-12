@@ -53,27 +53,20 @@ public class BlockController {
     }
 
     /**
-     * Method to get all the blocks in the database
+     * Get all blocks that are not revoked
      * @return List of all the blocks
      */
     //TODO make this more efficient
     public List<Block> getBlocks() {
         List<Block> blocks = databaseHandler.getAllBlocks();
-        //removes duplicates
-        for (int i=0; i<blocks.size(); i++) {
-            Block loop_block = blocks.get(i);
-            if (loop_block.isRevoked()) {
-                for (int j=0; j<i; j++) {
-                    if (blocks.get(j).equals(loop_block)) {
-                        blocks.remove(j);
-                        blocks.remove(i);
-                        break;
-                    }
-                }
-            }
+        List<Block> res = new List<Block>();
+        for (Block block : blocks) {
+            if (block.isRevoked())
+                res.remove(block);
+            else
+                res.add(block);
         }
-
-        return blocks;
+        return res;
     }
 
     /**
