@@ -83,7 +83,6 @@ public class Block {
 
         Block block = (Block) o;
 
-        if (sequence_number != block.sequence_number) return false;
         if (!owner.equals(block.owner)) return false;
         if (!previous_hash.equals(block.previous_hash)) return false;
         return public_key.equals(block.public_key);
