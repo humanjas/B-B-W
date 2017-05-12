@@ -1,7 +1,6 @@
-package com.example.jasper.app.Models;
+package nl.tudelft.b_b_w.Models;
 
 import java.security.MessageDigest;
-import java.nio.charset.StandardCharsets;
 
 /**
  * Class to convert values into a hashed value

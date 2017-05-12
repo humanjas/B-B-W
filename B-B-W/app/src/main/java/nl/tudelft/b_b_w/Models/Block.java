@@ -1,4 +1,4 @@
-package com.example.jasper.app.Models;
+package nl.tudelft.b_b_w.Models;
 
 /**
  * Block represents

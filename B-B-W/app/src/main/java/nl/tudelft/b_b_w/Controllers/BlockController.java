@@ -1,12 +1,12 @@
-package com.example.jasper.app.Controllers;
+package nl.tudelft.b_b_w.Controllers;
 
 import android.content.Context;
 
-import com.example.jasper.app.Models.Block;
-import com.example.jasper.app.Models.DatabaseHandler;
-import com.example.jasper.app.Models.User;
-
 import java.util.List;
+
+import nl.tudelft.b_b_w.Models.Block;
+import nl.tudelft.b_b_w.Models.DatabaseHandler;
+import nl.tudelft.b_b_w.Models.User;
 
 /**
  * Performs the actions of the blockchain
