@@ -72,7 +72,7 @@ public class Block {
     }
 
     /**
-     * Equals methode to check whether two blocks match
+     * Equals method to check whether two blocks match
      * @param o The block you want to match with the current block
      * @return true if blocks match, otherwise false
      */
