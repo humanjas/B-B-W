@@ -2,7 +2,10 @@ package nl.tudelft.b_b_w.Controllers;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import nl.tudelft.b_b_w.Models.Block;
 import nl.tudelft.b_b_w.Models.DatabaseHandler;
@@ -41,39 +44,30 @@ public class BlockController {
 
         if (latest == null) {
             databaseHandler.addBlock(block);
+        } else if (latest.isRevoked()) {
+            throw new RuntimeException("Error - Block is already revoked");
         } else {
-            if (latest.isRevoked()) throw new RuntimeException("Error - Block is already revoked");
-            else {
-                if (block.isRevoked()) databaseHandler.addBlock(block);
-                else throw new RuntimeException("Error - Block already exists");
-            }
+            if (block.isRevoked()) databaseHandler.addBlock(block);
+            else throw new RuntimeException("Error - Block already exists");
         }
 
         return block;
     }
 
     /**
-     * Method to get all the blocks in the database
+     * Get all blocks that are not revoked
      * @return List of all the blocks
      */
-    //TODO make this more efficient
     public List<Block> getBlocks() {
         List<Block> blocks = databaseHandler.getAllBlocks();
-        //removes duplicates
-        for (int i=0; i<blocks.size(); i++) {
-            Block loop_block = blocks.get(i);
-            if (loop_block.isRevoked()) {
-                for (int j=0; j<i; j++) {
-                    if (blocks.get(j).equals(loop_block)) {
-                        blocks.remove(j);
-                        blocks.remove(i);
-                        break;
-                    }
-                }
-            }
+        Map<Integer,Block> res = new HashMap<>();
+        for (Block block : blocks) {
+            if (block.isRevoked())
+                res.remove(block.getSequence_number());
+            else
+                res.put(block.getSequence_number(), block);
         }
-
-        return blocks;
+        return new ArrayList<Block>(res.values());
     }
 
     /**
