@@ -7,6 +7,9 @@ package nl.tudelft.b_b_w.Models;
 
 public class Block {
 
+    //TODO own hash of block attribute
+
+
     //properties of a block
     private String owner, previous_hash, public_key;
     private boolean isRevoked;
