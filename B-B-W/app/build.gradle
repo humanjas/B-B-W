@@ -30,3 +30,5 @@ dependencies {
 }
 
 apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
