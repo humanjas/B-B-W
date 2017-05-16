@@ -38,7 +38,7 @@ public class BlockController {
     public Block addBlock(Block block) {
         // Check if the block already exists
 
-        Block latest = databaseHandler.getLatestBlock(block.getOwner(), block.getPublic_key());
+        Block latest = databaseHandler.getLatestBlock(block.getOwner(), block.getPublicKey());
 
         if (latest == null) {
             databaseHandler.addBlock(block);
@@ -63,7 +63,9 @@ public class BlockController {
             if(block.isRevoked()) {
                 //if a block is revoked you dont want the revoked block
                 // and the original in your list.
-                res.remove(new Block(block.getOwner(), block.getSequence_number(), block.getPrevious_hash(), block.getPublic_key(), block.isRevoked()));
+                res.remove(new Block(block.getOwner(), block.getSequenceNumber(),
+                        block.getOwnHash(), block.getPreviousHashChain(),
+                        block.getPreviousHashSender(), block.getPublicKey(), block.isRevoked()));
                 res.remove(block);
             } else {
                 res.add(block);
@@ -79,8 +81,9 @@ public class BlockController {
      * @return the revoked block
      */
     public Block revokeBlock(Block block) {
-        return addBlock(new Block(block.getOwner(), block.getSequence_number(),
-                block.getPrevious_hash(), block.getPublic_key(), true));
+        return addBlock(new Block(block.getOwner(), block.getSequenceNumber(), block.getOwnHash(),
+                block.getPreviousHashChain(), block.getPreviousHashSender(), block.getPublicKey(),
+                block.isRevoked()));
     }
 
 }

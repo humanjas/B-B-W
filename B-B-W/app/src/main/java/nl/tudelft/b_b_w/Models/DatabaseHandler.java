@@ -30,21 +30,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Contacts Table Columns names
     private static final String KEY_OWNER = "owner";
-    private static final String KEY_SEQ_NO = "sequence_number";
-    private static final String KEY_PREV_HASH = "previous_hash";
-    private static final String KEY_PUBLIC_KEY = "public_key";
+    private static final String KEY_SEQ_NO = "sequenceNumber";
+    private static final String KEY_OWN_HASH = "ownHash";
+    private static final String KEY_PREV_HASH_CHAIN = "previousHashChain";
+    private static final String KEY_PREV_HASH_SENDER = "previousHashSender";
+    private static final String KEY_PUBLIC_KEY = "publicKey";
     private static final String KEY_REVOKE = "revoke";
     private static final String KEY_CREATED_AT = "created_at";
 
     // Persistence helpers
     final String _columns = KEY_OWNER + ", "
                 + KEY_SEQ_NO + ", "
-                + KEY_PREV_HASH + ", "
+                + KEY_OWN_HASH + ", "
+                + KEY_PREV_HASH_CHAIN + ", "
+                + KEY_PREV_HASH_SENDER + ", "
                 + KEY_PUBLIC_KEY + ", "
                 + KEY_REVOKE + ", "
                 + KEY_CREATED_AT;
     final String[] _columns2 = new String[] {
-            KEY_OWNER, KEY_SEQ_NO, KEY_PREV_HASH, KEY_PUBLIC_KEY, KEY_REVOKE
+            KEY_OWNER, KEY_SEQ_NO, KEY_OWN_HASH, KEY_PREV_HASH_CHAIN, KEY_PREV_HASH_SENDER, KEY_PUBLIC_KEY, KEY_REVOKE
     };
     final String _header = "SELECT " + _columns + " FROM "+ TABLE_NAME +";";
 
@@ -79,11 +83,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         final String CREATE_BLOCKS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
                 + KEY_OWNER + " TEXT NOT NULL,"
                 + KEY_SEQ_NO + " INTEGER NOT NULL,"
-                + KEY_PREV_HASH + " TEXT NOT NULL,"
+                + KEY_OWN_HASH + " TEXT NOT NULL,"
+                + KEY_PREV_HASH_CHAIN + " TEXT NOT NULL,"
+                + KEY_PREV_HASH_SENDER + " TEXT NOT NULL,"
                 + KEY_PUBLIC_KEY + " TEXT NOT NULL,"
                 + KEY_REVOKE + " BOOLEAN DEFAULT FALSE NOT NULL,"
                 + KEY_CREATED_AT + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
-                + " PRIMARY KEY (owner, public_key, sequence_number)"
+                + " PRIMARY KEY (owner, publicKey, sequenceNumber)"
                 + ")";
         final String CREATE_OPTION_TABLE = "CREATE TABLE option(key TEXT PRIMARY KEY, value BLOB);"
                 + "INSERT INTO option(key, value) "
@@ -130,9 +136,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_OWNER, block.getOwner());
-        values.put(KEY_SEQ_NO, block.getSequence_number());
-        values.put(KEY_PREV_HASH, block.getPrevious_hash());
-        values.put(KEY_PUBLIC_KEY, block.getPublic_key());
+        values.put(KEY_SEQ_NO, block.getSequenceNumber());
+        values.put(KEY_OWN_HASH, block.getOwnHash());
+        values.put(KEY_PREV_HASH_CHAIN, block.getPreviousHashChain());
+        values.put(KEY_PREV_HASH_SENDER, block.getPreviousHashSender());
+        values.put(KEY_PUBLIC_KEY, block.getPublicKey());
         values.put(KEY_REVOKE, block.isRevoked());
 
         // Inserting Row
@@ -166,7 +174,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getInt(1),
                 cursor.getString(2),
                 cursor.getString(3),
-                cursor.getInt(4) > 0
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getInt(6) > 0
         );
 
         // Close database connection
@@ -254,7 +264,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getInt(1),
                 cursor.getString(2),
                 cursor.getString(3),
-                cursor.getInt(4) > 0
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getInt(6) > 0
         );
 
         // Close database connection
@@ -293,7 +305,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getInt(1),
                 cursor.getString(2),
                 cursor.getString(3),
-                cursor.getInt(4) > 0
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getInt(6) > 0
         );
 
         // Close database connection
@@ -332,7 +346,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getInt(1),
                 cursor.getString(2),
                 cursor.getString(3),
-                cursor.getInt(4) > 0
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getInt(6) > 0
         );
 
         // Close database connection
@@ -365,7 +381,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         cursor.getInt(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        cursor.getInt(4) > 0
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getInt(6) > 0
                 );
                 blocks.add(block);
             } while (cursor.moveToNext());

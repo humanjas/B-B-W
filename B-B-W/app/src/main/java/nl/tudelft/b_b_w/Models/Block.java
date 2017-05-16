@@ -7,28 +7,32 @@ package nl.tudelft.b_b_w.Models;
 
 public class Block {
 
-    //TODO own hash of block attribute
-
-
     //properties of a block
-    private String owner, previous_hash, public_key;
+    private String owner;
+    private int sequenceNumber;
+    private String ownHash;
+    private String previousHashChain;
+    private String previousHashSender;
+    private String publicKey;
     private boolean isRevoked;
-    private int sequence_number;
 
     /**
      * Constructor to initialize a block
      * @param _owner owner of a block
-     * @param _sequence_number sequence number of the block
-     * @param _previous_hash the hash value of the block before in the chain
-     * @param _public_key public key of the owner of the block
+     * @param _sequenceNumber sequence number of the block
+     * @param _previousHashChain the hash value of the block before in the chain
+     * @param _previousHashChain the hash value of the block before of the sender
+     * @param _publicKey public key of the owner of the block
      * @param _isRevoked boolean to check whether a block is revoked or not
      */
-    public Block(String _owner, int _sequence_number, String _previous_hash, String _public_key, boolean _isRevoked) {
+    public Block(String _owner, int _sequenceNumber, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, boolean _isRevoked) {
         this.owner = _owner;
-        this.previous_hash = _previous_hash;
-        this.public_key = _public_key;
+        this.sequenceNumber = _sequenceNumber;
+        this.ownHash = _ownHash;
+        this.previousHashChain = _previousHashChain;
+        this.previousHashSender = _previousHashSender;
+        this.publicKey = _publicKey;
         this.isRevoked = _isRevoked;
-        this.sequence_number = _sequence_number;
     }
 
     /**
@@ -40,19 +44,43 @@ public class Block {
     }
 
     /**
-     * Default getter for previous block hash
-     * @return previous hash
+     * Default getter for own block hash
+     * @return own hash
      */
-    public String getPrevious_hash() {
-        return previous_hash;
+    public String getOwnHash() {
+        return ownHash;
+    }
+
+    /**
+     * Default getter for previous block hash of chain
+     * @return previous hash of chain
+     */
+    public String getPreviousHashChain() {
+        return previousHashChain;
+    }
+
+    /**
+     * Default getter for previous block hash of chain
+     * @return previous hash of chain
+     */
+    public String getPreviousHashSender() {
+        return previousHashSender;
     }
 
     /**
      * Default getter for public key
      * @return public key of the block
      */
-    public String getPublic_key() {
-        return public_key;
+    public String getPublicKey() {
+        return publicKey;
+    }
+
+    /**
+     * Default getter for sequence number
+     * @return the sequence number of the block
+     */
+    public int getSequenceNumber() {
+        return sequenceNumber;
     }
 
     /**
@@ -61,14 +89,6 @@ public class Block {
      */
     public boolean isRevoked() {
         return isRevoked;
-    }
-
-    /**
-     * Default getter for sequence number
-     * @return the sequence number of the block
-     */
-    public int getSequence_number() {
-        return sequence_number;
     }
 
     /**
@@ -84,8 +104,7 @@ public class Block {
         Block block = (Block) o;
 
         if (!owner.equals(block.owner)) return false;
-        if (!previous_hash.equals(block.previous_hash)) return false;
-        return public_key.equals(block.public_key);
+        return publicKey.equals(block.getPublicKey());
 
     }
 }
