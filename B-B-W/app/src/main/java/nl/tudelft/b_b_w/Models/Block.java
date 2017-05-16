@@ -91,11 +91,6 @@ public class Block {
         return isRevoked;
     }
 
-    /**
-     * Equals method to check whether two blocks match
-     * @param o The block you want to match with the current block
-     * @return true if blocks match, otherwise false
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,9 +98,26 @@ public class Block {
 
         Block block = (Block) o;
 
+        if (sequenceNumber != block.sequenceNumber) return false;
+        if (isRevoked != block.isRevoked) return false;
         if (!owner.equals(block.owner)) return false;
-        return publicKey.equals(block.getPublicKey());
+        if (!ownHash.equals(block.ownHash)) return false;
+        if (!previousHashChain.equals(block.previousHashChain)) return false;
+        if (!previousHashSender.equals(block.previousHashSender)) return false;
+        return publicKey.equals(block.publicKey);
 
+    }
+
+    @Override
+    public int hashCode() {
+        int result = owner.hashCode();
+        result = 31 * result + sequenceNumber;
+        result = 31 * result + ownHash.hashCode();
+        result = 31 * result + previousHashChain.hashCode();
+        result = 31 * result + previousHashSender.hashCode();
+        result = 31 * result + publicKey.hashCode();
+        result = 31 * result + (isRevoked ? 1 : 0);
+        return result;
     }
 
     /**
