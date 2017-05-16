@@ -115,7 +115,7 @@ public class BlockControllerUnitTest {
     @Test
     public void testEmpList() {
         bc.addBlock(_block);
-        bc.addBlock(new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, true));
+        bc.addBlock(new Block(owner, sequenceNumber+1, ownHash, previousHashChain, previousHashSender, publicKey, true));
         List<Block> list = new ArrayList<>();
         assertEquals(list, bc.getBlocks());
     }

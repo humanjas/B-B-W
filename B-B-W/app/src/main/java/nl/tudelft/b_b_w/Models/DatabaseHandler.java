@@ -61,17 +61,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
-    /**
-     * Singleton for creating only on instance of the database
-     * @param context context of the current state of the database
-     * @return the current state of the database
-     */
-    public static synchronized DatabaseHandler getInstance(Context context) {
-        if (_instance == null) _instance = new DatabaseHandler(context);
-        return _instance;
-    }
-
     /**
     * Called when the database is created for the first time. This is where the
     * creation of tables and the initial population of the tables should happen.
@@ -222,15 +211,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public int getLatestSeqNum(String owner, String publicKey) {
         SQLiteDatabase db = this.getReadableDatabase();
-
+        
         Cursor c = db.query(TABLE_NAME,
                 new String[] {"MAX(" + KEY_SEQ_NO + ")"},
                 KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ?",
                 new String[] {
                         owner, publicKey
                 }, null, null, null, null);
+        
         try {
             c.moveToFirst();
+            System.out.println("c.getInt(0) = " + c.getInt(0));
             return c.getInt(0);
         } finally {
             db.close();
@@ -247,6 +238,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public Block getLatestBlock(String owner, String publicKey) {
         int maxSeqNum = this.getLatestSeqNum(owner, publicKey);
+        System.out.println("max = " + maxSeqNum);
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,

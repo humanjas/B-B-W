@@ -47,18 +47,8 @@ public class DatabaseHandlerUnitTest {
      */
     @Before
     public void setUp() {
-        this.databaseHandler = DatabaseHandler.getInstance(RuntimeEnvironment.application);
+        this.databaseHandler = new DatabaseHandler(RuntimeEnvironment.application);
         _block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
-    }
-
-    /**
-     * singleton test
-     * Tests whether the singleton design pattern works
-     */
-    @Test
-    public void singleton() {
-        DatabaseHandler databaseHandler1 = databaseHandler.getInstance(RuntimeEnvironment.application);
-        assertEquals(databaseHandler, databaseHandler1);
     }
 
     /**
