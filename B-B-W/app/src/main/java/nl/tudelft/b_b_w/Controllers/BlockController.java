@@ -59,17 +59,11 @@ public class BlockController {
     public List<Block> getBlocks() {
         List<Block> blocks = databaseHandler.getAllBlocks();
         List<Block> res = new ArrayList<>();
-        List<Block> exc = new ArrayList<>();
-
-        for (int i = blocks.size() - 1; i >= 0; i--) {
-            if(exc.contains(blocks.get(i))) {
-                //do nothing
-            }
-            if(blocks.get(i).isRevoked()){
-                exc.add(blocks.get(i));
-            }
-            else {
-                res.add(0, blocks.get(i));
+        for(Block block : blocks) {
+            if (block.isRevoked()) {
+                res = removeBlock(res, block);
+            } else {
+                res.add(block);
             }
         }
         return res;
@@ -84,7 +78,24 @@ public class BlockController {
     public Block revokeBlock(Block block) {
         return addBlock(new Block(block.getOwner(), block.getSequenceNumber(), block.getOwnHash(),
                 block.getPreviousHashChain(), block.getPreviousHashSender(), block.getPublicKey(),
-                !block.isRevoked()));
+                true));
+        //TODO avoid hardcoding of the isRevoked parameter
+    }
+
+    /**
+     * Method for removing a certain block from a given list
+     * @param list The list of all the blocks
+     * @param block The revoke block
+     * @return List without the revoked block
+     */
+    public List<Block> removeBlock(List<Block> list, Block block) {
+        List<Block> res = new ArrayList<>();
+        for (Block blc : list) {
+            if (!(blc.getOwner().equals(block.getOwner()) && blc.getPublicKey().equals(block.getPublicKey()))){
+                res.add(blc);
+            }
+        }
+        return res;
     }
 
 }

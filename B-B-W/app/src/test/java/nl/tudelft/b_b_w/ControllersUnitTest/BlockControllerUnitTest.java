@@ -13,7 +13,6 @@ import nl.tudelft.b_b_w.Controllers.BlockController;
 import nl.tudelft.b_b_w.Models.Block;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 //import android.test.mock.MockContext;
 
@@ -29,14 +28,14 @@ public class BlockControllerUnitTest {
      * Attributes
      */
     private BlockController bc;
-    final String owner = "owner";
-    final int sequenceNumber = 0;
-    final String ownHash = "ownHash";
-    final String previousHashChain = "previousHashChain";
-    final String previousHashSender = "previousHashSender";
-    final String publicKey = "publicKey";
-    final boolean isRevoked = false;
-    Block _block;
+    private final String owner = "owner";
+    private final int sequenceNumber = 0;
+    private final String ownHash = "ownHash";
+    private final String previousHashChain = "previousHashChain";
+    private final String previousHashSender = "previousHashSender";
+    private final String publicKey = "publicKey";
+    private final boolean isRevoked = false;
+    private Block _block;
 
     /**
      * Initialize BlockController before every test
@@ -50,7 +49,7 @@ public class BlockControllerUnitTest {
 
     /**
      * Tests adding a block
-     * @throws Exception
+     * @throws Exception RuntimeException
      */
     @Test
     public void testAddBlock() throws Exception {
@@ -62,7 +61,7 @@ public class BlockControllerUnitTest {
 
     /**
      * Tests adding two blocks
-     * @throws Exception
+     * @throws Exception RuntimeException
      */
     @Test
     public void testAddBlock2() throws Exception {
@@ -77,7 +76,6 @@ public class BlockControllerUnitTest {
 
     /**
      * Tests adding a duplicate block
-     * @throws Exception RuntimeException
      */
     @Test(expected=RuntimeException.class)
     public void testAddDupBlocks() {
@@ -87,7 +85,6 @@ public class BlockControllerUnitTest {
 
     /**
      * Tests adding an already revoked block
-     * @throws Exception RuntimeException
      */
     @Test(expected=RuntimeException.class)
     public void alreadyRevoked() {
@@ -96,27 +93,26 @@ public class BlockControllerUnitTest {
     }
 
     /**
-     * Tests adding a revoke block
-     * @throws Exception
+     * Tests filtering duplicates out of a list
      */
     @Test
-    public void testRevokeBlock() throws Exception {
+    public void testEmptyList() {
         bc.addBlock(_block);
-        bc.revokeBlock(_block);
+        bc.revokeBlock(new Block(owner, sequenceNumber+1, ownHash, previousHashChain, previousHashSender, publicKey, true));
         List<Block> list = new ArrayList<>();
-        list.add(new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, true));
-        assertNotEquals(list, bc.getBlocks());
+        assertEquals(list, bc.getBlocks());
     }
 
     /**
-     * Tests filtering duplicates out of a list
-     * @throws Exception
+     * Test removeBlock if the specified revoked block has no match
      */
     @Test
-    public void testEmpList() {
+    public void testRemoveWithNoMatch() {
         bc.addBlock(_block);
-        bc.addBlock(new Block(owner, sequenceNumber+1, ownHash, previousHashChain, previousHashSender, publicKey, true));
+        Block blc2 = new Block("owner2", sequenceNumber+1, ownHash, previousHashChain, previousHashSender, "pub2", false);
+        bc.revokeBlock(blc2);
         List<Block> list = new ArrayList<>();
+        list.add(_block);
         assertEquals(list, bc.getBlocks());
     }
 
