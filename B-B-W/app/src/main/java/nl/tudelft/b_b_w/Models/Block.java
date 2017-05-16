@@ -107,4 +107,20 @@ public class Block {
         return publicKey.equals(block.getPublicKey());
 
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "Block{" +
+                "owner='" + owner + '\'' +
+                ", sequenceNumber=" + sequenceNumber +
+                ", ownHash='" + ownHash + '\'' +
+                ", previousHashChain='" + previousHashChain + '\'' +
+                ", previousHashSender='" + previousHashSender + '\'' +
+                ", publicKey='" + publicKey + '\'' +
+                ", isRevoked=" + isRevoked +
+                '}';
+    }
 }

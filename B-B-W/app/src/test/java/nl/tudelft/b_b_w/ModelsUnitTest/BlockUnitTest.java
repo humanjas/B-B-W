@@ -122,6 +122,23 @@ public class BlockUnitTest {
         assertFalse(_block.equals(check));
     }
 
+    /**
+     * Test whether the toString method is correct
+     */
+    @Test
+    public void toStringTest() {
+        String result = "Block{" +
+                "owner='" + owner + '\'' +
+                ", sequenceNumber=" + sequenceNumber +
+                ", ownHash='" + ownHash + '\'' +
+                ", previousHashChain='" + previousHashChain + '\'' +
+                ", previousHashSender='" + previousHashSender + '\'' +
+                ", publicKey='" + publicKey + '\'' +
+                ", isRevoked=" + isRevoked +
+                '}';
+        assertEquals(result, _block.toString());
+    }
+
 
 
 }
