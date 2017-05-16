@@ -91,6 +91,9 @@ public class Block {
         return isRevoked;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -108,6 +111,9 @@ public class Block {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         int result = owner.hashCode();
