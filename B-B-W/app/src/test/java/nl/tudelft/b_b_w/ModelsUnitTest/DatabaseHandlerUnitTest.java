@@ -72,6 +72,21 @@ public class DatabaseHandlerUnitTest {
     }
 
     /**
+     * addBlock2 test
+     * Tests adding a block and a revoke block
+     */
+    @Test
+    public void addBlock2() {
+        Block newBlock = new Block(owner, sequenceNumber+1, ownHash, previousHashChain, previousHashSender, publicKey, !isRevoked);
+        databaseHandler.addBlock(_block);
+        databaseHandler.addBlock(newBlock);
+        List<Block> list = new ArrayList<>();
+        list.add(_block);
+        list.add(newBlock);
+        assertEquals(list, databaseHandler.getAllBlocks());
+    }
+
+    /**
      * getNullBlock test
      * Tests getting a non-existing block
      */

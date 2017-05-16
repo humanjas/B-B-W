@@ -57,7 +57,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * creates a database connection
      * @param context given context
      */
-    private DatabaseHandler(Context context) {
+    public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -144,7 +144,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_REVOKE, block.isRevoked());
 
         // Inserting Row
-        db.insert(TABLE_NAME, null, values);
+        long res = db.insert(TABLE_NAME, null, values);
+        if (res == -1) throw new RuntimeException("Block cannot be added - " + block.toString());
         db.close(); // Closing database connection
     }
 
