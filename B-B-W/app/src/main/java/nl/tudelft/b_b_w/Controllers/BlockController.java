@@ -59,16 +59,17 @@ public class BlockController {
     public List<Block> getBlocks() {
         List<Block> blocks = databaseHandler.getAllBlocks();
         List<Block> res = new ArrayList<>();
-        for (Block block : blocks) {
-            if(block.isRevoked()) {
-                //if a block is revoked you dont want the revoked block
-                // and the original in your list.
-                res.remove(new Block(block.getOwner(), block.getSequenceNumber(),
-                        block.getOwnHash(), block.getPreviousHashChain(),
-                        block.getPreviousHashSender(), block.getPublicKey(), block.isRevoked()));
-                res.remove(block);
-            } else {
-                res.add(block);
+        List<Block> exc = new ArrayList<>();
+
+        for (int i = blocks.size() - 1; i >= 0; i--) {
+            if(exc.contains(blocks.get(i))) {
+                //do nothing
+            }
+            if(blocks.get(i).isRevoked()){
+                exc.add(blocks.get(i));
+            }
+            else {
+                res.add(0, blocks.get(i));
             }
         }
         return res;
