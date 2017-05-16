@@ -237,7 +237,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public Block getLatestBlock(String owner, String publicKey) {
         int maxSeqNum = this.getLatestSeqNum(owner, publicKey);
-        System.out.println("max = " + maxSeqNum);
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
