@@ -83,7 +83,7 @@ public class BlockController {
     public Block revokeBlock(Block block) {
         return addBlock(new Block(block.getOwner(), block.getSequenceNumber(), block.getOwnHash(),
                 block.getPreviousHashChain(), block.getPreviousHashSender(), block.getPublicKey(),
-                block.isRevoked()));
+                !block.isRevoked()));
     }
 
 }

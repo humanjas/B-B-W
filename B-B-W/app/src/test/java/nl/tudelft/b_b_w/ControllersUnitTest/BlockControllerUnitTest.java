@@ -13,6 +13,7 @@ import nl.tudelft.b_b_w.Controllers.BlockController;
 import nl.tudelft.b_b_w.Models.Block;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 //import android.test.mock.MockContext;
 
@@ -60,6 +61,21 @@ public class BlockControllerUnitTest {
     }
 
     /**
+     * Tests adding two blocks
+     * @throws Exception
+     */
+    @Test
+    public void testAddBlock2() throws Exception {
+        Block newBlock = new Block(owner+"2", sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        bc.addBlock(_block);
+        bc.addBlock(newBlock);
+        List<Block> list = new ArrayList<>();
+        list.add(_block);
+        list.add(newBlock);
+        assertEquals(bc.getBlocks(), list);
+    }
+
+    /**
      * Tests adding a duplicate block
      * @throws Exception RuntimeException
      */
@@ -89,7 +105,7 @@ public class BlockControllerUnitTest {
         bc.revokeBlock(_block);
         List<Block> list = new ArrayList<>();
         list.add(new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, true));
-        assertEquals(list, bc.getBlocks());
+        assertNotEquals(list, bc.getBlocks());
     }
 
     /**
