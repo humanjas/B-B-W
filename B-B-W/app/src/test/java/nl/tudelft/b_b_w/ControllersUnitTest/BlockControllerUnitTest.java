@@ -28,11 +28,13 @@ public class BlockControllerUnitTest {
      * Attributes
      */
     private BlockController bc;
-    private String _owner;
-    private String _previous_hash;
-    private String _public_key;
-    private Boolean _isRevoked;
-    private int _sequence_number;
+    final String owner = "owner";
+    final int sequenceNumber = 0;
+    final String ownHash = "ownHash";
+    final String previousHashChain = "previousHashChain";
+    final String previousHashSender = "previousHashSender";
+    final String publicKey = "publicKey";
+    final boolean isRevoked = false;
     Block _block;
 
     /**
@@ -42,12 +44,7 @@ public class BlockControllerUnitTest {
     @Before
     public void setUp() {
         this.bc = new BlockController(RuntimeEnvironment.application);
-        this._owner = "owner";
-        this._previous_hash = "previous_hash";
-        this._public_key = "public_key";
-        this._isRevoked = false;
-        this._sequence_number = 0;
-        this._block = new Block(_owner, _sequence_number, _previous_hash, _public_key, _isRevoked);
+        this._block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
     }
 
     /**
@@ -78,7 +75,7 @@ public class BlockControllerUnitTest {
      */
     @Test(expected=RuntimeException.class)
     public void alreadyRevoked() {
-        bc.addBlock(new Block(_owner,_sequence_number,_previous_hash, _public_key, true));
+        bc.addBlock(new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, true));
         bc.addBlock(_block);
     }
 
@@ -91,7 +88,7 @@ public class BlockControllerUnitTest {
         bc.addBlock(_block);
         bc.revokeBlock(_block);
         List<Block> list = new ArrayList<>();
-        list.add(new Block(_owner,_sequence_number,_previous_hash, _public_key, true));
+        list.add(new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, true));
         assertEquals(list, bc.getBlocks());
     }
 
@@ -102,7 +99,7 @@ public class BlockControllerUnitTest {
     @Test
     public void testEmpList() {
         bc.addBlock(_block);
-        bc.addBlock(new Block(_owner,_sequence_number,_previous_hash, _public_key, true));
+        bc.addBlock(new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, true));
         List<Block> list = new ArrayList<>();
         assertEquals(list, bc.getBlocks());
     }

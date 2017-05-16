@@ -31,6 +31,14 @@ import static org.junit.Assert.assertTrue;
 public class DatabaseHandlerUnitTest {
 
     private DatabaseHandler databaseHandler;
+    final String owner = "owner";
+    final int sequenceNumber = 0;
+    final String ownHash = "ownHash";
+    final String previousHashChain = "previousHashChain";
+    final String previousHashSender = "previousHashSender";
+    final String publicKey = "publicKey";
+    final boolean isRevoked = false;
+    Block _block;
 
     /**
      * setUp method
@@ -40,6 +48,7 @@ public class DatabaseHandlerUnitTest {
     @Before
     public void setUp() {
         this.databaseHandler = DatabaseHandler.getInstance(RuntimeEnvironment.application);
+        _block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
     }
 
     /**
@@ -58,14 +67,8 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void addBlock() {
-        String owner = "owner";
-        String previous_hash = "prev_hash";
-        String public_key = "pub_key";
-        boolean isRevoked = false;
-        int sequence_number = 0;
-        Block block = new Block(owner, sequence_number, previous_hash, public_key, isRevoked);
-        databaseHandler.addBlock(block);
-        assertEquals(block, databaseHandler.getBlock(owner, public_key, sequence_number));
+        databaseHandler.addBlock(_block);
+        assertEquals(_block, databaseHandler.getBlock(owner, publicKey, sequenceNumber));
     }
 
     /**
@@ -83,14 +86,8 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void containsBlock2() {
-        String owner = "owner";
-        String previous_hash = "prev_hash";
-        String public_key = "pub_key";
-        boolean isRevoked = false;
-        int sequence_number = 0;
-        Block block = new Block(owner, sequence_number, previous_hash, public_key, isRevoked);
-        databaseHandler.addBlock(block);
-        assertTrue(databaseHandler.containsBlock(owner, public_key));
+        databaseHandler.addBlock(_block);
+        assertTrue(databaseHandler.containsBlock(owner, publicKey));
     }
 
     /**
@@ -99,14 +96,8 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void containsBlock3() {
-        String owner = "owner";
-        String previous_hash = "prev_hash";
-        String public_key = "pub_key";
-        boolean isRevoked = false;
-        int sequence_number = 0;
-        Block block = new Block(owner, sequence_number, previous_hash, public_key, isRevoked);
-        databaseHandler.addBlock(block);
-        assertTrue(databaseHandler.containsBlock(owner, public_key, sequence_number));
+        databaseHandler.addBlock(_block);
+        assertTrue(databaseHandler.containsBlock(owner, publicKey, sequenceNumber));
     }
 
     /**
@@ -116,14 +107,8 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void containsBlock2_false() {
-        String owner = "owner";
-        String previous_hash = "prev_hash";
-        String public_key = "pub_key";
-        boolean isRevoked = false;
-        int sequence_number = 0;
-        Block block = new Block(owner, sequence_number, previous_hash, public_key, isRevoked);
-        databaseHandler.addBlock(block);
-        assertFalse(databaseHandler.containsBlock(owner, "pub_key2", sequence_number));
+        databaseHandler.addBlock(_block);
+        assertFalse(databaseHandler.containsBlock(owner, "pub_key2", sequenceNumber));
     }
 
     /**
@@ -132,16 +117,10 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getLatestSeqNum() {
-        String owner = "owner";
-        String previous_hash = "prev_hash";
-        String public_key = "pub_key";
-        boolean isRevoked = false;
-        int sequence_number = 0;
-        Block block = new Block(owner, sequence_number, previous_hash, public_key, isRevoked);
-        Block block2 = new Block(owner, 1, previous_hash, public_key, isRevoked);
-        databaseHandler.addBlock(block);
+        Block block2 = new Block(owner, 1, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
-        assertEquals(databaseHandler.getLatestSeqNum(owner, public_key), 1);
+        assertEquals(databaseHandler.getLatestSeqNum(owner, publicKey), 1);
     }
 
     /**
@@ -150,16 +129,10 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getLatestBlock() {
-        String owner = "owner";
-        String previous_hash = "prev_hash";
-        String public_key = "pub_key";
-        boolean isRevoked = false;
-        int sequence_number = 0;
-        Block block = new Block(owner, sequence_number, previous_hash, public_key, isRevoked);
-        Block block2 = new Block(owner, 1, previous_hash, public_key, isRevoked);
-        databaseHandler.addBlock(block);
+        Block block2 = new Block(owner, 1, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
-        assertEquals(databaseHandler.getLatestBlock(owner, public_key), block2);
+        assertEquals(databaseHandler.getLatestBlock(owner, publicKey), block2);
     }
 
     /**
@@ -168,16 +141,10 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getBlockAfter() {
-        String owner = "owner";
-        String previous_hash = "prev_hash";
-        String public_key = "pub_key";
-        boolean isRevoked = false;
-        int sequence_number = 0;
-        Block block = new Block(owner, sequence_number, previous_hash, public_key, isRevoked);
-        Block block2 = new Block(owner, 1, previous_hash, public_key, isRevoked);
-        databaseHandler.addBlock(block);
+        Block block2 = new Block(owner, 1, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
-        assertEquals(databaseHandler.getBlockAfter(owner, public_key, sequence_number), block2);
+        assertEquals(databaseHandler.getBlockAfter(owner, publicKey, sequenceNumber), block2);
     }
 
     /**
@@ -186,16 +153,10 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getBlockBefore() {
-        String owner = "owner";
-        String previous_hash = "prev_hash";
-        String public_key = "pub_key";
-        boolean isRevoked = false;
-        int sequence_number = 0;
-        Block block = new Block(owner, sequence_number, previous_hash, public_key, isRevoked);
-        Block block2 = new Block(owner, 1, previous_hash, public_key, isRevoked);
-        databaseHandler.addBlock(block);
+        Block block2 = new Block(owner, 1, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
-        assertEquals(databaseHandler.getBlockBefore(owner, public_key, 1), block);
+        assertEquals(databaseHandler.getBlockBefore(owner, publicKey, 1), _block);
     }
 
     /**
@@ -204,17 +165,11 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getAllBlocks() {
-        String owner = "owner";
-        String previous_hash = "prev_hash";
-        String public_key = "pub_key";
-        boolean isRevoked = false;
-        int sequence_number = 0;
-        Block block = new Block(owner, sequence_number, previous_hash, public_key, isRevoked);
-        Block block2 = new Block(owner, 1, previous_hash, public_key, isRevoked);
-        databaseHandler.addBlock(block);
+        Block block2 = new Block(owner, 1, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
         List<Block> result = new ArrayList<>();
-        result.add(block);
+        result.add(_block);
         result.add(block2);
         assertEquals(databaseHandler.getAllBlocks(), result);
     }
