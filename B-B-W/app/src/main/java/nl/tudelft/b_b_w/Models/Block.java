@@ -21,7 +21,7 @@ public class Block {
      * @param _owner owner of a block
      * @param _sequenceNumber sequence number of the block
      * @param _previousHashChain the hash value of the block before in the chain
-     * @param _previousHashChain the hash value of the block before of the sender
+     * @param _previousHashSender the hash value of the block before of the sender
      * @param _publicKey public key of the owner of the block
      * @param _isRevoked boolean to check whether a block is revoked or not
      */
