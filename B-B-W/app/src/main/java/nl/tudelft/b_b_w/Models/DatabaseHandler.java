@@ -221,7 +221,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         
         try {
             c.moveToFirst();
-            System.out.println("c.getInt(0) = " + c.getInt(0));
             return c.getInt(0);
         } finally {
             db.close();
