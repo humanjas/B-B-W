@@ -14,14 +14,14 @@ import static org.junit.Assert.assertTrue;
  */
 public class BlockUnitTest {
 
-    Block _block;
-    final String owner = "owner";
-    final int sequenceNumber = 0;
-    final String ownHash = "ownHash";
-    final String previousHashChain = "previousHashChain";
-    final String previousHashSender = "previousHashSender";
-    final String publicKey = "publicKey";
-    final boolean isRevoked = false;
+    private Block _block;
+    private final String owner = "owner";
+    private final int sequenceNumber = 0;
+    private final String ownHash = "ownHash";
+    private final String previousHashChain = "previousHashChain";
+    private final String previousHashSender = "previousHashSender";
+    private final String publicKey = "publicKey";
+    private final boolean isRevoked = false;
 
     /**
      * This method runs before each test to initialize the test object
@@ -120,6 +120,35 @@ public class BlockUnitTest {
         final String _owner = "NOTOWNER";
         Block check = new Block(_owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
         assertFalse(_block.equals(check));
+    }
+
+    /**
+     * Test whether the toString method is correct
+     */
+    @Test
+    public void toStringTest() {
+        String result = "Block{" +
+                "owner='" + owner + '\'' +
+                ", sequenceNumber=" + sequenceNumber +
+                ", ownHash='" + ownHash + '\'' +
+                ", previousHashChain='" + previousHashChain + '\'' +
+                ", previousHashSender='" + previousHashSender + '\'' +
+                ", publicKey='" + publicKey + '\'' +
+                ", isRevoked=" + isRevoked +
+                '}';
+        assertEquals(result, _block.toString());
+    }
+
+    /**
+     * Testing whether the hashcode method yields the same
+     * output with the same input
+     */
+    @Test
+    public void testHashCode() {
+        Block x = new Block("owner2", sequenceNumber+1, ownHash, previousHashChain, previousHashSender, "pub2", false);
+        Block y = new Block("owner2", sequenceNumber+1, ownHash, previousHashChain, previousHashSender, "pub2", false);
+        assertTrue(x.equals(y) && y.equals(x));
+        assertTrue(x.hashCode() == y.hashCode());
     }
 
 

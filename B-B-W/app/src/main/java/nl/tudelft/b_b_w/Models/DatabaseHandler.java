@@ -57,19 +57,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * creates a database connection
      * @param context given context
      */
-    private DatabaseHandler(Context context) {
+    public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
-
-    /**
-     * Singleton for creating only on instance of the database
-     * @param context context of the current state of the database
-     * @return the current state of the database
-     */
-    public static synchronized DatabaseHandler getInstance(Context context) {
-        if (_instance == null) _instance = new DatabaseHandler(context);
-        return _instance;
     }
 
     /**
@@ -144,7 +133,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_REVOKE, block.isRevoked());
 
         // Inserting Row
-        db.insert(TABLE_NAME, null, values);
+        long res = db.insert(TABLE_NAME, null, values);
+        if (res == -1) throw new RuntimeException("Block cannot be added - " + block.toString());
         db.close(); // Closing database connection
     }
 
@@ -221,13 +211,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public int getLatestSeqNum(String owner, String publicKey) {
         SQLiteDatabase db = this.getReadableDatabase();
-
+        
         Cursor c = db.query(TABLE_NAME,
                 new String[] {"MAX(" + KEY_SEQ_NO + ")"},
                 KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ?",
                 new String[] {
                         owner, publicKey
                 }, null, null, null, null);
+        
         try {
             c.moveToFirst();
             return c.getInt(0);

@@ -47,18 +47,8 @@ public class DatabaseHandlerUnitTest {
      */
     @Before
     public void setUp() {
-        this.databaseHandler = DatabaseHandler.getInstance(RuntimeEnvironment.application);
+        this.databaseHandler = new DatabaseHandler(RuntimeEnvironment.application);
         _block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
-    }
-
-    /**
-     * singleton test
-     * Tests whether the singleton design pattern works
-     */
-    @Test
-    public void singleton() {
-        DatabaseHandler databaseHandler1 = databaseHandler.getInstance(RuntimeEnvironment.application);
-        assertEquals(databaseHandler, databaseHandler1);
     }
 
     /**
@@ -69,6 +59,21 @@ public class DatabaseHandlerUnitTest {
     public void addBlock() {
         databaseHandler.addBlock(_block);
         assertEquals(_block, databaseHandler.getBlock(owner, publicKey, sequenceNumber));
+    }
+
+    /**
+     * addBlock2 test
+     * Tests adding a block and a revoke block
+     */
+    @Test
+    public void addBlock2() {
+        Block newBlock = new Block(owner, sequenceNumber+1, ownHash, previousHashChain, previousHashSender, publicKey, !isRevoked);
+        databaseHandler.addBlock(_block);
+        databaseHandler.addBlock(newBlock);
+        List<Block> list = new ArrayList<>();
+        list.add(_block);
+        list.add(newBlock);
+        assertEquals(list, databaseHandler.getAllBlocks());
     }
 
     /**

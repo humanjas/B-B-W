@@ -27,7 +27,7 @@ public class BlockController {
     public BlockController(Context _context) {
         this.context = _context;
         this.user = User.getUser();
-        this.databaseHandler = DatabaseHandler.getInstance(this.context);
+        this.databaseHandler = new DatabaseHandler(this.context);
     }
 
     /**
@@ -59,14 +59,9 @@ public class BlockController {
     public List<Block> getBlocks() {
         List<Block> blocks = databaseHandler.getAllBlocks();
         List<Block> res = new ArrayList<>();
-        for (Block block : blocks) {
-            if(block.isRevoked()) {
-                //if a block is revoked you dont want the revoked block
-                // and the original in your list.
-                res.remove(new Block(block.getOwner(), block.getSequenceNumber(),
-                        block.getOwnHash(), block.getPreviousHashChain(),
-                        block.getPreviousHashSender(), block.getPublicKey(), block.isRevoked()));
-                res.remove(block);
+        for(Block block : blocks) {
+            if (block.isRevoked()) {
+                res = removeBlock(res, block);
             } else {
                 res.add(block);
             }
@@ -83,7 +78,24 @@ public class BlockController {
     public Block revokeBlock(Block block) {
         return addBlock(new Block(block.getOwner(), block.getSequenceNumber(), block.getOwnHash(),
                 block.getPreviousHashChain(), block.getPreviousHashSender(), block.getPublicKey(),
-                block.isRevoked()));
+                true));
+        //TODO avoid hardcoding of the isRevoked parameter
+    }
+
+    /**
+     * Method for removing a certain block from a given list
+     * @param list The list of all the blocks
+     * @param block The revoke block
+     * @return List without the revoked block
+     */
+    public List<Block> removeBlock(List<Block> list, Block block) {
+        List<Block> res = new ArrayList<>();
+        for (Block blc : list) {
+            if (!(blc.getOwner().equals(block.getOwner()) && blc.getPublicKey().equals(block.getPublicKey()))){
+                res.add(blc);
+            }
+        }
+        return res;
     }
 
 }

@@ -21,7 +21,7 @@ public class Block {
      * @param _owner owner of a block
      * @param _sequenceNumber sequence number of the block
      * @param _previousHashChain the hash value of the block before in the chain
-     * @param _previousHashChain the hash value of the block before of the sender
+     * @param _previousHashSender the hash value of the block before of the sender
      * @param _publicKey public key of the owner of the block
      * @param _isRevoked boolean to check whether a block is revoked or not
      */
@@ -92,9 +92,7 @@ public class Block {
     }
 
     /**
-     * Equals method to check whether two blocks match
-     * @param o The block you want to match with the current block
-     * @return true if blocks match, otherwise false
+     * {@inheritDoc}
      */
     @Override
     public boolean equals(Object o) {
@@ -103,8 +101,44 @@ public class Block {
 
         Block block = (Block) o;
 
+        if (sequenceNumber != block.sequenceNumber) return false;
+        if (isRevoked != block.isRevoked) return false;
         if (!owner.equals(block.owner)) return false;
-        return publicKey.equals(block.getPublicKey());
+        if (!ownHash.equals(block.ownHash)) return false;
+        if (!previousHashChain.equals(block.previousHashChain)) return false;
+        if (!previousHashSender.equals(block.previousHashSender)) return false;
+        return publicKey.equals(block.publicKey);
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        int result = owner.hashCode();
+        result = 31 * result + sequenceNumber;
+        result = 31 * result + ownHash.hashCode();
+        result = 31 * result + previousHashChain.hashCode();
+        result = 31 * result + previousHashSender.hashCode();
+        result = 31 * result + publicKey.hashCode();
+        result = 31 * result + (isRevoked ? 1 : 0);
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return "Block{" +
+                "owner='" + owner + '\'' +
+                ", sequenceNumber=" + sequenceNumber +
+                ", ownHash='" + ownHash + '\'' +
+                ", previousHashChain='" + previousHashChain + '\'' +
+                ", previousHashSender='" + previousHashSender + '\'' +
+                ", publicKey='" + publicKey + '\'' +
+                ", isRevoked=" + isRevoked +
+                '}';
     }
 }
