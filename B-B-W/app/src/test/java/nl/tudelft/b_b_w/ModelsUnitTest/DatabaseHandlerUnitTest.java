@@ -1,7 +1,6 @@
 package nl.tudelft.b_b_w.ModelsUnitTest;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.test.suitebuilder.annotation.LargeTest;
 
 import org.junit.After;
 import org.junit.Before;
@@ -9,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,9 +120,11 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getLatestSeqNum() {
-        Block block2 = new Block(owner, 1, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        Block block2 = new Block(owner, 1, ownHash, previousHashChain, previousHashSender, publicKey, true);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
+        Block block3 = new Block("John", 2, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        databaseHandler.addBlock(block3);
         assertEquals(databaseHandler.getLatestSeqNum(owner, publicKey), 1);
     }
 

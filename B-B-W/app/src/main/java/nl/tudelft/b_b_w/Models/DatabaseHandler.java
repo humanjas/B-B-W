@@ -2,6 +2,7 @@ package nl.tudelft.b_b_w.Models;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources.NotFoundException;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -80,9 +81,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_CREATED_AT + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
                 + " PRIMARY KEY (owner, publicKey, sequenceNumber)"
                 + ")";
-        final String CREATE_OPTION_TABLE = "CREATE TABLE option(key TEXT PRIMARY KEY, value BLOB);"
-                + "INSERT INTO option(key, value) "
-                + "VALUES('database_version', '" + DATABASE_VERSION + "');";
         db.execSQL(CREATE_BLOCKS_TABLE);
     }
 
@@ -155,6 +153,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         owner, publicKey, String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
+        //When returning an exception the whole program crashes,
+        //but we want to preserve the state.
         if (cursor.getCount() < 1) return null;
 
         cursor.moveToFirst();
@@ -211,21 +211,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public int getLatestSeqNum(String owner, String publicKey) {
         SQLiteDatabase db = this.getReadableDatabase();
-        
+
         Cursor c = db.query(TABLE_NAME,
                 new String[] {"MAX(" + KEY_SEQ_NO + ")"},
                 KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ?",
                 new String[] {
                         owner, publicKey
                 }, null, null, null, null);
-        
-        try {
-            c.moveToFirst();
-            return c.getInt(0);
-        } finally {
-            db.close();
-            c.close();
-        }
+
+
+        if (c.getCount() < 1) return -1;
+        c.moveToFirst();
+
+        int result = c.getInt(0);
+        db.close();
+        c.close();
+
+        return result;
     }
 
     /**
@@ -246,6 +248,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         owner, publicKey, String.valueOf(maxSeqNum)
                 }, null, null, null, null);
 
+        //When returning an exception the whole program crashes,
+        //but we want to preserve the state.
         if (cursor.getCount() < 1) return null;
 
         cursor.moveToFirst();
@@ -277,7 +281,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param sequenceNumber the sequencenumber of the block before
      * @return the block after the specified one
      */
-    public Block getBlockAfter(String owner, String publicKey, int sequenceNumber) {
+    public Block getBlockAfter(String owner, String publicKey, int sequenceNumber) throws NotFoundException{
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
@@ -287,7 +291,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         owner, publicKey, String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
-        if (cursor.getCount() < 1) return null;
+        if (cursor.getCount() < 1) throw new NotFoundException();
 
         cursor.moveToFirst();
 
@@ -318,7 +322,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param sequenceNumber the sequencenumber of the block after
      * @return the block before the specified one
      */
-    public Block getBlockBefore(String owner, String publicKey, int sequenceNumber) {
+    public Block getBlockBefore(String owner, String publicKey, int sequenceNumber) throws NotFoundException {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
@@ -328,7 +332,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         owner, publicKey, String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
-        if (cursor.getCount() < 1) return null;
+        if (cursor.getCount() < 1) throw new NotFoundException();
 
         cursor.moveToFirst();
 
