@@ -117,8 +117,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_OWNER, owner);
 
         int lastSeqNumb = lastSeqNumberOfChain(owner);
-        if(lastSeqNumb ==0) {
-            values.put(KEY_SEQ_NO, 0);
+        if(lastSeqNumb == 0) {
+            values.put(KEY_SEQ_NO, 1);
         }
         else {
             values.put(KEY_SEQ_NO, lastSeqNumb + 1);
