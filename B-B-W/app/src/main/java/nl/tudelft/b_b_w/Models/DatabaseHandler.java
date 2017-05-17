@@ -306,14 +306,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @param sequenceNumber the sequencenumber of the block after
      * @return the block before the specified one
      */
-    public Block getBlockBefore(String owner, String publicKey, int sequenceNumber) {
+    public Block getBlockBefore(String owner, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
                 _columns,
-                KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ? AND " + KEY_SEQ_NO + " < ?",
+                KEY_OWNER + " = ? AND " + KEY_SEQ_NO + " < ?",
                 new String[] {
-                        owner, publicKey, String.valueOf(sequenceNumber)
+                        owner,  String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
         if (cursor.getCount() < 1) return null;
@@ -351,6 +351,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+
+
 
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();

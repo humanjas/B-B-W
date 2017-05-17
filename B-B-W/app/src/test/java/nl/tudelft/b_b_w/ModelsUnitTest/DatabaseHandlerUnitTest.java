@@ -164,7 +164,7 @@ public class DatabaseHandlerUnitTest {
         Block block2 = new Block(owner, 1, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
-        assertEquals(databaseHandler.getBlockBefore(owner, publicKey, 1), _block);
+        assertEquals(databaseHandler.getBlockBefore(owner, 1), _block);
     }
 
     /**
