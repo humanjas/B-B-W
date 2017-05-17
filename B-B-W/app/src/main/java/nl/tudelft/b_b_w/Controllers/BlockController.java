@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.b_b_w.Models.Block;
+import nl.tudelft.b_b_w.Models.BlockFactory;
 import nl.tudelft.b_b_w.Models.DatabaseHandler;
 import nl.tudelft.b_b_w.Models.User;
 
@@ -26,7 +27,7 @@ public class BlockController {
      */
     public BlockController(Context _context) {
         this.context = _context;
-        this.user = User.getUser();
+        this.user = new User();
         this.databaseHandler = new DatabaseHandler(this.context);
     }
 
@@ -76,11 +77,11 @@ public class BlockController {
      * @return the revoked block
      */
     public List<Block> revokeBlock(Block block) {
-        addBlock(new Block(block.getOwner(), block.getSequenceNumber(), block.getOwnHash(),
-                block.getPreviousHashChain(), block.getPreviousHashSender(), block.getPublicKey(),
-                true));
+        Block newBlock = BlockFactory.getBlock("REVOKE", block.getOwner(), block.getSequenceNumber(),
+                block.getOwnHash(), block.getPreviousHashChain(), block.getPreviousHashSender(),
+                block.getPublicKey());
+        addBlock(newBlock);
         return getBlocks();
-        //TODO avoid hardcoding of the isRevoked parameter
     }
 
     /**

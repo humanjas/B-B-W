@@ -11,6 +11,7 @@ import java.util.List;
 
 import nl.tudelft.b_b_w.Controllers.BlockController;
 import nl.tudelft.b_b_w.Models.Block;
+import nl.tudelft.b_b_w.Models.BlockFactory;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,8 +35,9 @@ public class BlockControllerUnitTest {
     private final String previousHashChain = "previousHashChain";
     private final String previousHashSender = "previousHashSender";
     private final String publicKey = "publicKey";
-    private final boolean isRevoked = false;
     private Block _block;
+    private final String TYPE_BLOCK = "BLOCK";
+    private final String TYPE_REVOKE = "REVOKE";
 
     /**
      * Initialize BlockController before every test
@@ -44,7 +46,8 @@ public class BlockControllerUnitTest {
     @Before
     public void setUp() {
         this.bc = new BlockController(RuntimeEnvironment.application);
-        this._block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        this._block = BlockFactory.getBlock(TYPE_BLOCK, owner, sequenceNumber, ownHash,
+                previousHashChain, previousHashSender, publicKey);
     }
 
     /**
@@ -65,7 +68,8 @@ public class BlockControllerUnitTest {
      */
     @Test
     public void testAddBlock2() throws Exception {
-        Block newBlock = new Block(owner+"2", sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner+"2", sequenceNumber, ownHash,
+                previousHashChain, previousHashSender, publicKey);
         bc.addBlock(_block);
         bc.addBlock(newBlock);
         List<Block> list = new ArrayList<>();
@@ -88,7 +92,9 @@ public class BlockControllerUnitTest {
      */
     @Test(expected=RuntimeException.class)
     public void alreadyRevoked() {
-        bc.addBlock(new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, true));
+        Block newBlock = BlockFactory.getBlock(TYPE_REVOKE, owner, sequenceNumber, ownHash,
+                previousHashChain, previousHashSender, publicKey);
+        bc.addBlock(newBlock);
         bc.addBlock(_block);
     }
 
@@ -98,7 +104,9 @@ public class BlockControllerUnitTest {
     @Test
     public void testEmptyList() {
         bc.addBlock(_block);
-        bc.revokeBlock(new Block(owner, sequenceNumber+1, ownHash, previousHashChain, previousHashSender, publicKey, true));
+        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, sequenceNumber+1, ownHash,
+                previousHashChain, previousHashSender, publicKey);
+        bc.revokeBlock(newBlock);
         List<Block> list = new ArrayList<>();
         assertEquals(list, bc.getBlocks());
     }
@@ -109,7 +117,8 @@ public class BlockControllerUnitTest {
     @Test
     public void testRemoveWithNoMatch() {
         bc.addBlock(_block);
-        Block blc2 = new Block("owner2", sequenceNumber+1, ownHash, previousHashChain, previousHashSender, "pub2", false);
+        Block blc2 = BlockFactory.getBlock(TYPE_BLOCK, owner+"2", sequenceNumber+1, ownHash,
+                previousHashChain, previousHashSender, publicKey+"2");
         bc.revokeBlock(blc2);
         List<Block> list = new ArrayList<>();
         list.add(_block);
