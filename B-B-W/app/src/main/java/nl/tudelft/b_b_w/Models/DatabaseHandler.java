@@ -16,8 +16,6 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    private static DatabaseHandler _instance;
-
     // All Static variables
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -39,18 +37,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_CREATED_AT = "created_at";
 
     // Persistence helpers
-    final String _columns = KEY_OWNER + ", "
-                + KEY_SEQ_NO + ", "
-                + KEY_OWN_HASH + ", "
-                + KEY_PREV_HASH_CHAIN + ", "
-                + KEY_PREV_HASH_SENDER + ", "
-                + KEY_PUBLIC_KEY + ", "
-                + KEY_REVOKE + ", "
-                + KEY_CREATED_AT;
-    final String[] _columns2 = new String[] {
+    private final String[] _columns = new String[] {
             KEY_OWNER, KEY_SEQ_NO, KEY_OWN_HASH, KEY_PREV_HASH_CHAIN, KEY_PREV_HASH_SENDER, KEY_PUBLIC_KEY, KEY_REVOKE
     };
-    final String _header = "SELECT " + _columns + " FROM "+ TABLE_NAME +";";
 
     /**
      * Constructor
@@ -149,7 +138,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
-                _columns2,
+                _columns,
                 KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ? AND " + KEY_SEQ_NO + " = ?",
                 new String[] {
                         owner, publicKey, String.valueOf(sequenceNumber)
@@ -240,7 +229,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
-                _columns2,
+                _columns,
                 KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ? AND " + KEY_SEQ_NO + " = ?",
                 new String[] {
                         owner, publicKey, String.valueOf(maxSeqNum)
@@ -281,7 +270,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
-                _columns2,
+                _columns,
                 KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ? AND " + KEY_SEQ_NO + " > ?",
                 new String[] {
                         owner, publicKey, String.valueOf(sequenceNumber)
@@ -322,7 +311,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
-                _columns2,
+                _columns,
                 KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ? AND " + KEY_SEQ_NO + " < ?",
                 new String[] {
                         owner, publicKey, String.valueOf(sequenceNumber)

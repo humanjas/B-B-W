@@ -26,7 +26,7 @@ public class BlockController {
      */
     public BlockController(Context _context) {
         this.context = _context;
-        this.user = User.getUser();
+        this.user = new User();
         this.databaseHandler = new DatabaseHandler(this.context);
     }
 
