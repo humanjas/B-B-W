@@ -262,18 +262,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Method to get the block after a specified block
      * @param owner the owner of the block before
-     * @param publicKey the owner of the block before
      * @param sequenceNumber the sequencenumber of the block before
      * @return the block after the specified one
      */
-    public Block getBlockAfter(String owner, String publicKey, int sequenceNumber) {
+    public Block getBlockAfter(String owner, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
                 _columns,
-                KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ? AND " + KEY_SEQ_NO + " > ?",
+                KEY_OWNER + " = ? AND " + KEY_SEQ_NO + " > ?",
                 new String[] {
-                        owner, publicKey, String.valueOf(sequenceNumber)
+                        owner, String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
         if (cursor.getCount() < 1) return null;
