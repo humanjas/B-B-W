@@ -44,6 +44,18 @@ public class BlockUnitTest {
         assertEquals(check, _block.getOwner());
     }
 
+
+    /**
+     * Test to check whether the getOwnHash() method returns the right hash
+     * @throws Exception Catches error when the MessageDigest
+     * gets an error.
+     */
+    @Test
+    public void getOwnHashTest() throws Exception {
+        final String check = "ownHash";
+        assertEquals(check, _block.getOwnHash());
+    }
+
     /**
      * Test to check whether the getPreviousHashChain() returns the hash of the previous block in the chain
      * @throws Exception Catches error when the MessageDigest
