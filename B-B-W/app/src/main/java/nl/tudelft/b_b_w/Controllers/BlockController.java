@@ -38,8 +38,8 @@ public class BlockController {
      */
     public List<Block> addBlock(Block block) {
         // Check if the block already exists
-
-        Block latest = databaseHandler.getLatestBlock(block.getOwner(), block.getPublicKey());
+        String owner = block.getOwner();
+        Block latest = databaseHandler.getLatestBlock(owner, block.getPublicKey());
 
         if (latest == null) {
             databaseHandler.addBlock(block);
@@ -50,15 +50,15 @@ public class BlockController {
             else throw new RuntimeException("Error - Block already exists");
         }
 
-        return getBlocks();
+        return getBlocks(owner);
     }
 
     /**
      * Get all blocks that are not revoked
      * @return List of all the blocks
      */
-    public List<Block> getBlocks() {
-        List<Block> blocks = databaseHandler.getAllBlocks();
+    public List<Block> getBlocks(String owner) {
+        List<Block> blocks = databaseHandler.getAllBlocks(owner);
         List<Block> res = new ArrayList<>();
         for(Block block : blocks) {
             if (block.isRevoked()) {
@@ -77,11 +77,12 @@ public class BlockController {
      * @return the revoked block
      */
     public List<Block> revokeBlock(Block block) {
+        String owner = block.getOwner();
         Block newBlock = BlockFactory.getBlock("REVOKE", block.getOwner(), block.getSequenceNumber(),
                 block.getOwnHash(), block.getPreviousHashChain(), block.getPreviousHashSender(),
                 block.getPublicKey());
         addBlock(newBlock);
-        return getBlocks();
+        return getBlocks(owner);
     }
 
     /**
