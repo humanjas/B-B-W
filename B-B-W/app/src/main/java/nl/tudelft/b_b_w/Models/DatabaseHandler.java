@@ -51,11 +51,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
-    * Called when the database is created for the first time. This is where the
-    * creation of tables and the initial population of the tables should happen.
-    *
-    * @param db The database.
-    */
+     * Called when the database is created for the first time. This is where the
+     * creation of tables and the initial population of the tables should happen.
+     *
+     * @param db The database.
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String CREATE_BLOCKS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
@@ -111,10 +111,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public void addBlock(Block block) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
-        values.put(KEY_OWNER, block.getOwner());
-        values.put(KEY_SEQ_NO, block.getSequenceNumber());
+
+        String owner = block.getOwner();
+        values.put(KEY_OWNER, owner);
+
+        int lastSeqNumb = lastSeqNumberOfChain(owner);
+        if(lastSeqNumb ==0) {
+            values.put(KEY_SEQ_NO, 0);
+        }
+        else {
+            values.put(KEY_SEQ_NO, lastSeqNumb + 1);
+        }
+
         values.put(KEY_OWN_HASH, block.getOwnHash());
         values.put(KEY_PREV_HASH_CHAIN, block.getPreviousHashChain());
         values.put(KEY_PREV_HASH_SENDER, block.getPreviousHashSender());
@@ -126,6 +135,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (res == -1) throw new RuntimeException("Block cannot be added - " + block.toString());
         db.close(); // Closing database connection
     }
+
+    /**
+     * Find the last sequence number of the chain of a specific owner
+     * @param owner the owner of the chain which you want to get the last sequence number from
+     *              There is no need for a public key because each block of the chain is
+     *              supposed to have different public key from the contact
+     */
+    public int lastSeqNumberOfChain(String owner) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(TABLE_NAME,
+                new String[] {"MAX(" + KEY_SEQ_NO + ")"},
+                KEY_OWNER + " = ? ",
+                new String[] {
+                        owner
+                }, null, null, null, null);
+
+
+        try {
+            c.moveToFirst();
+            return c.getInt(0);
+        } finally {
+            c.close();
+        }
+
+    }
+
 
     /**
      * Method to get a specific block
@@ -200,14 +236,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public int getLatestSeqNum(String owner, String publicKey) {
         SQLiteDatabase db = this.getReadableDatabase();
-        
+
         Cursor c = db.query(TABLE_NAME,
                 new String[] {"MAX(" + KEY_SEQ_NO + ")"},
                 KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ?",
                 new String[] {
                         owner, publicKey
                 }, null, null, null, null);
-        
+
         try {
             c.moveToFirst();
             return c.getInt(0);

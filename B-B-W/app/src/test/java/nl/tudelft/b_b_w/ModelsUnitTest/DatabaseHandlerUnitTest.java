@@ -72,6 +72,11 @@ public class DatabaseHandlerUnitTest {
     public void addBlock2() {
         Block newBlock = new Block(owner, sequenceNumber+1, ownHash, previousHashChain, previousHashSender, publicKey, !isRevoked);
         databaseHandler.addBlock(_block);
+        for(Block e:databaseHandler.getAllBlocks(owner) )
+        {
+            System.out.println(e.getSequenceNumber());
+        }
+
         databaseHandler.addBlock(newBlock);
         List<Block> list = new ArrayList<>();
         list.add(_block);
@@ -174,7 +179,7 @@ public class DatabaseHandlerUnitTest {
     @Test
     public void getAllBlocks() {
         String owner2 = "owner2";
-        Block block2 = new Block(owner2, 1, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        Block block2 = new Block(owner2, 0, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
         List<Block> result = new ArrayList<>();
