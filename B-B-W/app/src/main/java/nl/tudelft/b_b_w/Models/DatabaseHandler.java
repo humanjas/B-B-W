@@ -302,7 +302,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Method to get the block before a specified block
      * @param owner the owner of the block after
-     * @param publicKey the owner of the block after
      * @param sequenceNumber the sequencenumber of the block after
      * @return the block before the specified one
      */
@@ -343,15 +342,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Method which puts all the blocks currently in the
      * blockchain into a list
+     * @param owner the owner of the blocks that are going to be fetched
      * @return List of all the blocks
      */
-    public List<Block> getAllBlocks() {
+    public List<Block> getAllBlocks(String owner) {
         List<Block> blocks = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
-
+        Cursor cursor = db.query(TABLE_NAME,
+                _columns,
+                KEY_OWNER + " = ?",
+                new String[] {
+                        owner
+                }, null, null, null, null);
 
 
         if (cursor.getCount() > 0) {

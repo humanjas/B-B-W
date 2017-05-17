@@ -76,7 +76,7 @@ public class DatabaseHandlerUnitTest {
         List<Block> list = new ArrayList<>();
         list.add(_block);
         list.add(newBlock);
-        assertEquals(list, databaseHandler.getAllBlocks());
+        assertEquals(list, databaseHandler.getAllBlocks(owner));
     }
 
     /**
@@ -173,13 +173,13 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getAllBlocks() {
-        Block block2 = new Block(owner, 1, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        String owner2 = "owner2";
+        Block block2 = new Block(owner2, 1, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
         List<Block> result = new ArrayList<>();
-        result.add(_block);
         result.add(block2);
-        assertEquals(databaseHandler.getAllBlocks(), result);
+        assertEquals(databaseHandler.getAllBlocks(owner2), result);
     }
 
     /**

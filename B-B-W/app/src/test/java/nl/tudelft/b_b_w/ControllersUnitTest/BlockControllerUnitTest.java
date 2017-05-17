@@ -62,7 +62,7 @@ public class BlockControllerUnitTest {
         bc.addBlock(_block);
         List<Block> list = new ArrayList<>();
         list.add(_block);
-        assertEquals(bc.getBlocks(), list);
+        assertEquals(bc.getBlocks(owner), list);
     }
 
     /**
@@ -71,15 +71,20 @@ public class BlockControllerUnitTest {
      */
     @Test
     public void testAddBlock2() throws Exception {
-        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner+"2", sequenceNumber, ownHash,
+        String newOwner = owner+"2";
+        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, sequenceNumber, ownHash,
                 previousHashChain, previousHashSender, publicKey);
         bc.addBlock(_block);
         bc.addBlock(newBlock);
         List<Block> list = new ArrayList<>();
         list.add(_block);
         list.add(newBlock);
-        assertEquals(bc.getBlocks(), list);
-    }
+
+        List<Block> newList = bc.getBlocks(owner);
+        newList.addAll(bc.getBlocks(newOwner));
+
+        assertEquals(newList, list);
+}
 
     /**
      * Tests adding a duplicate block
@@ -111,7 +116,7 @@ public class BlockControllerUnitTest {
                 previousHashChain, previousHashSender, publicKey);
         bc.revokeBlock(newBlock);
         List<Block> list = new ArrayList<>();
-        assertEquals(list, bc.getBlocks());
+        assertEquals(list, bc.getBlocks(owner));
     }
 
     /**
@@ -125,7 +130,7 @@ public class BlockControllerUnitTest {
         bc.revokeBlock(blc2);
         List<Block> list = new ArrayList<>();
         list.add(_block);
-        assertEquals(list, bc.getBlocks());
+        assertEquals(list, bc.getBlocks(owner));
     }
 
 }
