@@ -35,7 +35,7 @@ public class BlockController {
      * @param block Block you want to add
      * @return returns the block you added
      */
-    public Block addBlock(Block block) {
+    public List<Block> addBlock(Block block) {
         // Check if the block already exists
 
         Block latest = databaseHandler.getLatestBlock(block.getOwner(), block.getPublicKey());
@@ -49,7 +49,7 @@ public class BlockController {
             else throw new RuntimeException("Error - Block already exists");
         }
 
-        return block;
+        return getBlocks();
     }
 
     /**
@@ -75,10 +75,11 @@ public class BlockController {
      * @param block The block you want to revoke
      * @return the revoked block
      */
-    public Block revokeBlock(Block block) {
-        return addBlock(new Block(block.getOwner(), block.getSequenceNumber(), block.getOwnHash(),
+    public List<Block> revokeBlock(Block block) {
+        addBlock(new Block(block.getOwner(), block.getSequenceNumber(), block.getOwnHash(),
                 block.getPreviousHashChain(), block.getPreviousHashSender(), block.getPublicKey(),
                 true));
+        return getBlocks();
         //TODO avoid hardcoding of the isRevoked parameter
     }
 
