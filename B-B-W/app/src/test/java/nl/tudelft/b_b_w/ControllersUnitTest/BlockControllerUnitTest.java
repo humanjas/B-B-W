@@ -1,5 +1,7 @@
 package nl.tudelft.b_b_w.ControllersUnitTest;
 
+import android.content.res.Resources;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -115,7 +117,7 @@ public class BlockControllerUnitTest {
      * Test removeBlock if the specified revoked block has no match
      */
     @Test
-    public void testRemoveWithNoMatch() {
+    public void testRemoveWithNoMatch() throws Resources.NotFoundException{
         bc.addBlock(_block);
         Block blc2 = BlockFactory.getBlock(TYPE_BLOCK, owner+"2", sequenceNumber+1, ownHash,
                 previousHashChain, previousHashSender, publicKey+"2");
