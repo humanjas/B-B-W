@@ -224,7 +224,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * @return true if the blockchain contains the specified block, otherwise false
      */
     public boolean containsBlock(String owner, String publicKey) {
-        return this.getLatestBlock(owner, publicKey) != null;
+        return this.getLatestBlock(owner) != null;
     }
 
     /**
@@ -259,18 +259,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * Method to get the latest block in a blockchain using the
      * owner and publickey
      * @param owner the owner of the block
-     * @param publicKey the publickey of the block
      * @return the latest block
      */
-    public Block getLatestBlock(String owner, String publicKey) {
-        int maxSeqNum = this.getLatestSeqNum(owner, publicKey);
+    public Block getLatestBlock(String owner) {
+        int maxSeqNum = this.lastSeqNumberOfChain(owner);
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
                 _columns,
-                KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ? AND " + KEY_SEQ_NO + " = ?",
+                KEY_OWNER + " = ? AND " + KEY_SEQ_NO + " = ?",
                 new String[] {
-                        owner, publicKey, String.valueOf(maxSeqNum)
+                        owner,  String.valueOf(maxSeqNum)
                 }, null, null, null, null);
 
         //When returning an exception the whole program crashes,
