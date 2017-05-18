@@ -1,8 +1,8 @@
 package nl.tudelft.b_b_w;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -13,7 +13,7 @@ import nl.tudelft.b_b_w.Models.Conversion;
 import nl.tudelft.b_b_w.Models.DatabaseHandler;
 
 
-public class RevokeBlockActivity extends AppCompatActivity {
+public class RevokeBlockActivity extends Activity {
 
     /**
      * Connection with block database
