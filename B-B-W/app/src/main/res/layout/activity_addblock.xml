@@ -75,6 +75,7 @@
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="addBlock"
             android:text="Add"
             tools:text="Add" />
 
