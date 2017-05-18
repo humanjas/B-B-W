@@ -66,9 +66,15 @@ public class MainActivity extends Activity {
      */
     public void onDeleteBlock(View view) {
         Intent intent = new Intent(this, DeleteBlockActivity.class);
+        intent.putExtra("ownerName", ownerName);
+        intent.putExtra("publicKey", publicKey);
         startActivity(intent);
     }
 
     public void onDisplayChain(View view) {
+        Intent intent = new Intent(this, DisplayChainActivity.class);
+        intent.putExtra("ownerName", ownerName);
+        intent.putExtra("publicKey", publicKey);
+        startActivity(intent);
     }
 }
