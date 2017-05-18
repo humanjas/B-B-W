@@ -88,7 +88,7 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getNullBlock() {
-        assertNull(databaseHandler.getLatestBlock("null", "null"));
+        assertNull(databaseHandler.getLatestBlock("null"));
     }
 
     /**
@@ -146,7 +146,7 @@ public class DatabaseHandlerUnitTest {
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
         Block expectBlock = new Block(owner, 2, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
-        assertEquals(expectBlock, databaseHandler.getLatestBlock(owner, publicKey));
+        assertEquals(expectBlock, databaseHandler.getLatestBlock(owner));
     }
 
     /**
