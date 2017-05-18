@@ -22,9 +22,16 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         handler = new DatabaseHandler(this);
         blockController = new BlockController(this);
-        addGenesis();
         ownerName = "GENESIS";
         publicKey = "demokey";
+
+        //test method
+        int n = handler.lastSeqNumberOfChain(ownerName);
+        Toast.makeText(this, "#" + n, Toast.LENGTH_LONG).show();
+
+        // add genesis if we don't have any blocks
+        if (handler.lastSeqNumberOfChain(ownerName) == 0)
+            addGenesis();
     }
 
     /**
@@ -33,7 +40,7 @@ public class MainActivity extends Activity {
     private void addGenesis() {
         try {
             if (handler.getAllBlocks(ownerName).isEmpty()) {
-                Block block = new Block(ownerName, 0, "", "", "", "", false);
+                Block block = new Block(ownerName, 1, "ownhash", "previoushash", "senderhash", "senderpubkey", false);
                 blockController.addBlock(block);
             }
         } catch (Exception e) {

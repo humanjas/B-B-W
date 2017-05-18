@@ -40,9 +40,10 @@ public class AddBlockActivity extends Activity {
         setContentView(R.layout.activity_addblock);
         handler = new DatabaseHandler(this);
         blockController = new BlockController(this);
-        ownerName = savedInstanceState.getString("ownerName");
-        publicKey = savedInstanceState.getString("publicKey");
-        Toast.makeText(this, ownerName + ", " + publicKey, Toast.LENGTH_SHORT);
+        Bundle extras = getIntent().getExtras();
+        ownerName = extras.getString("ownerName");
+        publicKey = extras.getString("publicKey");
+        Toast.makeText(this, ownerName + ", " + publicKey, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -50,16 +51,19 @@ public class AddBlockActivity extends Activity {
      * which is added to the database.
      * @param view current view (AddBlockActivity)
      */
-    public void addBlock(View view) {
+    public void onAddBlock(View view) {
+
+        try {
         // extract information
         EditText senderHashText = (EditText) findViewById(R.id.addSenderHash);
         EditText senderPublicKeyText = (EditText) findViewById(R.id.addPublicKey);
         String senderHash = senderHashText.getText().toString();
         String senderPublicKey = senderPublicKeyText.getText().toString();
 
-        try {
+
             // create and add the block
-            Block previous = handler.getLatestBlock(ownerName, publicKey);
+            Block previous = handler.getLatestBlock(ownerName);
+
             Conversion conversion = new Conversion(ownerName, senderPublicKey, previous.getOwnHash(), senderHash);
             String ownHash = conversion.hashKey();
             Block block = new Block(

@@ -39,7 +39,7 @@ public class BlockController {
     public List<Block> addBlock(Block block) {
         // Check if the block already exists
         String owner = block.getOwner();
-        Block latest = databaseHandler.getLatestBlock(owner, block.getPublicKey());
+        Block latest = databaseHandler.getLatestBlock(owner);
 
         if (latest == null) {
             databaseHandler.addBlock(block);
