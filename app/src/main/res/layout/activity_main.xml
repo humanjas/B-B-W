@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="nl.tudelft.b_b_w.MainActivity"
+    tools:context="nl.tudelft.b_b_w.view.MainActivity"
     tools:layout_editor_absoluteY="73dp"
     tools:layout_editor_absoluteX="0dp">
 
@@ -13,7 +13,8 @@
         android:layout_height="106dp"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="45dp"
-        tools:layout_editor_absoluteY="400dp">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp">
 
         <Button
             android:id="@+id/button5"

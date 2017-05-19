@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.b_b_w.BuildConfig;
-import nl.tudelft.b_b_w.Controllers.BlockController;
-import nl.tudelft.b_b_w.Models.Block;
-import nl.tudelft.b_b_w.Models.BlockFactory;
+import nl.tudelft.b_b_w.controller.BlockController;
+import nl.tudelft.b_b_w.model.Block;
+import nl.tudelft.b_b_w.model.BlockFactory;
 
 import static org.junit.Assert.assertEquals;
 

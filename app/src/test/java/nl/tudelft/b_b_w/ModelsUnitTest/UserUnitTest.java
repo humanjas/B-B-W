@@ -1,8 +1,7 @@
 package nl.tudelft.b_b_w.ModelsUnitTest;
 
-import org.junit.Before;
 import org.junit.Test;
-import nl.tudelft.b_b_w.Models.User;
+import nl.tudelft.b_b_w.model.User;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;

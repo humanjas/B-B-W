@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.b_b_w.BuildConfig;
-import nl.tudelft.b_b_w.Models.Block;
-import nl.tudelft.b_b_w.Models.DatabaseHandler;
+import nl.tudelft.b_b_w.model.Block;
+import nl.tudelft.b_b_w.model.DatabaseHandler;
 
 import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;

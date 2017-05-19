@@ -2,7 +2,7 @@ package nl.tudelft.b_b_w.ModelsUnitTest;
 
 import org.junit.Before;
 import org.junit.Test;
-import nl.tudelft.b_b_w.Models.Block;
+import nl.tudelft.b_b_w.model.Block;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
