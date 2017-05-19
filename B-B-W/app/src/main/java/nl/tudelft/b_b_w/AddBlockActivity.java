@@ -43,11 +43,15 @@ public class AddBlockActivity extends Activity {
         String publicKey = publicKeyText.getText().toString();
 
         // create and add the block
-        Block previous = handler.getLatestBlock(owner, publicKey);
-        Block block = new Block(owner, handler.getLatestSeqNum(owner, publicKey), "temp", previous.getOwnHash(), previous.getPreviousHashSender(), publicKey, false);
-        handler.addBlock(block);
+        try {
+            Block previous = handler.getLatestBlock(owner, publicKey);
+            Block block = new Block(owner, handler.getLatestSeqNum(owner, publicKey), "temp", previous.getOwnHash(), previous.getPreviousHashSender(), publicKey, false);
+            handler.addBlock(block);
 
-        // confirm by showing a small text message
-        Toast.makeText(this, "Block added", Toast.LENGTH_SHORT).show();
+            // confirm by showing a small text message
+            Toast.makeText(this, "Block added", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "Block added failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }
