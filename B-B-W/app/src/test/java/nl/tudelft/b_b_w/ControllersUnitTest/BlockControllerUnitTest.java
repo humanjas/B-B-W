@@ -1,14 +1,18 @@
 package nl.tudelft.b_b_w.ControllersUnitTest;
 
+import android.content.res.Resources;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.tudelft.b_b_w.BuildConfig;
 import nl.tudelft.b_b_w.Controllers.BlockController;
 import nl.tudelft.b_b_w.Models.Block;
 import nl.tudelft.b_b_w.Models.BlockFactory;
@@ -23,6 +27,7 @@ import static org.junit.Assert.assertEquals;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class,sdk= 21,  manifest = "src/main/AndroidManifest.xml")
 public class BlockControllerUnitTest {
 
     /**
@@ -30,7 +35,7 @@ public class BlockControllerUnitTest {
      */
     private BlockController bc;
     private final String owner = "owner";
-    private final int sequenceNumber = 0;
+    private final int sequenceNumber = 1;
     private final String ownHash = "ownHash";
     private final String previousHashChain = "previousHashChain";
     private final String previousHashSender = "previousHashSender";
@@ -59,7 +64,7 @@ public class BlockControllerUnitTest {
         bc.addBlock(_block);
         List<Block> list = new ArrayList<>();
         list.add(_block);
-        assertEquals(bc.getBlocks(), list);
+        assertEquals(bc.getBlocks(owner), list);
     }
 
     /**
@@ -68,15 +73,20 @@ public class BlockControllerUnitTest {
      */
     @Test
     public void testAddBlock2() throws Exception {
-        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner+"2", sequenceNumber, ownHash,
+        String newOwner = owner+"2";
+        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, sequenceNumber, ownHash,
                 previousHashChain, previousHashSender, publicKey);
         bc.addBlock(_block);
         bc.addBlock(newBlock);
         List<Block> list = new ArrayList<>();
         list.add(_block);
         list.add(newBlock);
-        assertEquals(bc.getBlocks(), list);
-    }
+
+        List<Block> newList = bc.getBlocks(owner);
+        newList.addAll(bc.getBlocks(newOwner));
+
+        assertEquals(newList, list);
+}
 
     /**
      * Tests adding a duplicate block
@@ -108,21 +118,21 @@ public class BlockControllerUnitTest {
                 previousHashChain, previousHashSender, publicKey);
         bc.revokeBlock(newBlock);
         List<Block> list = new ArrayList<>();
-        assertEquals(list, bc.getBlocks());
+        assertEquals(list, bc.getBlocks(owner));
     }
 
     /**
      * Test removeBlock if the specified revoked block has no match
      */
     @Test
-    public void testRemoveWithNoMatch() {
+    public void testRemoveWithNoMatch() throws Resources.NotFoundException{
         bc.addBlock(_block);
         Block blc2 = BlockFactory.getBlock(TYPE_BLOCK, owner+"2", sequenceNumber+1, ownHash,
                 previousHashChain, previousHashSender, publicKey+"2");
         bc.revokeBlock(blc2);
         List<Block> list = new ArrayList<>();
         list.add(_block);
-        assertEquals(list, bc.getBlocks());
+        assertEquals(list, bc.getBlocks(owner));
     }
 
 }

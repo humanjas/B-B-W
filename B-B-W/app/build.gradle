@@ -1,4 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
+apply plugin: 'cobertura'
+apply plugin: 'com.github.kt3k.coveralls'
 
 android {
     compileSdkVersion 25
@@ -30,6 +35,12 @@ dependencies {
     testCompile 'org.robolectric:robolectric:3.0'
 }
 
-apply plugin: 'checkstyle'
-apply plugin: 'pmd'
-apply plugin: 'findbugs'
+cobertura {
+    coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
+    coverageExcludes = [
+            // Exclude dependencies
+    ]
+}
+
+
+

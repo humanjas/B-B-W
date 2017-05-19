@@ -2,6 +2,7 @@ package nl.tudelft.b_b_w.Models;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.Resources.NotFoundException;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -51,11 +52,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     /**
-    * Called when the database is created for the first time. This is where the
-    * creation of tables and the initial population of the tables should happen.
-    *
-    * @param db The database.
-    */
+     * Called when the database is created for the first time. This is where the
+     * creation of tables and the initial population of the tables should happen.
+     *
+     * @param db The database.
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         final String CREATE_BLOCKS_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
@@ -69,9 +70,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_CREATED_AT + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
                 + " PRIMARY KEY (owner, publicKey, sequenceNumber)"
                 + ")";
-        final String CREATE_OPTION_TABLE = "CREATE TABLE option(key TEXT PRIMARY KEY, value BLOB);"
-                + "INSERT INTO option(key, value) "
-                + "VALUES('database_version', '" + DATABASE_VERSION + "');";
         db.execSQL(CREATE_BLOCKS_TABLE);
     }
 
@@ -111,10 +109,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public void addBlock(Block block) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
-        values.put(KEY_OWNER, block.getOwner());
-        values.put(KEY_SEQ_NO, block.getSequenceNumber());
+
+        String owner = block.getOwner();
+        values.put(KEY_OWNER, owner);
+
+        int lastSeqNumb = lastSeqNumberOfChain(owner);
+        if(lastSeqNumb == 0) {
+            values.put(KEY_SEQ_NO, 1);
+        }
+        else {
+            values.put(KEY_SEQ_NO, lastSeqNumb + 1);
+        }
+
         values.put(KEY_OWN_HASH, block.getOwnHash());
         values.put(KEY_PREV_HASH_CHAIN, block.getPreviousHashChain());
         values.put(KEY_PREV_HASH_SENDER, block.getPreviousHashSender());
@@ -126,6 +133,33 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (res == -1) throw new RuntimeException("Block cannot be added - " + block.toString());
         db.close(); // Closing database connection
     }
+
+    /**
+     * Find the last sequence number of the chain of a specific owner
+     * @param owner the owner of the chain which you want to get the last sequence number from
+     *              There is no need for a public key because each block of the chain is
+     *              supposed to have different public key from the contact
+     */
+    public int lastSeqNumberOfChain(String owner) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(TABLE_NAME,
+                new String[] {"MAX(" + KEY_SEQ_NO + ")"},
+                KEY_OWNER + " = ? ",
+                new String[] {
+                        owner
+                }, null, null, null, null);
+
+
+        try {
+            c.moveToFirst();
+            return c.getInt(0);
+        } finally {
+            c.close();
+        }
+
+    }
+
 
     /**
      * Method to get a specific block
@@ -144,6 +178,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         owner, publicKey, String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
+        //When returning an exception the whole program crashes,
+        //but we want to preserve the state.
         if (cursor.getCount() < 1) return null;
 
         cursor.moveToFirst();
@@ -200,21 +236,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public int getLatestSeqNum(String owner, String publicKey) {
         SQLiteDatabase db = this.getReadableDatabase();
-        
+
         Cursor c = db.query(TABLE_NAME,
                 new String[] {"MAX(" + KEY_SEQ_NO + ")"},
                 KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ?",
                 new String[] {
                         owner, publicKey
                 }, null, null, null, null);
-        
-        try {
-            c.moveToFirst();
-            return c.getInt(0);
-        } finally {
-            db.close();
-            c.close();
-        }
+
+        if (c.getCount() < 1) return -1;
+        c.moveToFirst();
+
+        int result = c.getInt(0);
+        db.close();
+        c.close();
+
+        return result;
+
     }
 
     /**
@@ -235,6 +273,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         owner, publicKey, String.valueOf(maxSeqNum)
                 }, null, null, null, null);
 
+        //When returning an exception the whole program crashes,
+        //but we want to preserve the state.
         if (cursor.getCount() < 1) return null;
 
         cursor.moveToFirst();
@@ -262,21 +302,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Method to get the block after a specified block
      * @param owner the owner of the block before
-     * @param publicKey the owner of the block before
      * @param sequenceNumber the sequencenumber of the block before
      * @return the block after the specified one
      */
-    public Block getBlockAfter(String owner, String publicKey, int sequenceNumber) {
+
+    public Block getBlockAfter(String owner, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
                 _columns,
-                KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ? AND " + KEY_SEQ_NO + " > ?",
+                KEY_OWNER + " = ? AND " + KEY_SEQ_NO + " > ?",
                 new String[] {
-                        owner, publicKey, String.valueOf(sequenceNumber)
+                        owner, String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
-        if (cursor.getCount() < 1) return null;
+        if (cursor.getCount() < 1) throw new NotFoundException();
 
         cursor.moveToFirst();
 
@@ -303,21 +343,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Method to get the block before a specified block
      * @param owner the owner of the block after
-     * @param publicKey the owner of the block after
      * @param sequenceNumber the sequencenumber of the block after
      * @return the block before the specified one
      */
-    public Block getBlockBefore(String owner, String publicKey, int sequenceNumber) {
+
+    public Block getBlockBefore(String owner, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
                 _columns,
-                KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ? AND " + KEY_SEQ_NO + " < ?",
+                KEY_OWNER + " = ? AND " + KEY_SEQ_NO + " < ?",
                 new String[] {
-                        owner, publicKey, String.valueOf(sequenceNumber)
+                        owner,  String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
-        if (cursor.getCount() < 1) return null;
+        if (cursor.getCount() < 1) throw new NotFoundException();
 
         cursor.moveToFirst();
 
@@ -344,14 +384,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Method which puts all the blocks currently in the
      * blockchain into a list
+     * @param owner the owner of the blocks that are going to be fetched
      * @return List of all the blocks
      */
-    public List<Block> getAllBlocks() {
+    public List<Block> getAllBlocks(String owner) {
         List<Block> blocks = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        Cursor cursor = db.query(TABLE_NAME,
+                _columns,
+                KEY_OWNER + " = ?",
+                new String[] {
+                        owner
+                }, null, null, null, null);
+
 
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
