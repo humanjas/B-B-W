@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import nl.tudelft.b_b_w.Controllers.BlockController;
 import nl.tudelft.b_b_w.Models.Block;
+import nl.tudelft.b_b_w.Models.Conversion;
 import nl.tudelft.b_b_w.Models.DatabaseHandler;
 
 /**
@@ -26,6 +27,9 @@ public class AddBlockActivity extends Activity {
      */
     private BlockController blockController;
 
+    private String ownerName;
+    private String publicKey;
+
     /**
      * On create we request a database connection
      * @param savedInstanceState unused, meant for serialisation
@@ -36,6 +40,9 @@ public class AddBlockActivity extends Activity {
         setContentView(R.layout.activity_addblock);
         handler = new DatabaseHandler(this);
         blockController = new BlockController(this);
+        ownerName = savedInstanceState.getString("ownerName");
+        publicKey = savedInstanceState.getString("publicKey");
+        Toast.makeText(this, ownerName + ", " + publicKey, Toast.LENGTH_SHORT);
     }
 
     /**
@@ -45,15 +52,25 @@ public class AddBlockActivity extends Activity {
      */
     public void addBlock(View view) {
         // extract information
-        EditText ownerText = (EditText) findViewById(R.id.addContactName);
-        EditText publicKeyText = (EditText) findViewById(R.id.addPublicKey);
-        String owner = ownerText.getText().toString();
-        String publicKey = publicKeyText.getText().toString();
+        EditText senderHashText = (EditText) findViewById(R.id.addSenderHash);
+        EditText senderPublicKeyText = (EditText) findViewById(R.id.addPublicKey);
+        String senderHash = senderHashText.getText().toString();
+        String senderPublicKey = senderPublicKeyText.getText().toString();
 
-        // create and add the block
         try {
-            Block previous = handler.getLatestBlock(owner, publicKey);
-            Block block = new Block(owner, handler.getLatestSeqNum(owner, publicKey), "temp", previous.getOwnHash(), previous.getPreviousHashSender(), publicKey, false);
+            // create and add the block
+            Block previous = handler.getLatestBlock(ownerName, publicKey);
+            Conversion conversion = new Conversion(ownerName, senderPublicKey, previous.getOwnHash(), senderHash);
+            String ownHash = conversion.hashKey();
+            Block block = new Block(
+                    ownerName, // owner of a block
+                    999999, // addBlock will overwrite this, TODO remove from constructor
+                    ownHash, // our own hash
+                    previous.getOwnHash(), //  the hash value of the block before in the chain
+                    senderHash, // the hash value of the block before of the sender
+                    senderPublicKey, // public key of the owner of the block
+                    false // is revoked?
+            );
             handler.addBlock(block);
 
             // confirm by showing a small text message

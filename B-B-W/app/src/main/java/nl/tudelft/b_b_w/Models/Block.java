@@ -17,9 +17,10 @@ public class Block {
     private boolean isRevoked;
 
     /**
-     * Constructor to initialize a block
+     *
      * @param _owner owner of a block
      * @param _sequenceNumber sequence number of the block
+     * @param _ownHash our own hash
      * @param _previousHashChain the hash value of the block before in the chain
      * @param _previousHashSender the hash value of the block before of the sender
      * @param _publicKey public key of the owner of the block
