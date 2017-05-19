@@ -10,7 +10,7 @@ import android.widget.Toast;
 import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
-import nl.tudelft.b_b_w.model.Conversion;
+import nl.tudelft.b_b_w.controller.ConversionController;
 import nl.tudelft.b_b_w.model.DatabaseHandler;
 
 
@@ -69,8 +69,8 @@ public class RevokeBlockActivity extends Activity {
             // create and add the block
             Block previous = handler.getLatestBlock(ownerName);
 
-            Conversion conversion = new Conversion(ownerName, senderPublicKey, previous.getOwnHash(), senderHash);
-            String ownHash = conversion.hashKey();
+            ConversionController conversionController = new ConversionController(ownerName, senderPublicKey, previous.getOwnHash(), senderHash);
+            String ownHash = conversionController.hashKey();
             Block block = new Block(
                     ownerName, // owner of a block
                     999999, // addBlock will overwrite this, TODO remove from constructor

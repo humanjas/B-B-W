@@ -1,55 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="nl.tudelft.b_b_w.view.MainActivity"
     tools:layout_editor_absoluteY="73dp"
-    tools:layout_editor_absoluteX="0dp">
+    tools:layout_editor_absoluteX="0dp"
+    android:orientation="vertical">
+
 
     <LinearLayout
-        android:layout_width="310dp"
-        android:layout_height="106dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="45dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
         <Button
-            android:id="@+id/button5"
-            android:layout_width="match_parent"
+            android:id="@+id/button7"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onDisplayChain"
-            android:text="Display chain"
-            tools:layout_editor_absoluteX="100dp"
-            tools:layout_editor_absoluteY="400dp" />
+            android:layout_weight="1.58"
+            android:onClick="onAddBlock"
+            android:text="Add block" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="8dp">
-
-            <Button
-                android:id="@+id/button7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.58"
-                android:onClick="onAddBlock"
-                android:text="Add block" />
-
-            <Button
-                android:id="@+id/button8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="onRevokeBlock"
-                android:text="Revoke block" />
-        </LinearLayout>
-
+            android:layout_weight="1"
+            android:onClick="onRevokeBlock"
+            android:text="Revoke block" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onDisplayChain"
+        android:text="Display chain"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="400dp" />
 
-</android.support.constraint.ConstraintLayout>
+</android.widget.LinearLayout>

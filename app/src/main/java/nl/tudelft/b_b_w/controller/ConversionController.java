@@ -1,4 +1,4 @@
-package nl.tudelft.b_b_w.model;
+package nl.tudelft.b_b_w.controller;
 
 import java.security.MessageDigest;
 
@@ -6,7 +6,7 @@ import java.security.MessageDigest;
  * Class to convert values into a hashed value
  * Created by Ashay on 01/05/2017.
  */
-public class Conversion {
+public class ConversionController {
     // Variables which we need to create a hashed key
     private String keyOwner;
     private String senderPublicKey;
@@ -18,7 +18,7 @@ public class Conversion {
      * @param senderPublicKey PublicKey of the block
      * @param owner Owner of the block
      */
-    public Conversion(String owner, String senderPublicKey, String previousBlockHash, String contactBlockHash) {
+    public ConversionController(String owner, String senderPublicKey, String previousBlockHash, String contactBlockHash) {
         keyOwner = owner;
         this.senderPublicKey = senderPublicKey;
         this.previousBlockHash = previousBlockHash;
