@@ -19,4 +19,12 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, AddBlockActivity.class);
         startActivity(intent);
     }
+
+    public void deleteBlcok(View view) {
+
+    }
+
+    public void viewChain(View view) {
+
+    }
 }

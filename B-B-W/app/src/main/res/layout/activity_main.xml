@@ -28,6 +28,7 @@
             android:id="@+id/button5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="displayChain"
             android:text="Display chain"
             tools:layout_editor_absoluteX="100dp"
             tools:layout_editor_absoluteY="400dp" />
@@ -44,6 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.58"
+                android:onClick="addBlock"
                 android:text="Add block" />
 
             <Button
@@ -51,6 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:onClick="deleteBlock"
                 android:text="Delete block" />
         </LinearLayout>
 
