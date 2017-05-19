@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.controller.BlockController;
-import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.controller.ConversionController;
+import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.DatabaseHandler;
 
 /**
@@ -40,6 +40,7 @@ public class AddBlockActivity extends Activity {
 
     /**
      * On create we request a database connection
+     *
      * @param savedInstanceState unused, meant for serialisation
      */
     @Override
@@ -57,6 +58,7 @@ public class AddBlockActivity extends Activity {
     /**
      * Upon adding a block, information is extracted from the GUI and put into the fresh block,
      * which is added to the database.
+     *
      * @param view current view (AddBlockActivity)
      */
     public void onAddBlock(View view) {

@@ -2,7 +2,6 @@ package nl.tudelft.b_b_w.model;
 
 /**
  * Block represents
- *
  */
 
 public class Block {
@@ -17,14 +16,13 @@ public class Block {
     private boolean isRevoked;
 
     /**
-     *
-     * @param _owner owner of a block
-     * @param _sequenceNumber sequence number of the block
-     * @param _ownHash our own hash
-     * @param _previousHashChain the hash value of the block before in the chain
+     * @param _owner              owner of a block
+     * @param _sequenceNumber     sequence number of the block
+     * @param _ownHash            our own hash
+     * @param _previousHashChain  the hash value of the block before in the chain
      * @param _previousHashSender the hash value of the block before of the sender
-     * @param _publicKey public key of the owner of the block
-     * @param _isRevoked boolean to check whether a block is revoked or not
+     * @param _publicKey          public key of the owner of the block
+     * @param _isRevoked          boolean to check whether a block is revoked or not
      */
     public Block(String _owner, int _sequenceNumber, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, boolean _isRevoked) {
         this.owner = _owner;
@@ -38,6 +36,7 @@ public class Block {
 
     /**
      * Default getter for owner
+     *
      * @return owner of the block
      */
     public String getOwner() {
@@ -46,6 +45,7 @@ public class Block {
 
     /**
      * Default getter for own block hash
+     *
      * @return own hash
      */
     public String getOwnHash() {
@@ -54,6 +54,7 @@ public class Block {
 
     /**
      * Default getter for previous block hash of chain
+     *
      * @return previous hash of chain
      */
     public String getPreviousHashChain() {
@@ -62,6 +63,7 @@ public class Block {
 
     /**
      * Default getter for previous block hash of chain
+     *
      * @return previous hash of chain
      */
     public String getPreviousHashSender() {
@@ -70,6 +72,7 @@ public class Block {
 
     /**
      * Default getter for public key
+     *
      * @return public key of the block
      */
     public String getPublicKey() {
@@ -78,6 +81,7 @@ public class Block {
 
     /**
      * Default getter for sequence number
+     *
      * @return the sequence number of the block
      */
     public int getSequenceNumber() {
@@ -86,6 +90,7 @@ public class Block {
 
     /**
      * Default getter for checking whether a block is revoked
+     *
      * @return true or false
      */
     public boolean isRevoked() {

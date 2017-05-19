@@ -38,13 +38,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_CREATED_AT = "created_at";
 
     // Persistence helpers
-    private final String[] _columns = new String[] {
+    private final String[] _columns = new String[]{
             KEY_OWNER, KEY_SEQ_NO, KEY_OWN_HASH, KEY_PREV_HASH_CHAIN, KEY_PREV_HASH_SENDER, KEY_PUBLIC_KEY, KEY_REVOKE
     };
 
     /**
      * Constructor
      * creates a database connection
+     *
      * @param context given context
      */
     public DatabaseHandler(Context context) {
@@ -95,8 +96,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        final String upgrade_script = "DROP TABLE IF EXISTS "+ TABLE_NAME +";"
-                +"DROP TABLE IF EXISTS option;";
+        final String upgrade_script = "DROP TABLE IF EXISTS " + TABLE_NAME + ";"
+                + "DROP TABLE IF EXISTS option;";
 
         // TODO: check if the db version is lower than the latest
 
@@ -105,6 +106,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     /**
      * Adds a block to the blockchain
+     *
      * @param block the block you want to add
      */
     public void addBlock(Block block) {
@@ -115,10 +117,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_OWNER, owner);
 
         int lastSeqNumb = lastSeqNumberOfChain(owner);
-        if(lastSeqNumb == 0) {
+        if (lastSeqNumb == 0) {
             values.put(KEY_SEQ_NO, 1);
-        }
-        else {
+        } else {
             values.put(KEY_SEQ_NO, lastSeqNumb + 1);
         }
 
@@ -136,6 +137,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     /**
      * Find the last sequence number of the chain of a specific owner
+     *
      * @param owner the owner of the chain which you want to get the last sequence number from
      *              There is no need for a public key because each block of the chain is
      *              supposed to have different public key from the contact
@@ -144,9 +146,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor c = db.query(TABLE_NAME,
-                new String[] {"MAX(" + KEY_SEQ_NO + ")"},
+                new String[]{"MAX(" + KEY_SEQ_NO + ")"},
                 KEY_OWNER + " = ? ",
-                new String[] {
+                new String[]{
                         owner
                 }, null, null, null, null);
 
@@ -163,8 +165,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     /**
      * Method to get a specific block
-     * @param owner The owner of the block you want
-     * @param publicKey The owner of the block you want
+     *
+     * @param owner          The owner of the block you want
+     * @param publicKey      The owner of the block you want
      * @param sequenceNumber The number of the block in the sequence
      * @return The block you were searching for
      */
@@ -174,7 +177,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_NAME,
                 _columns,
                 KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ? AND " + KEY_SEQ_NO + " = ?",
-                new String[] {
+                new String[]{
                         owner, publicKey, String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
@@ -207,8 +210,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Method to check whether the blockchain contains a specific block,
      * uses the getBlock method to avoid duplication
-     * @param owner the owner of the block you want
-     * @param publicKey the publickey of the block you want
+     *
+     * @param owner          the owner of the block you want
+     * @param publicKey      the publickey of the block you want
      * @param sequenceNumber The number of the block in the sequence
      * @return true if the blockchain contains the specified block, otherwise false
      */
@@ -219,7 +223,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Method to check whether the blockchain contains a specific block,
      * uses the getBlock method to avoid duplication
-     * @param owner the owner of the block you want
+     *
+     * @param owner     the owner of the block you want
      * @param publicKey the publickey of the block you want
      * @return true if the blockchain contains the specified block, otherwise false
      */
@@ -230,7 +235,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Method to get the latest sequence number of a block with a
      * certain owner and publickey
-     * @param owner the owner of the block
+     *
+     * @param owner     the owner of the block
      * @param publicKey the owner of the sequence number
      * @return the latest sequence number of the specified block
      */
@@ -238,9 +244,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor c = db.query(TABLE_NAME,
-                new String[] {"MAX(" + KEY_SEQ_NO + ")"},
+                new String[]{"MAX(" + KEY_SEQ_NO + ")"},
                 KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ?",
-                new String[] {
+                new String[]{
                         owner, publicKey
                 }, null, null, null, null);
 
@@ -258,6 +264,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Method to get the latest block in a blockchain using the
      * owner and publickey
+     *
      * @param owner the owner of the block
      * @return the latest block
      */
@@ -268,8 +275,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_NAME,
                 _columns,
                 KEY_OWNER + " = ? AND " + KEY_SEQ_NO + " = ?",
-                new String[] {
-                        owner,  String.valueOf(maxSeqNum)
+                new String[]{
+                        owner, String.valueOf(maxSeqNum)
                 }, null, null, null, null);
 
         //When returning an exception the whole program crashes,
@@ -300,7 +307,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     /**
      * Method to get the block after a specified block
-     * @param owner the owner of the block before
+     *
+     * @param owner          the owner of the block before
      * @param sequenceNumber the sequencenumber of the block before
      * @return the block after the specified one
      */
@@ -311,7 +319,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_NAME,
                 _columns,
                 KEY_OWNER + " = ? AND " + KEY_SEQ_NO + " > ?",
-                new String[] {
+                new String[]{
                         owner, String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
@@ -341,7 +349,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     /**
      * Method to get the block before a specified block
-     * @param owner the owner of the block after
+     *
+     * @param owner          the owner of the block after
      * @param sequenceNumber the sequencenumber of the block after
      * @return the block before the specified one
      */
@@ -352,8 +361,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_NAME,
                 _columns,
                 KEY_OWNER + " = ? AND " + KEY_SEQ_NO + " < ?",
-                new String[] {
-                        owner,  String.valueOf(sequenceNumber)
+                new String[]{
+                        owner, String.valueOf(sequenceNumber)
                 }, null, null, null, null);
 
         if (cursor.getCount() < 1) throw new NotFoundException();
@@ -383,6 +392,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Method which puts all the blocks currently in the
      * blockchain into a list
+     *
      * @param owner the owner of the blocks that are going to be fetched
      * @return List of all the blocks
      */
@@ -394,7 +404,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_NAME,
                 _columns,
                 KEY_OWNER + " = ?",
-                new String[] {
+                new String[]{
                         owner
                 }, null, null, null, null);
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
 import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
@@ -50,6 +51,7 @@ public class MainActivity extends Activity {
 
     /**
      * Callback for when user clicks on 'add block'. Switch to AddBlockActivity.
+     *
      * @param view current view, which is always MainActivity
      */
     public void onAddBlock(View view) {
@@ -62,6 +64,7 @@ public class MainActivity extends Activity {
 
     /**
      * Callback for when user clicks on 'delete block'. Switch to RevokeBlockActivity.
+     *
      * @param view current view, which is always MainActivity
      */
     public void onRevokeBlock(View view) {

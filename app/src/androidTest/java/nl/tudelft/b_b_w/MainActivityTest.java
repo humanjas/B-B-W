@@ -9,10 +9,6 @@ import org.junit.runner.RunWith;
 
 import nl.tudelft.b_b_w.view.MainActivity;
 
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-
 /**
  * Instrumentation test, which will execute on an Android device.
  *

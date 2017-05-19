@@ -23,6 +23,7 @@ public class BlockController {
 
     /**
      * contructor to initialize all the involved entities
+     *
      * @param _context the instance
      */
     public BlockController(Context _context) {
@@ -33,6 +34,7 @@ public class BlockController {
 
     /**
      * adding a block to the blockchain
+     *
      * @param block Block you want to add
      * @return returns the block you added
      */
@@ -55,12 +57,13 @@ public class BlockController {
 
     /**
      * Get all blocks that are not revoked
+     *
      * @return List of all the blocks
      */
     public List<Block> getBlocks(String owner) {
         List<Block> blocks = databaseHandler.getAllBlocks(owner);
         List<Block> res = new ArrayList<>();
-        for(Block block : blocks) {
+        for (Block block : blocks) {
             if (block.isRevoked()) {
                 res = removeBlock(res, block);
             } else {
@@ -73,6 +76,7 @@ public class BlockController {
     /**
      * Revoke a block from the blockchain by adding the same
      * block but setting revoked on true
+     *
      * @param block The block you want to revoke
      * @return the revoked block
      */
@@ -87,14 +91,15 @@ public class BlockController {
 
     /**
      * Method for removing a certain block from a given list
-     * @param list The list of all the blocks
+     *
+     * @param list  The list of all the blocks
      * @param block The revoke block
      * @return List without the revoked block
      */
     public List<Block> removeBlock(List<Block> list, Block block) {
         List<Block> res = new ArrayList<>();
         for (Block blc : list) {
-            if (!(blc.getOwner().equals(block.getOwner()) && blc.getPublicKey().equals(block.getPublicKey()))){
+            if (!(blc.getOwner().equals(block.getOwner()) && blc.getPublicKey().equals(block.getPublicKey()))) {
                 res.add(blc);
             }
         }
