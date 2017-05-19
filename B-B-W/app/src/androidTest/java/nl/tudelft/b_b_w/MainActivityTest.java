@@ -22,7 +22,7 @@ import static junit.framework.Assert.assertNotNull;
  */
 @RunWith(AndroidJUnit4.class)
 public class MainActivityTest {
-
+    /** Start the main activity for these tests */
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(
             MainActivity.class);

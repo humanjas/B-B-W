@@ -21,8 +21,10 @@ public class DisplayChainActivity extends Activity {
 
         handler = new DatabaseHandler(this);
         Bundle extras = getIntent().getExtras();
-        ownerName = extras.getString("ownerName");
-        publicKey = extras.getString("publicKey");
+        if (extras != null) {
+            ownerName = extras.getString("ownerName");
+            publicKey = extras.getString("publicKey");
+        }
 
         /*ListView view = (ListView) findViewById(R.id.chain);
 
