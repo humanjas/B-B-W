@@ -25,11 +25,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Public Key"
-                tools:text="Public Key" />
+                android:text="Contact Name" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/addContactName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -50,11 +49,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sender"
-                tools:text="Sender Hash" />
+                android:text="Public Key" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/addPublicKey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
