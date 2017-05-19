@@ -61,11 +61,11 @@ public class MainActivity extends Activity {
 
 
     /**
-     * Callback for when user clicks on 'delete block'. Switch to DeleteBlockActivity.
+     * Callback for when user clicks on 'delete block'. Switch to RevokeBlockActivity.
      * @param view current view, which is always MainActivity
      */
-    public void onDeleteBlock(View view) {
-        Intent intent = new Intent(this, DeleteBlockActivity.class);
+    public void onRevokeBlock(View view) {
+        Intent intent = new Intent(this, RevokeBlockActivity.class);
         intent.putExtra("ownerName", ownerName);
         intent.putExtra("publicKey", publicKey);
         startActivity(intent);

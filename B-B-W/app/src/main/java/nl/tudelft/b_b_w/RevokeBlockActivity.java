@@ -1,8 +1,8 @@
 package nl.tudelft.b_b_w;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -12,11 +12,9 @@ import nl.tudelft.b_b_w.Models.Block;
 import nl.tudelft.b_b_w.Models.Conversion;
 import nl.tudelft.b_b_w.Models.DatabaseHandler;
 
-/**
- * When the user wants to add a block he enters into the AddBlockActivity, which contain
- * some entry fields and a button to confirm the addition.
- */
-public class AddBlockActivity extends Activity {
+
+public class RevokeBlockActivity extends AppCompatActivity {
+
     /**
      * Connection with block database
      */
@@ -44,7 +42,7 @@ public class AddBlockActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addblock);
+        setContentView(R.layout.activity_revokeblock);
         handler = new DatabaseHandler(this);
         blockController = new BlockController(this);
         Bundle extras = getIntent().getExtras();
@@ -54,16 +52,15 @@ public class AddBlockActivity extends Activity {
     }
 
     /**
-     * Upon adding a block, information is extracted from the GUI and put into the fresh block,
+     * Upon revoking a block, information is extracted from the GUI and put into the fresh revoke block
      * which is added to the database.
-     * @param view current view (AddBlockActivity)
+     * @param view current view (RevokeBlockActivity)
      */
-    public void onAddBlock(View view) {
-
+    public void onRevokeBlock(View view) {
         try {
             // extract information
-            EditText senderHashText = (EditText) findViewById(R.id.addSenderHash);
-            EditText senderPublicKeyText = (EditText) findViewById(R.id.addPublicKey);
+            EditText senderHashText = (EditText) findViewById(R.id.revokeSenderHash);
+            EditText senderPublicKeyText = (EditText) findViewById(R.id.revokePublicKey);
             String senderHash = senderHashText.getText().toString();
             String senderPublicKey = senderPublicKeyText.getText().toString();
 
@@ -80,18 +77,18 @@ public class AddBlockActivity extends Activity {
                     previous.getOwnHash(), //  the hash value of the block before in the chain
                     senderHash, // the hash value of the block before of the sender
                     senderPublicKey, // public key of the owner of the block
-                    false // is revoked?
+                    true // is revoked?
             );
             handler.addBlock(block);
 
             // confirm by showing a small text message
-            Toast.makeText(this, "Block added", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Revoke block added", Toast.LENGTH_SHORT).show();
 
             // switch back to MainActivity
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         } catch (Exception e) {
-            Toast.makeText(this, "Block added failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Revoke block failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="nl.tudelft.b_b_w.DeleteBlockActivity">
+    android:layout_height="wrap_content"
+    tools:context="nl.tudelft.b_b_w.AddBlockActivity">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteY="16dp"
-        tools:layout_editor_absoluteX="16dp">
+        tools:layout_editor_absoluteY="10dp"
+        tools:layout_editor_absoluteX="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,11 +25,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Public Key"
-                tools:text="Public Key" />
+                android:text="SenderBlockHash" />
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/revokeSenderHash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -50,11 +49,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Sender"
-                tools:text="Sender Hash" />
+                android:text="SenderPublicKey" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/revokePublicKey"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -75,8 +73,9 @@
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delete"
-            tools:text="Delete" />
+            android:onClick="onRevokeBlock"
+            android:text="Revoke"
+            tools:text="Revoke" />
 
     </LinearLayout>
 

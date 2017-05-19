@@ -41,6 +41,8 @@ public class DisplayChainActivity extends Activity {
 
         String result = "";
         for (Block block : blocks) {
+            if (block.isRevoked())
+                result = result + "REVOKE ";
             result = result + block.getSequenceNumber() + "\t" + block.getPublicKey() + "\t" + block.getOwnHash() + "\n\n";
         }
         view.setText(result);
