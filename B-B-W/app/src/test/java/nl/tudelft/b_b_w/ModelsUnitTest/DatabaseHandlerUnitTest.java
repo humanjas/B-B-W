@@ -53,7 +53,7 @@ public class DatabaseHandlerUnitTest {
     }
 
     /**
-     * addBlock test
+     * onAddBlock test
      * Tests adding a block
      */
     @Test

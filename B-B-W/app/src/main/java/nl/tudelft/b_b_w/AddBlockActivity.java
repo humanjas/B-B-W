@@ -1,11 +1,13 @@
 package nl.tudelft.b_b_w;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import nl.tudelft.b_b_w.Controllers.BlockController;
 import nl.tudelft.b_b_w.Models.Block;
 import nl.tudelft.b_b_w.Models.DatabaseHandler;
 
@@ -20,6 +22,11 @@ public class AddBlockActivity extends Activity {
     private DatabaseHandler handler;
 
     /**
+     * Controller of blocks
+     */
+    private BlockController blockController;
+
+    /**
      * On create we request a database connection
      * @param savedInstanceState unused, meant for serialisation
      */
@@ -28,6 +35,7 @@ public class AddBlockActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addblock);
         handler = new DatabaseHandler(this);
+        blockController = new BlockController(this);
     }
 
     /**
@@ -50,6 +58,10 @@ public class AddBlockActivity extends Activity {
 
             // confirm by showing a small text message
             Toast.makeText(this, "Block added", Toast.LENGTH_SHORT).show();
+
+            // switch back to MainActivity
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         } catch (Exception e) {
             Toast.makeText(this, "Block added failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
