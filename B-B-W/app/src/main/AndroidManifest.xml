@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddBlockActivity" />
-        <activity android:name=".DeleteBlockActivity"></activity>
+        <activity android:name=".DeleteBlockActivity" />
+        <activity android:name=".DisplayChainActivity"></activity>
     </application>
 
 </manifest>

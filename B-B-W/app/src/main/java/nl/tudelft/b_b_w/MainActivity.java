@@ -6,12 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 public class MainActivity extends Activity {
-    public static MainActivity self;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        self = this;
         setContentView(R.layout.activity_main);
     }
 
@@ -20,11 +17,11 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    public void deleteBlcok(View view) {
-
+    public void deleteBlock(View view) {
+        Intent intent = new Intent(this, DeleteBlockActivity.class);
+        startActivity(intent);
     }
 
-    public void viewChain(View view) {
-
+    public void displayChain(View view) {
     }
 }
