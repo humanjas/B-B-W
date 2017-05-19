@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import nl.tudelft.b_b_w.Controllers.BlockController;
 import nl.tudelft.b_b_w.Models.Block;
@@ -30,9 +31,13 @@ public class MainActivity extends Activity {
      * Add a genesis block so that the database is not empty
      */
     private void addGenesis() {
-        if (handler.getAllBlocks(ownerName).isEmpty()) {
-            Block block = new Block(ownerName, 0, "", "", "", "", false);
-            blockController.addBlock(block);
+        try {
+            if (handler.getAllBlocks(ownerName).isEmpty()) {
+                Block block = new Block(ownerName, 0, "", "", "", "", false);
+                blockController.addBlock(block);
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
