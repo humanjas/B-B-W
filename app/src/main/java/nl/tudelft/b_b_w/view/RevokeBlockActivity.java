@@ -72,8 +72,8 @@ public class RevokeBlockActivity extends Activity {
 
             // create and add the block
             Block previous = handler.getLatestBlock(ownerName);
-
-            ConversionController conversionController = new ConversionController(ownerName, senderPublicKey, previous.getOwnHash(), senderHash);
+            int blockSeqNumber = previous.getSequenceNumber()+ 1;
+            ConversionController conversionController = new ConversionController(ownerName,blockSeqNumber, senderPublicKey, previous.getOwnHash(), senderHash,senderIban);
             String ownHash = conversionController.hashKey();
             Block block = new Block(
                     ownerName, // owner of a block

@@ -101,6 +101,18 @@ public class BlockUnitTest {
         assertEquals(check, _block.getPublicKey());
     }
 
+
+    /**
+     * Test to check whether the getIban() function returns the right public key of the contact of the block
+     * @throws Exception Catches error when the MessageDigest
+     * gets an error.
+     */
+    @Test
+    public void getIbanTest() throws Exception {
+        final String check = "iban";
+        assertEquals(check, _block.getIban());
+    }
+
     /**
      * Test to check whether the isRevoked() method returns the right boolean value indicating if the block is revoked or not.
      * @throws Exception Catches error when the MessageDigest

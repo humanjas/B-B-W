@@ -8,21 +8,25 @@ import java.security.MessageDigest;
  */
 public class ConversionController {
     // Variables which we need to create a hashed key
-    private String keyOwner;
+    private String blockOwner;
+    private int     seqNumber;
     private String senderPublicKey;
     private String previousBlockHash;
     private String contactBlockHash;
+    private String contactIban;
 
     /**
      * Instantiating the necessary variables
      * @param senderPublicKey PublicKey of the block
      * @param owner Owner of the block
      */
-    public ConversionController(String owner, String senderPublicKey, String previousBlockHash, String contactBlockHash) {
-        keyOwner = owner;
+    public ConversionController(String owner, int sn, String senderPublicKey, String previousBlockHash, String contactBlockHash, String contactIban) {
+        this.blockOwner = owner;
+        this.seqNumber =sn;
         this.senderPublicKey = senderPublicKey;
         this.previousBlockHash = previousBlockHash;
         this.contactBlockHash = contactBlockHash;
+        this.contactIban = contactIban;
     }
 
     /**
@@ -32,7 +36,7 @@ public class ConversionController {
      */
     public String hashKey() throws Exception {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
-        String text = keyOwner + senderPublicKey + previousBlockHash + contactBlockHash;
+        String text = blockOwner + String.valueOf(seqNumber) + senderPublicKey + previousBlockHash + contactBlockHash + contactIban;
         md.update(text.getBytes("UTF-8"));
         byte[] digest = md.digest();
         String hash = String.format("%064x", new java.math.BigInteger(1, digest));
