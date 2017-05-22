@@ -9,10 +9,8 @@ import android.widget.Toast;
 import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
-import nl.tudelft.b_b_w.model.DatabaseHandler;
 
 public class MainActivity extends Activity {
-    private DatabaseHandler handler;
     private BlockController blockController;
     private String ownerName;
     private String publicKey;
@@ -21,17 +19,16 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        handler = new DatabaseHandler(this);
         blockController = new BlockController(this);
         ownerName = "GENESIS";
         publicKey = "demokey";
 
         //test method
-        int n = handler.lastSeqNumberOfChain(ownerName);
+        int n = blockController.getLastestSeqNumber(ownerName);
         Toast.makeText(this, "#" + n, Toast.LENGTH_LONG).show();
 
         // add genesis if we don't have any blocks
-        if (handler.lastSeqNumberOfChain(ownerName) == 0)
+        if (blockController.getLastestSeqNumber(ownerName) == 0)
             addGenesis();
     }
 
@@ -40,7 +37,7 @@ public class MainActivity extends Activity {
      */
     private void addGenesis() {
         try {
-            if (handler.getAllBlocks(ownerName).isEmpty()) {
+            if (blockController.getBlocks(ownerName).isEmpty()) {
                 Block block = new Block(ownerName, 1, "ownHash", "previoushash", "senderhash", "senderpubkey","senderIban", false);
                 blockController.addBlock(block);
             }
