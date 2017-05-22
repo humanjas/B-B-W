@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">B-B-W</string>
+    <string name="title_activity_friends_page">FriendsPageActivity</string>
 </resources>
