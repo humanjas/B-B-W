@@ -24,7 +24,7 @@ android:
 
 env:
   global:
-    - DIR=constraint-layout-start # Project directory
+    - "DIR=constraint-layout-start API=25 TAG=google_apis ABI=armeabi-v7a QEMU_AUDIO_DRV=none GRADLE_USER_HOME=\"${TRAVIS_BUILD_DIR}/gradle\" ANDROID_HOME=/usr/local/android-sdk-24.0.2 TOOLS=${ANDROID_HOME}/tools PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH} ADB_INSTALL_TIMEOUT=20" # Project directory
     - API=25 # Android API level 25 by default
     - TAG=google_apis # Google APIs by default, alternatively use default
     - ABI=armeabi-v7a # ARM ABI v7a by default
@@ -37,6 +37,7 @@ env:
 
 matrix:
   include: # More Emulator API levels to build in parallel
+  	- env: API=25
     - env: API=24
     - env: API=23
     - env: API=22
