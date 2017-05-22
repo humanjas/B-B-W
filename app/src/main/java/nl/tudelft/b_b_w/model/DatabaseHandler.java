@@ -34,12 +34,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_PREV_HASH_CHAIN = "previousHashChain";
     private static final String KEY_PREV_HASH_SENDER = "previousHashSender";
     private static final String KEY_PUBLIC_KEY = "publicKey";
+    private static final String KEY_IBAN_KEY = "iban";
     private static final String KEY_REVOKE = "revoke";
     private static final String KEY_CREATED_AT = "created_at";
 
     // Persistence helpers
     private final String[] _columns = new String[]{
-            KEY_OWNER, KEY_SEQ_NO, KEY_OWN_HASH, KEY_PREV_HASH_CHAIN, KEY_PREV_HASH_SENDER, KEY_PUBLIC_KEY, KEY_REVOKE
+            KEY_OWNER, KEY_SEQ_NO, KEY_OWN_HASH, KEY_PREV_HASH_CHAIN, KEY_PREV_HASH_SENDER, KEY_PUBLIC_KEY,KEY_IBAN_KEY, KEY_REVOKE
     };
 
     /**
@@ -67,6 +68,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_PREV_HASH_CHAIN + " TEXT NOT NULL,"
                 + KEY_PREV_HASH_SENDER + " TEXT NOT NULL,"
                 + KEY_PUBLIC_KEY + " TEXT NOT NULL,"
+                + KEY_IBAN_KEY + " TEXT NOT NULL,"
                 + KEY_REVOKE + " BOOLEAN DEFAULT FALSE NOT NULL,"
                 + KEY_CREATED_AT + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
                 + " PRIMARY KEY (owner, publicKey, sequenceNumber)"
@@ -126,6 +128,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_OWN_HASH, block.getOwnHash());
         values.put(KEY_PREV_HASH_CHAIN, block.getPreviousHashChain());
         values.put(KEY_PREV_HASH_SENDER, block.getPreviousHashSender());
+        values.put(KEY_IBAN_KEY, block.getIban());
         values.put(KEY_PUBLIC_KEY, block.getPublicKey());
         values.put(KEY_REVOKE, block.isRevoked());
 

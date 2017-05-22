@@ -20,8 +20,8 @@ public class BlockUnitTest {
     private final String ownHash = "ownHash";
     private final String previousHashChain = "previousHashChain";
     private final String previousHashSender = "previousHashSender";
-    private final String iban = "iban";
     private final String publicKey = "publicKey";
+    private final String iban = "iban";
     private final boolean isRevoked = false;
 
     /**
@@ -147,6 +147,7 @@ public class BlockUnitTest {
                 ", previousHashChain='" + previousHashChain + '\'' +
                 ", previousHashSender='" + previousHashSender + '\'' +
                 ", publicKey='" + publicKey + '\'' +
+                ", iban='" + iban + '\'' +
                 ", isRevoked=" + isRevoked +
                 '}';
         assertEquals(result, _block.toString());
