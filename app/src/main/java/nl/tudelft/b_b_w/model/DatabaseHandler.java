@@ -194,7 +194,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(3),
                 cursor.getString(4),
                 cursor.getString(5),
-                cursor.getInt(6) > 0
+                cursor.getString(6),
+                cursor.getInt(7) > 0
         );
 
         // Close database connection
@@ -292,7 +293,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(3),
                 cursor.getString(4),
                 cursor.getString(5),
-                cursor.getInt(6) > 0
+                cursor.getString(6),
+                cursor.getInt(7) > 0
         );
 
         // Close database connection
@@ -334,7 +336,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(3),
                 cursor.getString(4),
                 cursor.getString(5),
-                cursor.getInt(6) > 0
+                cursor.getString(6),
+                cursor.getInt(7) > 0
         );
 
         // Close database connection
@@ -376,7 +379,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(3),
                 cursor.getString(4),
                 cursor.getString(5),
-                cursor.getInt(6) > 0
+                cursor.getString(6),
+                cursor.getInt(7) > 0
         );
 
         // Close database connection
@@ -419,7 +423,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                         cursor.getString(3),
                         cursor.getString(4),
                         cursor.getString(5),
-                        cursor.getInt(6) > 0
+                        cursor.getString(6),
+                        cursor.getInt(7) > 0
                 );
                 blocks.add(block);
             } while (cursor.moveToNext());

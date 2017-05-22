@@ -21,16 +21,17 @@ public class BlockFactory {
      * @param _ownHash            Hash value of the block
      * @param _previousHashChain  Previous hash value of the block in the blockchain
      * @param _previousHashSender Previous hash value of the sender of the block
-     * @param _publicKey          Public key of the block
+     * @param _publicKey          Public key of the sender
+     * @param _iban               IBAN number of a contact
      * @return Returns a new block
      * @throws IllegalArgumentException when the input string type is invalid
      */
-    public static Block getBlock(String type, String _owner, int _sequenceNumber, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey) throws IllegalArgumentException {
+    public static Block getBlock(String type, String _owner, int _sequenceNumber, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban) throws IllegalArgumentException {
         switch (type) {
             case "BLOCK":
-                return new Block(_owner, _sequenceNumber, _ownHash, _previousHashChain, _previousHashSender, _publicKey, !TYPE_REVOKE);
+                return new Block(_owner, _sequenceNumber, _ownHash, _previousHashChain, _previousHashSender, _publicKey, _iban, !TYPE_REVOKE);
             case "REVOKE":
-                return new Block(_owner, _sequenceNumber, _ownHash, _previousHashChain, _previousHashSender, _publicKey, TYPE_REVOKE);
+                return new Block(_owner, _sequenceNumber, _ownHash, _previousHashChain, _previousHashSender, _publicKey, _iban, TYPE_REVOKE);
             default:
                 throw new IllegalArgumentException("Invalid type of block: " + type);
         }
