@@ -191,8 +191,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         String blockType;
-        if(cursor.getInt(7) > 0) {blockType = "BLOCK";}
-        else{blockType = "REVOKE";}
+        if(cursor.getInt(7) > 0) {blockType = "REVOKE";}
+        else{blockType = "BLOCK";}
         Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
                 cursor.getString(4), cursor.getString(5), cursor.getString(6));
 
@@ -285,8 +285,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         String blockType;
-        if(cursor.getInt(7) > 0) {blockType = "BLOCK";}
-        else{blockType = "REVOKE";}
+        if(cursor.getInt(7) > 0) {blockType = "REVOKE";}
+        else{blockType = "BLOCK";}
         Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
                 cursor.getString(4), cursor.getString(5), cursor.getString(6));
         // Close database connection
@@ -322,8 +322,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         String blockType;
-        if(cursor.getInt(7) > 0) {blockType = "BLOCK";}
-        else{blockType = "REVOKE";}
+        if(cursor.getInt(7) > 0) {blockType = "REVOKE";}
+        else{blockType = "BLOCK";}
         Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
                 cursor.getString(4), cursor.getString(5), cursor.getString(6));
 
@@ -360,8 +360,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         String blockType;
-        if(cursor.getInt(7) > 0) {blockType = "BLOCK";}
-        else{blockType = "REVOKE";}
+        if(cursor.getInt(7) > 0) {blockType = "REVOKE";}
+        else{blockType = "BLOCK";}
         Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
                 cursor.getString(4), cursor.getString(5), cursor.getString(6));
 
@@ -399,8 +399,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
             do {
                 String blockType;
-                if(cursor.getInt(7) > 0) {blockType = "BLOCK";}
-                else{blockType = "REVOKE";}
+                if(cursor.getInt(7) > 0) {blockType = "REVOKE";}
+                else{blockType = "BLOCK";}
                 Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
                         cursor.getString(4), cursor.getString(5), cursor.getString(6));
                 blocks.add(block);
