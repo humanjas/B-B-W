@@ -188,33 +188,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         //but we want to preserve the state.
         if (cursor.getCount() < 1) return null;
 
-        /*+ KEY_OWNER + " TEXT NOT NULL,"
-                + KEY_SEQ_NO + " INTEGER NOT NULL,"
-                + KEY_OWN_HASH + " TEXT NOT NULL,"
-                + KEY_PREV_HASH_CHAIN + " TEXT NOT NULL,"
-                + KEY_PREV_HASH_SENDER + " TEXT NOT NULL,"
-                + KEY_PUBLIC_KEY + " TEXT NOT NULL,"
-                + KEY_IBAN_KEY + " TEXT NOT NULL,"
-                + KEY_REVOKE + " BOOLEAN DEFAULT FALSE NOT NULL,"
-                + KEY_CREATED_AT + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
-                + " PRIMARY KEY (owner, publicKey, sequenceNumber)"*/
-
         cursor.moveToFirst();
 
         String blockType;
-        if(cursor.getInt(7) > 0)
-        {
-            blockType = "BLOCK";
-        }
-        else
-
-        {
-            blockType = "REVOKE";
-        }
-
+        if(cursor.getInt(7) > 0) {blockType = "BLOCK";}
+        else{blockType = "REVOKE";}
         Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
                 cursor.getString(4), cursor.getString(5), cursor.getString(6));
-        
+
         // Close database connection
         db.close();
 
@@ -303,17 +284,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         cursor.moveToFirst();
 
-        Block block = new Block(
-                cursor.getString(0),
-                cursor.getInt(1),
-                cursor.getString(2),
-                cursor.getString(3),
-                cursor.getString(4),
-                cursor.getString(5),
-                cursor.getString(6),
-                cursor.getInt(7) > 0
-        );
-
+        String blockType;
+        if(cursor.getInt(7) > 0) {blockType = "BLOCK";}
+        else{blockType = "REVOKE";}
+        Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
+                cursor.getString(4), cursor.getString(5), cursor.getString(6));
         // Close database connection
         db.close();
 
@@ -346,16 +321,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         cursor.moveToFirst();
 
-        Block block = new Block(
-                cursor.getString(0),
-                cursor.getInt(1),
-                cursor.getString(2),
-                cursor.getString(3),
-                cursor.getString(4),
-                cursor.getString(5),
-                cursor.getString(6),
-                cursor.getInt(7) > 0
-        );
+        String blockType;
+        if(cursor.getInt(7) > 0) {blockType = "BLOCK";}
+        else{blockType = "REVOKE";}
+        Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
+                cursor.getString(4), cursor.getString(5), cursor.getString(6));
 
         // Close database connection
         db.close();
@@ -389,16 +359,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         cursor.moveToFirst();
 
-        Block block = new Block(
-                cursor.getString(0),
-                cursor.getInt(1),
-                cursor.getString(2),
-                cursor.getString(3),
-                cursor.getString(4),
-                cursor.getString(5),
-                cursor.getString(6),
-                cursor.getInt(7) > 0
-        );
+        String blockType;
+        if(cursor.getInt(7) > 0) {blockType = "BLOCK";}
+        else{blockType = "REVOKE";}
+        Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
+                cursor.getString(4), cursor.getString(5), cursor.getString(6));
 
         // Close database connection
         db.close();
@@ -433,16 +398,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
-                Block block = new Block(
-                        cursor.getString(0),
-                        cursor.getInt(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getString(5),
-                        cursor.getString(6),
-                        cursor.getInt(7) > 0
-                );
+                String blockType;
+                if(cursor.getInt(7) > 0) {blockType = "BLOCK";}
+                else{blockType = "REVOKE";}
+                Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
+                        cursor.getString(4), cursor.getString(5), cursor.getString(6));
                 blocks.add(block);
             } while (cursor.moveToNext());
         }

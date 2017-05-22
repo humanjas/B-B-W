@@ -53,7 +53,7 @@ public class BlockControllerUnitTest {
     @Before
     public void setUp() {
         this.bc = new BlockController(RuntimeEnvironment.application);
-        this._block = BlockFactory.getBlock(TYPE_BLOCK, owner, sequenceNumber, ownHash,
+        this._block = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
     }
 
@@ -76,7 +76,7 @@ public class BlockControllerUnitTest {
      */
     @Test
     public void testGetLastestBlock() throws Exception {
-        Block expected = BlockFactory.getBlock(TYPE_BLOCK, owner, sequenceNumber, ownHash,
+        Block expected = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         bc.addBlock(_block);
         assertEquals(expected, bc.getLastestBlock(owner));
@@ -89,7 +89,7 @@ public class BlockControllerUnitTest {
     @Test
     public void testGetLastestSeqNumber() throws Exception {
         String newOwner = owner+"2";
-        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, sequenceNumber, ownHash,
+        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, ownHash,
                 previousHashChain, previousHashSender, publicKey,iban);
         bc.addBlock(_block);
         bc.addBlock(newBlock);
@@ -108,7 +108,7 @@ public class BlockControllerUnitTest {
     @Test
     public void testAddBlock2() throws Exception {
         String newOwner = owner+"2";
-        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, sequenceNumber, ownHash,
+        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, ownHash,
                 previousHashChain, previousHashSender, publicKey,iban);
         bc.addBlock(_block);
         bc.addBlock(newBlock);
@@ -136,7 +136,7 @@ public class BlockControllerUnitTest {
      */
     @Test(expected=RuntimeException.class)
     public void alreadyRevoked() {
-        Block newBlock = BlockFactory.getBlock(TYPE_REVOKE, owner, sequenceNumber, ownHash,
+        Block newBlock = BlockFactory.getBlock(TYPE_REVOKE, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey,iban);
         bc.addBlock(newBlock);
         bc.addBlock(_block);
@@ -148,7 +148,7 @@ public class BlockControllerUnitTest {
     @Test
     public void testEmptyList() {
         bc.addBlock(_block);
-        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, sequenceNumber+1, ownHash,
+        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey,iban);
         bc.revokeBlock(newBlock);
         List<Block> list = new ArrayList<>();
@@ -161,7 +161,7 @@ public class BlockControllerUnitTest {
     @Test
     public void testRemoveWithNoMatch() throws Resources.NotFoundException{
         bc.addBlock(_block);
-        Block blc2 = BlockFactory.getBlock(TYPE_BLOCK, owner+"2", sequenceNumber+1, ownHash,
+        Block blc2 = BlockFactory.getBlock(TYPE_BLOCK, owner+"2", ownHash,
                 previousHashChain, previousHashSender, publicKey+"2", iban);
         bc.revokeBlock(blc2);
         List<Block> list = new ArrayList<>();
