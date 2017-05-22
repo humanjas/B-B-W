@@ -67,11 +67,13 @@ public class RevokeBlockActivity extends Activity {
             String senderHash = senderHashText.getText().toString();
             String senderPublicKey = senderPublicKeyText.getText().toString();
 
+            //URGENCY: THIS NEED TO BE A SEPARATE INPUT FIELD FOR IBAN NUMBER
+            String senderIban = senderPublicKeyText.getText().toString();
 
             // create and add the block
             Block previous = handler.getLatestBlock(ownerName);
-
-            ConversionController conversionController = new ConversionController(ownerName, senderPublicKey, previous.getOwnHash(), senderHash);
+            int blockSeqNumber = previous.getSequenceNumber()+ 1;
+            ConversionController conversionController = new ConversionController(ownerName,blockSeqNumber, senderPublicKey, previous.getOwnHash(), senderHash,senderIban);
             String ownHash = conversionController.hashKey();
             Block block = new Block(
                     ownerName, // owner of a block
@@ -79,7 +81,8 @@ public class RevokeBlockActivity extends Activity {
                     ownHash, // our own hash
                     previous.getOwnHash(), //  the hash value of the block before in the chain
                     senderHash, // the hash value of the block before of the sender
-                    senderPublicKey, // public key of the owner of the block
+                    senderPublicKey, // public key of sender
+                    senderIban,// iban of the sender
                     true // is revoked?
             );
             handler.addBlock(block);
