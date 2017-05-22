@@ -73,6 +73,18 @@ public class BlockController {
         return res;
     }
 
+
+
+    /**
+     * Get athe lastest block
+     *
+     * @return Lastest Block
+     */
+    public Block getLastestBlock(String owner) {
+        return databaseHandler.getLatestBlock(owner);
+    }
+
+
     /**
      * Revoke a block from the blockchain by adding the same
      * block but setting revoked on true

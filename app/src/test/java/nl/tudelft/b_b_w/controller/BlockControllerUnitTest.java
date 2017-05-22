@@ -17,6 +17,7 @@ import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
 
+import static android.R.id.list;
 import static org.junit.Assert.assertEquals;
 
 //import android.test.mock.MockContext;
@@ -67,6 +68,24 @@ public class BlockControllerUnitTest {
         list.add(_block);
         assertEquals(bc.getBlocks(owner), list);
     }
+
+
+    /**
+     * Tests returning the lastest block
+     * @throws Exception RuntimeException
+     */
+    @Test
+    public void testGetLastestBlock() throws Exception {
+        Block expected = BlockFactory.getBlock(TYPE_BLOCK, owner, sequenceNumber, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban);
+        bc.addBlock(_block);
+        assertEquals(expected, bc.getLastestBlock(owner));
+    }
+
+
+
+
+
 
     /**
      * Tests adding two blocks
