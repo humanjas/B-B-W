@@ -2,7 +2,10 @@ package nl.tudelft.b_b_w.ModelsUnitTest;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import nl.tudelft.b_b_w.model.Block;
+import nl.tudelft.b_b_w.model.BlockFactory;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -15,14 +18,16 @@ import static org.junit.Assert.assertTrue;
 public class BlockUnitTest {
 
     private Block _block;
+    final String blockType = "BLOCK";
     private final String owner = "owner";
     private final int sequenceNumber = 0;
     private final String ownHash = "ownHash";
     private final String previousHashChain = "previousHashChain";
     private final String previousHashSender = "previousHashSender";
     private final String publicKey = "publicKey";
-    private final String iban = "iban";
     private final boolean isRevoked = false;
+    private final String iban = "iban";
+
 
     /**
      * This method runs before each test to initialize the test object
@@ -31,7 +36,8 @@ public class BlockUnitTest {
      */
     @Before
     public void makeNewBlock() throws Exception {
-        _block = new Block(owner, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
+        _block = BlockFactory.getBlock(blockType, owner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban);
     }
 
     /**
@@ -145,7 +151,8 @@ public class BlockUnitTest {
      */
     @Test
     public void equalsTest() throws Exception {
-        Block check = new Block(owner, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
+        Block check = BlockFactory.getBlock(blockType, owner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban);
         assertTrue(_block.equals(check));
     }
 
@@ -158,7 +165,8 @@ public class BlockUnitTest {
     @Test
     public void equalsFalseTest() throws Exception {
         final String _owner = "NOTOWNER";
-        Block check = new Block(_owner,  ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
+        Block check = BlockFactory.getBlock(blockType, _owner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban);
         assertFalse(_block.equals(check));
     }
 
