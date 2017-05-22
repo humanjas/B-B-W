@@ -1,4 +1,4 @@
-package nl.tudelft.b_b_w;
+package nl.tudelft.b_b_w.view;
 
 import android.app.Activity;
 import android.app.Instrumentation;
