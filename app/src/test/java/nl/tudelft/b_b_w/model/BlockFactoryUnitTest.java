@@ -34,7 +34,7 @@ public class BlockFactoryUnitTest {
      */
     @Before
     public void makeNewBlock() throws Exception {
-        _block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey,iban, isRevoked);
+        _block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
         blockFactory = new BlockFactory();
     }
 
