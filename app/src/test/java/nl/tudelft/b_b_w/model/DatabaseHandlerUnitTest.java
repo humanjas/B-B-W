@@ -50,7 +50,7 @@ public class DatabaseHandlerUnitTest {
     @Before
     public void setUp() {
         this.databaseHandler = new DatabaseHandler(RuntimeEnvironment.application);
-        _block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey,iban, isRevoked);
+        _block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
 }
 
     /**
@@ -69,7 +69,7 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void addBlock2() {
-        Block newBlock = new Block(owner, sequenceNumber+1, ownHash, previousHashChain, previousHashSender, publicKey,iban, !isRevoked);
+        Block newBlock = new Block(owner, sequenceNumber+1, ownHash, previousHashChain, previousHashSender, publicKey, iban, !isRevoked);
         databaseHandler.addBlock(_block);
         for(Block e:databaseHandler.getAllBlocks(owner) )
         {
@@ -130,7 +130,7 @@ public class DatabaseHandlerUnitTest {
     @Test
     public void getLatestSeqNum() {
 
-        Block block2 = new Block(owner, 99, ownHash, previousHashChain, previousHashSender, publicKey,iban, isRevoked);
+        Block block2 = new Block(owner, 99, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
         assertEquals(2, databaseHandler.getLatestSeqNum(owner, publicKey));
@@ -143,10 +143,10 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getLatestBlock() {
-        Block block2 = new Block(owner, 99, ownHash, previousHashChain, previousHashSender, publicKey,iban, isRevoked);
+        Block block2 = new Block(owner, 99, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
-        Block expectBlock = new Block(owner, 2, ownHash, previousHashChain, previousHashSender, publicKey,iban, isRevoked);
+        Block expectBlock = new Block(owner, 2, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
         assertEquals(expectBlock, databaseHandler.getLatestBlock(owner));
     }
 
@@ -156,10 +156,10 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getBlockAfter() {
-        Block block2 = new Block(owner, 99, ownHash, previousHashChain, previousHashSender, publicKey,iban, isRevoked);
+        Block block2 = new Block(owner, 99, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
-        Block expectBlock = new Block(owner, 2, ownHash, previousHashChain, previousHashSender, publicKey,iban, isRevoked);
+        Block expectBlock = new Block(owner, 2, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
         assertEquals(expectBlock, databaseHandler.getBlockAfter(owner, sequenceNumber));
     }
 
@@ -169,7 +169,7 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getBlockBefore() {
-        Block block2 = new Block(owner, 99, ownHash, previousHashChain, previousHashSender, publicKey,iban, isRevoked);
+        Block block2 = new Block(owner, 99, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
         assertEquals(databaseHandler.getBlockBefore(owner, 2), _block);
@@ -182,7 +182,7 @@ public class DatabaseHandlerUnitTest {
     @Test
     public void getAllBlocks() {
         String owner2 = "owner2";
-        Block block2 = new Block(owner2, 1, ownHash, previousHashChain, previousHashSender, publicKey,iban, isRevoked);
+        Block block2 = new Block(owner2, 1, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
         List<Block> result = new ArrayList<>();
