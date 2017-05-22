@@ -20,6 +20,7 @@ public class BlockUnitTest {
     private final String ownHash = "ownHash";
     private final String previousHashChain = "previousHashChain";
     private final String previousHashSender = "previousHashSender";
+    private final String iban = "iban";
     private final String publicKey = "publicKey";
     private final boolean isRevoked = false;
 
@@ -30,7 +31,7 @@ public class BlockUnitTest {
      */
     @Before
     public void makeNewBlock() throws Exception {
-        _block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        _block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey,iban, isRevoked);
     }
 
     /**
@@ -117,7 +118,7 @@ public class BlockUnitTest {
      */
     @Test
     public void equalsTest() throws Exception {
-        Block check = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        Block check = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey,iban, isRevoked);
         assertTrue(_block.equals(check));
     }
 
@@ -130,7 +131,7 @@ public class BlockUnitTest {
     @Test
     public void equalsFalseTest() throws Exception {
         final String _owner = "NOTOWNER";
-        Block check = new Block(_owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, isRevoked);
+        Block check = new Block(_owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey,iban, isRevoked);
         assertFalse(_block.equals(check));
     }
 
@@ -157,8 +158,8 @@ public class BlockUnitTest {
      */
     @Test
     public void testHashCode() {
-        Block x = new Block("owner2", sequenceNumber+1, ownHash, previousHashChain, previousHashSender, "pub2", false);
-        Block y = new Block("owner2", sequenceNumber+1, ownHash, previousHashChain, previousHashSender, "pub2", false);
+        Block x = new Block("owner2", sequenceNumber+1, ownHash, previousHashChain, previousHashSender, "pub2",iban, false);
+        Block y = new Block("owner2", sequenceNumber+1, ownHash, previousHashChain, previousHashSender, "pub2",iban, false);
         assertTrue(x.equals(y) && y.equals(x));
         assertTrue(x.hashCode() == y.hashCode());
     }
