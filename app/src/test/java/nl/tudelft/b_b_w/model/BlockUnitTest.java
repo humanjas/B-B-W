@@ -113,6 +113,21 @@ public class BlockUnitTest {
         assertEquals(check, _block.getIban());
     }
 
+
+    /**
+     * Test to check whether the setSeqNumberTo() sets the sequence number of a block to correctly.
+     * @throws Exception Catches error when the MessageDigest
+     * gets an error.
+     */
+    @Test
+    public void setSeqNumberToTest() throws Exception {
+        _block.setSeqNumberTo(99);
+        assertEquals(99, _block.getSequenceNumber());
+    }
+
+
+
+
     /**
      * Test to check whether the isRevoked() method returns the right boolean value indicating if the block is revoked or not.
      * @throws Exception Catches error when the MessageDigest
