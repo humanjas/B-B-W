@@ -40,7 +40,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     // Persistence helpers
     private final String[] _columns = new String[]{
-            KEY_OWNER, KEY_SEQ_NO, KEY_OWN_HASH, KEY_PREV_HASH_CHAIN, KEY_PREV_HASH_SENDER, KEY_PUBLIC_KEY,KEY_IBAN_KEY, KEY_REVOKE
+            KEY_OWNER, KEY_SEQ_NO, KEY_OWN_HASH, KEY_PREV_HASH_CHAIN, KEY_PREV_HASH_SENDER, KEY_PUBLIC_KEY, KEY_IBAN_KEY, KEY_REVOKE
     };
 
     /**
