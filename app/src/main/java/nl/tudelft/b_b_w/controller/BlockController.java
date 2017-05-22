@@ -85,7 +85,18 @@ public class BlockController {
     }
 
 
+
     /**
+     * Get the lastest sequence number of the chain of a specific owner
+     *
+     * @return Lastest int of chain
+     */
+    public int getLastestSeqNumber(String owner) {
+        return databaseHandler.lastSeqNumberOfChain(owner);
+    }
+
+    /**
+     *
      * Revoke a block from the blockchain by adding the same
      * block but setting revoked on true
      *

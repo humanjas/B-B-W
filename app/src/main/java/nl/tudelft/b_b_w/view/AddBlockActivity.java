@@ -11,17 +11,12 @@ import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.controller.ConversionController;
 import nl.tudelft.b_b_w.model.Block;
-import nl.tudelft.b_b_w.model.DatabaseHandler;
 
 /**
  * When the user wants to add a block he enters into the AddBlockActivity, which contain
  * some entry fields and a button to confirm the addition.
  */
 public class AddBlockActivity extends Activity {
-    /**
-     * Connection with block database
-     */
-    private DatabaseHandler handler;
 
     /**
      * Controller of blocks
@@ -47,7 +42,6 @@ public class AddBlockActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addblock);
-        handler = new DatabaseHandler(this);
         blockController = new BlockController(this);
         Bundle extras = getIntent().getExtras();
         ownerName = extras.getString("ownerName");
@@ -76,7 +70,7 @@ public class AddBlockActivity extends Activity {
 
 
             // create and add the block
-            Block previous = handler.getLatestBlock(ownerName);
+            Block previous = blockController.getLastestBlock(ownerName);
             int blockSeqNumber = previous.getSequenceNumber()+ 1;
             ConversionController conversionController = new ConversionController(ownerName, blockSeqNumber, senderPublicKey, previous.getOwnHash(), senderHash, senderIban);
             String ownHash = conversionController.hashKey();
@@ -90,7 +84,7 @@ public class AddBlockActivity extends Activity {
                     senderIban, //iban of teh sender
                     false // is revoked?
             );
-            handler.addBlock(block);
+            blockController.addBlock(block);
 
             // confirm by showing a small text message
             Toast.makeText(this, "Block added", Toast.LENGTH_SHORT).show();

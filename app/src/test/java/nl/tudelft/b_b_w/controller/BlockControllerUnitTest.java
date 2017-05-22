@@ -82,7 +82,21 @@ public class BlockControllerUnitTest {
         assertEquals(expected, bc.getLastestBlock(owner));
     }
 
+    /**
+     * Tests returning the lastestsequence number of chain
+     * @throws Exception RuntimeException
+     */
+    @Test
+    public void testGetLastestSeqNumber() throws Exception {
+        String newOwner = owner+"2";
+        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, sequenceNumber, ownHash,
+                previousHashChain, previousHashSender, publicKey,iban);
+        bc.addBlock(_block);
+        bc.addBlock(newBlock);
 
+
+        assertEquals(1, bc.getLastestSeqNumber(owner));
+    }
 
 
 
