@@ -34,7 +34,7 @@ public class BlockFactoryUnitTest {
      */
     @Before
     public void makeNewBlock() throws Exception {
-        _block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
+        _block = new Block(owner, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
         blockFactory = new BlockFactory();
     }
 
@@ -44,7 +44,7 @@ public class BlockFactoryUnitTest {
      */
     @Test
     public void testGetBlock(){
-        Block newBlock = BlockFactory.getBlock("BLOCK", owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban);
+        Block newBlock = BlockFactory.getBlock("BLOCK", owner, ownHash, previousHashChain, previousHashSender, publicKey, iban);
         assertEquals(_block, newBlock);
     }
 
@@ -54,7 +54,7 @@ public class BlockFactoryUnitTest {
      */
     @Test
     public void testGetRevokeBlock(){
-        Block newBlock = BlockFactory.getBlock("BLOCK", owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban);
+        Block newBlock = BlockFactory.getBlock("BLOCK", owner, ownHash, previousHashChain, previousHashSender, publicKey, iban);
         assertEquals(_block, newBlock);
     }
 
@@ -64,7 +64,7 @@ public class BlockFactoryUnitTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testGetBlockEmpty(){
-        BlockFactory.getBlock("", owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban);
+        BlockFactory.getBlock("", owner, ownHash, previousHashChain, previousHashSender, publicKey, iban);
     }
 
     /**
@@ -73,7 +73,7 @@ public class BlockFactoryUnitTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testGetBlockFaultyString(){
-        BlockFactory.getBlock("block", owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban);
+        BlockFactory.getBlock("block", owner,  ownHash, previousHashChain, previousHashSender, publicKey, iban);
     }
 
 }

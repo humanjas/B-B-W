@@ -11,6 +11,7 @@ import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.controller.ConversionController;
 import nl.tudelft.b_b_w.model.Block;
+import nl.tudelft.b_b_w.model.BlockFactory;
 
 /**
  * When the user wants to add a block he enters into the AddBlockActivity, which contain
@@ -74,16 +75,18 @@ public class AddBlockActivity extends Activity {
             int blockSeqNumber = previous.getSequenceNumber()+ 1;
             ConversionController conversionController = new ConversionController(ownerName, blockSeqNumber, senderPublicKey, previous.getOwnHash(), senderHash, senderIban);
             String ownHash = conversionController.hashKey();
-            Block block = new Block(
-                    ownerName, // owner of a block
-                    999999, // addBlock will overwrite this, TODO remove from constructor
+
+
+            Block block =  BlockFactory.getBlock(
+                    "BLOCK", // is revoked?
+                    ownerName,// owner of the block
                     ownHash, // our own hash
                     previous.getOwnHash(), //  the hash value of the block before in the chain
                     senderHash, // the hash value of the block before of the sender
                     senderPublicKey, // public key of the owner of the block
-                    senderIban, //iban of teh sender
-                    false // is revoked?
+                    senderIban //iban of teh sender
             );
+
             blockController.addBlock(block);
 
             // confirm by showing a small text message
