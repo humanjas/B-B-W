@@ -35,10 +35,4 @@
         tools:layout_editor_absoluteX="100dp"
         tools:layout_editor_absoluteY="400dp" />
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Energy-Saving Mode" />
-
 </android.widget.LinearLayout>
