@@ -37,7 +37,7 @@
         android:id="@+id/button5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onDisplayChain"
+        android:onClick="onPairPage"
         android:text="Pair"
         tools:layout_editor_absoluteX="100dp"
         tools:layout_editor_absoluteY="400dp" />
