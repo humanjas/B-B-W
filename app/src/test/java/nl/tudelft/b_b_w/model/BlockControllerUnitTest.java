@@ -1,4 +1,4 @@
-package nl.tudelft.b_b_w.ControllersUnitTest;
+package nl.tudelft.b_b_w.model;
 
 import android.content.res.Resources;
 
