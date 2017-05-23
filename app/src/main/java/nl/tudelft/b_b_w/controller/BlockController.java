@@ -11,7 +11,7 @@ import nl.tudelft.b_b_w.model.DatabaseHandler;
 import nl.tudelft.b_b_w.model.User;
 
 /**
- * Performs the actions of the blockchain
+ * Performs the actions of your own blockchain
  * Created by jasper on 11/05/2017.
  */
 

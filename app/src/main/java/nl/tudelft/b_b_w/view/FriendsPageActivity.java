@@ -2,6 +2,8 @@ package nl.tudelft.b_b_w.view;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import nl.tudelft.b_b_w.R;
@@ -62,6 +64,10 @@ public class FriendsPageActivity extends Activity {
     }
 
 
+    public void addBlock(View view) {
+
+        EditText senderNameText = (EditText) findViewById(R.id.senderName);
 
 
+    }
 }

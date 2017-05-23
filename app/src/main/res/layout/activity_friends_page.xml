@@ -31,7 +31,7 @@
                 android:text="Congratulations! You just connected with" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/senderName"
                 android:layout_width="300dp"
                 android:layout_height="80dp"
                 android:background="@android:color/transparent"
@@ -104,12 +104,30 @@
                     android:text="ibanDummy" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="361dp"
-                android:layout_height="wrap_content"
-                android:background="@android:color/holo_blue_light"
-                android:text="Add person to contact list" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/button3"
+                    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                    android:layout_width="159dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.22"
+                    android:background="@android:color/holo_blue_light"
+                    android:text="Add to contact list" />
+
+                <Button
+                    android:id="@+id/button9"
+                    style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/holo_blue_light"
+                    android:backgroundTint="@android:color/holo_green_dark"
+                    android:text="View his contact list" />
+            </LinearLayout>
 
         </LinearLayout>
 
