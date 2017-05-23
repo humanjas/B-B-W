@@ -2,6 +2,9 @@ package nl.tudelft.b_b_w.view.TestSubjects;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.Toast;
+
+import java.util.List;
 
 import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.controller.BlockController;
@@ -15,6 +18,7 @@ public class TestSubject1 extends Activity {
     private Block block2;
     private Block block3;
     private Block block4;
+    private String ownerName;
 
 //
 
@@ -27,11 +31,12 @@ public class TestSubject1 extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_subject1);
 
+        ownerName = "TestSubject1";
         blockController = new BlockController(this);
-        block1 = BlockFactory.getBlock("BLOCK", "TestSubject1", "HASH1","N/A","N/A","TestSubject_PUBKEY","IBANTestSubject1");
-        block2 = BlockFactory.getBlock("BLOCK", "TestSubject1", "HASH2","HASH1","HASHfromContact1","Contact1_PUBKEY","IBANContact1");
-        block3 = BlockFactory.getBlock("BLOCK", "TestSubject1", "HASH3","HASH2","HASHfromContact2","Contact2_PUBKEY","IBANContact2");
-        block4 = BlockFactory.getBlock("BLOCK", "TestSubject1", "HASH4","HASH3","HASHfromContact3","Contact3_PUBKEY","IBANContact3");
+        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","TestSubject_PUBKEY","IBANTestSubject1");
+        block2 = BlockFactory.getBlock("BLOCK", ownerName, "HASH2","HASH1","HASHfromContact1","Contact1_PUBKEY","IBANContact1");
+        block3 = BlockFactory.getBlock("BLOCK", ownerName, "HASH3","HASH2","HASHfromContact2","Contact2_PUBKEY","IBANContact2");
+        block4 = BlockFactory.getBlock("BLOCK", ownerName, "HASH4","HASH3","HASHfromContact3","Contact3_PUBKEY","IBANContact3");
 
         addTestChainToDatabase();
 
@@ -42,6 +47,12 @@ public class TestSubject1 extends Activity {
         blockController.addBlock(block3);
         blockController.addBlock(block4);
 
+        List<Block> list = blockController.getBlocks(ownerName);
+
+        Toast.makeText(this, list.get(0).getPublicKey() + ", " +
+                            list.get(1).getPublicKey() + ", " +
+                            list.get(2).getPublicKey() + ", " +
+                            list.get(3).getPublicKey(), Toast.LENGTH_SHORT).show();
     }
 
 
