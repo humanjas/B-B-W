@@ -79,4 +79,13 @@ public class MainActivity extends Activity {
         intent.putExtra("publicKey", publicKey);
         startActivity(intent);
     }
+
+
+
+    // NEW ADDITIONS REF
+
+    public void onPairPage(View view) {
+        Intent intent = new Intent(this, PairActivity.class);
+        startActivity(intent);
+    }
 }
