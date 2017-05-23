@@ -6,7 +6,6 @@ import nl.tudelft.b_b_w.controller.ConversionController;
 import static org.junit.Assert.*;
 /**
  * ConversionTest
- * Created by Ashay on 01/05/2017.
  */
 public class ConversionControllerUnitTest {
 

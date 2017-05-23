@@ -145,6 +145,24 @@ public class BlockUnitTest {
     }
 
     /**
+     * Test to check whether getting and setting the trust value actually works
+     */
+    @Test
+    public void testTrustValue() {
+        final int SET_VALUE = 10;
+        _block.setTrustValue(SET_VALUE);
+        assertEquals(SET_VALUE, _block.getTrustValue());
+    }
+
+    /**
+     * Test to check whether initializing the trustvalue works
+     */
+    @Test
+    public void testTrustValueInit() {
+        assertEquals(0, _block.getTrustValue());
+    }
+
+    /**
      * Test to check whether the equals() method returns the right boolean value indicating if this block is equal to the parameter block.
      * @throws Exception Catches error when the MessageDigest
      * gets an error.
@@ -183,6 +201,7 @@ public class BlockUnitTest {
                 ", previousHashSender='" + previousHashSender + '\'' +
                 ", publicKey='" + publicKey + '\'' +
                 ", iban='" + iban + '\'' +
+                ", trustValue='" + 0 + '\'' +
                 ", isRevoked=" + isRevoked +
                 '}';
         assertEquals(result, _block.toString());

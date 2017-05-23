@@ -40,7 +40,16 @@ public class MainActivity extends Activity {
         try {
             if (blockController.getBlocks(ownerName).isEmpty()) {
 
-                Block block = BlockFactory.getBlock("BLOCK",ownerName, "ownHash", "previoushash", "senderhash", "senderpubkey","senderIban");
+                Block block = BlockFactory.getBlock(
+                        "BLOCK",
+                        ownerName,
+                        "ownHash",
+                        "previoushash",
+                        "senderhash",
+                        "senderpubkey",
+                        "senderIban",
+                        0
+                );
                 blockController.addBlock(block);
             }
         } catch (Exception e) {
