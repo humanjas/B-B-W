@@ -25,6 +25,7 @@
             android:id="@+id/button10"
             android:layout_width="139dp"
             android:layout_height="wrap_content"
+            android:onClick="onTestSubject1"
             android:paddingTop="10dp"
             android:text="TestSubject1" />
 
@@ -32,6 +33,7 @@
             android:id="@+id/button11"
             android:layout_width="139dp"
             android:layout_height="wrap_content"
+            android:onClick="onTestSubject2"
             android:paddingTop="10dp"
             android:text="TestSubject2" />
 
@@ -39,6 +41,7 @@
             android:id="@+id/button12"
             android:layout_width="139dp"
             android:layout_height="wrap_content"
+            android:onClick="onTestSubject3"
             android:paddingTop="10dp"
             android:text="TestSubject3" />
     </LinearLayout>
