@@ -160,6 +160,31 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     /**
+     * Get the owner name, given the public kkey
+     *
+     * @return name of owner
+     */
+    public String getOwnerName(String publicKey)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.query(TABLE_NAME,
+                new String[]{KEY_OWNER},
+                KEY_PUBLIC_KEY + " = ? ",
+                new String[]{
+                        publicKey
+                }, null, null, null, null);
+
+        try {
+            c.moveToFirst();
+            return c.getString(0);
+        } finally {
+            c.close();
+        }
+    }
+
+
+
+    /**
      * Method to get a specific block
      *
      * @param owner          The owner of the block you want
