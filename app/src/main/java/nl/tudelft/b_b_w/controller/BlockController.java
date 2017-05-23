@@ -84,7 +84,7 @@ public class BlockController {
         String owner = block.getOwner();
         Block newBlock = BlockFactory.getBlock("REVOKE", block.getOwner(), block.getSequenceNumber(),
                 block.getOwnHash(), block.getPreviousHashChain(), block.getPreviousHashSender(),
-                block.getPublicKey());
+                block.getPublicKey(), block.getIban());
         addBlock(newBlock);
         return getBlocks(owner);
     }
