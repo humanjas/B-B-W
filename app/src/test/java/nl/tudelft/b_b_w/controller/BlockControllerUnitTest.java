@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.b_b_w.BuildConfig;
-import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
 
@@ -66,6 +65,25 @@ public class BlockControllerUnitTest {
         List<Block> list = new ArrayList<>();
         list.add(_block);
         assertEquals(bc.getBlocks(owner), list);
+    }
+
+
+
+
+    /**
+     * getOwnerName test
+     * Test getting the owner name given public key.
+     */
+    @Test
+    public void getOwnerName() {
+        final String owner2 = "testowner";
+        final String publicKey2 = "testpubkey";
+        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner2, ownHash,
+                previousHashChain, previousHashSender, publicKey2, iban);
+        bc.addBlock(block2);
+        bc.addBlock(_block);
+        assertEquals(owner2, bc.getOwnerName(publicKey2));
+
     }
 
 

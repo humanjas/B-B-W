@@ -75,12 +75,12 @@ public class BlockController {
 
 
     /**
-     * Get the owner name, given the public kkey
-     *
+     * Get the owner name, given the public key
+     * @param publicKey public key of the owner
+     *                  whose name we want to find
      * @return name of owner
      */
     public String getOwnerName(String publicKey) {
-
         return databaseHandler.getOwnerName(publicKey);
     }
 

@@ -161,7 +161,6 @@ public class DatabaseHandlerUnitTest {
 
 
 
-
     /**
      * getLatestBlock test
      * Tests the latest block
