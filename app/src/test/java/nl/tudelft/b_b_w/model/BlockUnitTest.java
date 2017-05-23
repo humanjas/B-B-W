@@ -18,7 +18,8 @@ import static org.junit.Assert.assertTrue;
 public class BlockUnitTest {
 
     private Block _block;
-    private final String blockType = "BLOCK";
+    private final String TYPE_BLOCK = "BLOCK";
+    private final String TYPE_REVOKE = "REVOKE";
     private final String owner = "owner";
     private final int sequenceNumber = 0;
     private final String ownHash = "ownHash";
@@ -36,7 +37,7 @@ public class BlockUnitTest {
      */
     @Before
     public void makeNewBlock() throws Exception {
-        _block = BlockFactory.getBlock(blockType, owner, ownHash,
+        _block = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
     }
 
@@ -151,7 +152,7 @@ public class BlockUnitTest {
      */
     @Test
     public void equalsTest() throws Exception {
-        final Block check = BlockFactory.getBlock(blockType, owner, ownHash,
+        final Block check = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         assertTrue(_block.equals(check));
     }
@@ -165,7 +166,7 @@ public class BlockUnitTest {
     @Test
     public void equalsFalseTest() throws Exception {
         final String _owner = "NOTOWNER";
-        final Block check = BlockFactory.getBlock(blockType, _owner, ownHash,
+        final Block check = BlockFactory.getBlock(TYPE_REVOKE, _owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         assertFalse(_block.equals(check));
     }

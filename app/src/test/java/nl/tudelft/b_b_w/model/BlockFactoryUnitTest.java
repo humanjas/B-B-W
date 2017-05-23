@@ -17,7 +17,8 @@ import static org.junit.Assert.assertTrue;
 public class BlockFactoryUnitTest {
 
     private Block _block;
-    private final String blockType = "BLOCK";
+    private final String TYPE_BLOCK = "BLOCK";
+    private final String TYPE_REVOKE = "REVOKE";
     private final String owner = "owner";
     private final String ownHash = "ownHash";
     private final String previousHashChain = "previousHashChain";
@@ -34,7 +35,7 @@ public class BlockFactoryUnitTest {
      */
     @Before
     public void makeNewBlock() throws Exception {
-        _block = BlockFactory.getBlock(blockType, owner, ownHash,
+        _block = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         blockFactory = new BlockFactory();
     }
@@ -45,7 +46,7 @@ public class BlockFactoryUnitTest {
      */
     @Test
     public void testGetBlock(){
-        final Block newBlock = BlockFactory.getBlock(blockType, owner, ownHash,
+        final Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         assertEquals(_block, newBlock);
     }
@@ -56,7 +57,7 @@ public class BlockFactoryUnitTest {
      */
     @Test
     public void testGetRevokeBlock(){
-        final Block newBlock = BlockFactory.getBlock(blockType, owner, ownHash,
+        final Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         assertEquals(_block, newBlock);
     }

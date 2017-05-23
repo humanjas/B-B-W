@@ -33,7 +33,8 @@ import static org.junit.Assert.assertTrue;
 public class DatabaseHandlerUnitTest {
 
     private DatabaseHandler databaseHandler;
-    private final String blockType = "BLOCK";
+    private final String TYPE_BLOCK = "BLOCK";
+    private final String TYPE_REVOKE = "REVOKE";
     private final String owner = "owner";
     private final int sequenceNumber = 1;
     private final String ownHash = "ownHash";
@@ -51,7 +52,7 @@ public class DatabaseHandlerUnitTest {
     @Before
     public void setUp() {
         this.databaseHandler = new DatabaseHandler(RuntimeEnvironment.application);
-       _block =  BlockFactory.getBlock(blockType, owner, ownHash,
+       _block =  BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
 
 }
@@ -134,7 +135,7 @@ public class DatabaseHandlerUnitTest {
     @Test
     public void getLatestSeqNum() {
 
-        final Block block2 = BlockFactory.getBlock(blockType, owner, ownHash,
+        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
@@ -151,7 +152,7 @@ public class DatabaseHandlerUnitTest {
     public void getOwnerName() {
         final String owner2 = "testowner";
         final String publicKey2 = "testpubkey";
-        final Block block2 = BlockFactory.getBlock(blockType, owner2, ownHash,
+        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner2, ownHash,
                 previousHashChain, previousHashSender, publicKey2, iban);
         databaseHandler.addBlock(block2);
         databaseHandler.addBlock(_block);
@@ -167,11 +168,11 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getLatestBlock() {
-        final Block block2 = BlockFactory.getBlock(blockType, "owner2", ownHash,
+        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, "owner2", ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
-        final Block expectBlock = BlockFactory.getBlock(blockType, "owner2", ownHash,
+        final Block expectBlock = BlockFactory.getBlock(TYPE_BLOCK, "owner2", ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         assertEquals(expectBlock, databaseHandler.getLatestBlock("owner2"));
     }
@@ -182,11 +183,11 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getBlockAfter() {
-        final Block block2 = BlockFactory.getBlock(blockType, owner, ownHash,
+        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
-        final Block expectBlock = BlockFactory.getBlock(blockType, owner, ownHash,
+        final Block expectBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         assertEquals(expectBlock, databaseHandler.getBlockAfter(owner, sequenceNumber));
     }
@@ -197,7 +198,7 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void getBlockBefore() {
-        final Block block2 = BlockFactory.getBlock(blockType, owner, ownHash,
+        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
@@ -211,7 +212,7 @@ public class DatabaseHandlerUnitTest {
     @Test
     public void getAllBlocks() {
         final String owner2 = "owner2";
-        final Block block2 = BlockFactory.getBlock(blockType, owner2, ownHash,
+        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner2, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
