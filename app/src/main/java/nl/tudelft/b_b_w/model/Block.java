@@ -13,24 +13,26 @@ public class Block {
     private String previousHashChain;
     private String previousHashSender;
     private String publicKey;
+    private String iban;
     private boolean isRevoked;
 
     /**
      * @param _owner              owner of a block
-     * @param _sequenceNumber     sequence number of the block
      * @param _ownHash            our own hash
      * @param _previousHashChain  the hash value of the block before in the chain
      * @param _previousHashSender the hash value of the block before of the sender
-     * @param _publicKey          public key of the owner of the block
+     * @param _publicKey          public key of the sender
+     * @param _iban               IBAN number of a contact
      * @param _isRevoked          boolean to check whether a block is revoked or not
      */
-    public Block(String _owner, int _sequenceNumber, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, boolean _isRevoked) {
+    public Block(String _owner, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban, boolean _isRevoked) {
         this.owner = _owner;
-        this.sequenceNumber = _sequenceNumber;
+        this.sequenceNumber = 0;
         this.ownHash = _ownHash;
         this.previousHashChain = _previousHashChain;
         this.previousHashSender = _previousHashSender;
         this.publicKey = _publicKey;
+        this.iban   = _iban;
         this.isRevoked = _isRevoked;
     }
 
@@ -88,6 +90,28 @@ public class Block {
         return sequenceNumber;
     }
 
+
+    /**
+     * Default initializar for sequence number
+     *
+     * @return the sequence number of the block after initialization
+     */
+    public int setSeqNumberTo(int _sequenceNumber) {
+        sequenceNumber = _sequenceNumber;
+        return sequenceNumber;
+    }
+
+
+    /**
+     * Default getter for sequence number
+     *
+     * @return the sequence number of the block
+     */
+    public String getIban() {
+        return iban;
+    }
+
+
     /**
      * Default getter for checking whether a block is revoked
      *
@@ -113,6 +137,7 @@ public class Block {
         if (!ownHash.equals(block.ownHash)) return false;
         if (!previousHashChain.equals(block.previousHashChain)) return false;
         if (!previousHashSender.equals(block.previousHashSender)) return false;
+        if (!iban.equals(block.iban)) return false;
         return publicKey.equals(block.publicKey);
 
     }
@@ -128,6 +153,7 @@ public class Block {
         result = 31 * result + previousHashChain.hashCode();
         result = 31 * result + previousHashSender.hashCode();
         result = 31 * result + publicKey.hashCode();
+        result = 31 * result + iban.hashCode();
         result = 31 * result + (isRevoked ? 1 : 0);
         return result;
     }
@@ -144,6 +170,7 @@ public class Block {
                 ", previousHashChain='" + previousHashChain + '\'' +
                 ", previousHashSender='" + previousHashSender + '\'' +
                 ", publicKey='" + publicKey + '\'' +
+                ", iban='" + iban + '\'' +
                 ", isRevoked=" + isRevoked +
                 '}';
     }

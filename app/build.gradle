@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "nl.tudelft.b_b_w"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -28,4 +28,9 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.0'
+<<<<<<< HEAD
+=======
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'org.encryptor4j:encryptor4j:0.1.1'
+>>>>>>> 8ad9306af153812e0a282d4e6e8957ad5271d335
 }
