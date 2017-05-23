@@ -2,7 +2,10 @@ package nl.tudelft.b_b_w.ModelsUnitTest;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import nl.tudelft.b_b_w.model.Block;
+import nl.tudelft.b_b_w.model.BlockFactory;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -15,14 +18,16 @@ import static org.junit.Assert.assertTrue;
 public class BlockUnitTest {
 
     private Block _block;
+    private final String blockType = "BLOCK";
     private final String owner = "owner";
     private final int sequenceNumber = 0;
     private final String ownHash = "ownHash";
     private final String previousHashChain = "previousHashChain";
     private final String previousHashSender = "previousHashSender";
     private final String publicKey = "publicKey";
-    private final String iban = "iban";
     private final boolean isRevoked = false;
+    private final String iban = "iban";
+
 
     /**
      * This method runs before each test to initialize the test object
@@ -31,7 +36,8 @@ public class BlockUnitTest {
      */
     @Before
     public void makeNewBlock() throws Exception {
-        _block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
+        _block = BlockFactory.getBlock(blockType, owner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban);
     }
 
     /**
@@ -113,6 +119,21 @@ public class BlockUnitTest {
         assertEquals(check, _block.getIban());
     }
 
+
+    /**
+     * Test to check whether the setSeqNumberTo() sets the sequence number of a block to correctly.
+     * @throws Exception Catches error when the MessageDigest
+     * gets an error.
+     */
+    @Test
+    public void setSeqNumberToTest() throws Exception {
+        _block.setSeqNumberTo(99);
+        assertEquals(99, _block.getSequenceNumber());
+    }
+
+
+
+
     /**
      * Test to check whether the isRevoked() method returns the right boolean value indicating if the block is revoked or not.
      * @throws Exception Catches error when the MessageDigest
@@ -130,7 +151,8 @@ public class BlockUnitTest {
      */
     @Test
     public void equalsTest() throws Exception {
-        Block check = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
+        final Block check = BlockFactory.getBlock(blockType, owner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban);
         assertTrue(_block.equals(check));
     }
 
@@ -143,7 +165,8 @@ public class BlockUnitTest {
     @Test
     public void equalsFalseTest() throws Exception {
         final String _owner = "NOTOWNER";
-        Block check = new Block(_owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
+        final Block check = BlockFactory.getBlock(blockType, _owner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban);
         assertFalse(_block.equals(check));
     }
 
@@ -152,7 +175,7 @@ public class BlockUnitTest {
      */
     @Test
     public void toStringTest() {
-        String result = "Block{" +
+        final String result = "Block{" +
                 "owner='" + owner + '\'' +
                 ", sequenceNumber=" + sequenceNumber +
                 ", ownHash='" + ownHash + '\'' +
@@ -171,8 +194,8 @@ public class BlockUnitTest {
      */
     @Test
     public void testHashCode() {
-        Block x = new Block("owner2", sequenceNumber+1, ownHash, previousHashChain, previousHashSender, "pub2", iban, false);
-        Block y = new Block("owner2", sequenceNumber+1, ownHash, previousHashChain, previousHashSender, "pub2", iban, false);
+        final Block x = new Block("owner2", ownHash, previousHashChain, previousHashSender, "pub2", iban, false);
+        final Block y = new Block("owner2", ownHash, previousHashChain, previousHashSender, "pub2", iban, false);
         assertTrue(x.equals(y) && y.equals(x));
         assertTrue(x.hashCode() == y.hashCode());
     }

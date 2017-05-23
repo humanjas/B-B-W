@@ -18,7 +18,6 @@ public class Block {
 
     /**
      * @param _owner              owner of a block
-     * @param _sequenceNumber     sequence number of the block
      * @param _ownHash            our own hash
      * @param _previousHashChain  the hash value of the block before in the chain
      * @param _previousHashSender the hash value of the block before of the sender
@@ -26,9 +25,9 @@ public class Block {
      * @param _iban               IBAN number of a contact
      * @param _isRevoked          boolean to check whether a block is revoked or not
      */
-    public Block(String _owner, int _sequenceNumber, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban, boolean _isRevoked) {
+    public Block(String _owner, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban, boolean _isRevoked) {
         this.owner = _owner;
-        this.sequenceNumber = _sequenceNumber;
+        this.sequenceNumber = 0;
         this.ownHash = _ownHash;
         this.previousHashChain = _previousHashChain;
         this.previousHashSender = _previousHashSender;
@@ -90,6 +89,18 @@ public class Block {
     public int getSequenceNumber() {
         return sequenceNumber;
     }
+
+
+    /**
+     * Default initializar for sequence number
+     *
+     * @return the sequence number of the block after initialization
+     */
+    public int setSeqNumberTo(int _sequenceNumber) {
+        sequenceNumber = _sequenceNumber;
+        return sequenceNumber;
+    }
+
 
     /**
      * Default getter for sequence number

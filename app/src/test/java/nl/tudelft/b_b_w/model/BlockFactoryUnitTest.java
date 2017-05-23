@@ -17,8 +17,8 @@ import static org.junit.Assert.assertTrue;
 public class BlockFactoryUnitTest {
 
     private Block _block;
+    private final String blockType = "BLOCK";
     private final String owner = "owner";
-    private final int sequenceNumber = 0;
     private final String ownHash = "ownHash";
     private final String previousHashChain = "previousHashChain";
     private final String previousHashSender = "previousHashSender";
@@ -34,7 +34,8 @@ public class BlockFactoryUnitTest {
      */
     @Before
     public void makeNewBlock() throws Exception {
-        _block = new Block(owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban, isRevoked);
+        _block = BlockFactory.getBlock(blockType, owner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban);
         blockFactory = new BlockFactory();
     }
 
@@ -44,7 +45,8 @@ public class BlockFactoryUnitTest {
      */
     @Test
     public void testGetBlock(){
-        Block newBlock = BlockFactory.getBlock("BLOCK", owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban);
+        final Block newBlock = BlockFactory.getBlock(blockType, owner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban);
         assertEquals(_block, newBlock);
     }
 
@@ -54,7 +56,8 @@ public class BlockFactoryUnitTest {
      */
     @Test
     public void testGetRevokeBlock(){
-        Block newBlock = BlockFactory.getBlock("BLOCK", owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban);
+        final Block newBlock = BlockFactory.getBlock(blockType, owner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban);
         assertEquals(_block, newBlock);
     }
 
@@ -64,7 +67,7 @@ public class BlockFactoryUnitTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testGetBlockEmpty(){
-        BlockFactory.getBlock("", owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban);
+        BlockFactory.getBlock("", owner, ownHash, previousHashChain, previousHashSender, publicKey, iban);
     }
 
     /**
@@ -73,7 +76,7 @@ public class BlockFactoryUnitTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testGetBlockFaultyString(){
-        BlockFactory.getBlock("block", owner, sequenceNumber, ownHash, previousHashChain, previousHashSender, publicKey, iban);
+        BlockFactory.getBlock("block", owner,  ownHash, previousHashChain, previousHashSender, publicKey, iban);
     }
 
 }

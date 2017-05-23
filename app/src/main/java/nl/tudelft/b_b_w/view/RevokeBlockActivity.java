@@ -11,15 +11,11 @@ import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.controller.ConversionController;
 import nl.tudelft.b_b_w.model.Block;
-import nl.tudelft.b_b_w.model.DatabaseHandler;
+import nl.tudelft.b_b_w.model.BlockFactory;
 
 
 public class RevokeBlockActivity extends Activity {
 
-    /**
-     * Connection with block database
-     */
-    private DatabaseHandler handler;
 
     /**
      * Controller of blocks
@@ -45,7 +41,6 @@ public class RevokeBlockActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_revokeblock);
-        handler = new DatabaseHandler(this);
         blockController = new BlockController(this);
         Bundle extras = getIntent().getExtras();
         ownerName = extras.getString("ownerName");
@@ -71,21 +66,23 @@ public class RevokeBlockActivity extends Activity {
             String senderIban = senderPublicKeyText.getText().toString();
 
             // create and add the block
-            Block previous = handler.getLatestBlock(ownerName);
-            int blockSeqNumber = previous.getSequenceNumber()+ 1;
+            final Block previous = blockController.getLatestBlock(ownerName);
+            final int blockSeqNumber = previous.getSequenceNumber()+ 1;
             ConversionController conversionController = new ConversionController(ownerName,blockSeqNumber, senderPublicKey, previous.getOwnHash(), senderHash,senderIban);
             String ownHash = conversionController.hashKey();
-            Block block = new Block(
-                    ownerName, // owner of a block
-                    999999, // addBlock will overwrite this, TODO remove from constructor
+
+            Block block =  BlockFactory.getBlock(
+                    "REVOKE", // is revoked?
+                    ownerName,// owner of the block
                     ownHash, // our own hash
                     previous.getOwnHash(), //  the hash value of the block before in the chain
                     senderHash, // the hash value of the block before of the sender
-                    senderPublicKey, // public key of sender
-                    senderIban,// iban of the sender
-                    true // is revoked?
+                    senderPublicKey, // public key of the owner of the block
+                    senderIban //iban of teh sender
             );
-            handler.addBlock(block);
+
+
+            blockController.addBlock(block);
 
             // confirm by showing a small text message
             Toast.makeText(this, "Revoke block added", Toast.LENGTH_SHORT).show();
