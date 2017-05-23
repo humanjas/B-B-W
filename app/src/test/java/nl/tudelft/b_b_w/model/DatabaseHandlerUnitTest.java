@@ -1,4 +1,4 @@
-package nl.tudelft.b_b_w.ModelsUnitTest;
+package nl.tudelft.b_b_w.model;
 
 import android.database.sqlite.SQLiteDatabase;
 
@@ -17,9 +17,11 @@ import nl.tudelft.b_b_w.BuildConfig;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
 import nl.tudelft.b_b_w.model.DatabaseHandler;
+import nl.tudelft.b_b_w.model.TrustValues;
 
 import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -75,11 +77,6 @@ public class DatabaseHandlerUnitTest {
         final Block newBlock = BlockFactory.getBlock("REVOKE", owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         databaseHandler.addBlock(_block);
-        for(Block e:databaseHandler.getAllBlocks(owner) )
-        {
-            System.out.println(e.getSequenceNumber());
-        }
-
         databaseHandler.addBlock(newBlock);
         List<Block> list = new ArrayList<>();
         list.add(_block);
@@ -199,6 +196,19 @@ public class DatabaseHandlerUnitTest {
         List<Block> result = new ArrayList<>();
         result.add(block2);
         assertEquals(result, databaseHandler.getAllBlocks(owner2));
+    }
+
+    /**
+     * updateBlockTest
+     * Tests whether updating a block works
+     */
+    @Test
+    public void updateBlockTest() {
+        final Block block2 = new Block(owner, sequenceNumber, ownHash, previousHashChain,
+                previousHashSender, publicKey, iban, isRevoked);
+        _block.setTrustValue(TrustValues.SUCCESFUL_TRANSACTION.getValue());
+        databaseHandler.updateBlock(_block);
+        assertNotEquals(databaseHandler.getBlock(owner, publicKey, sequenceNumber), block2);
     }
 
     /**
