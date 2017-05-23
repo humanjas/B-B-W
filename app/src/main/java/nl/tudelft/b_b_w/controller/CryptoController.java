@@ -6,7 +6,8 @@ import org.encryptor4j.util.TextEncryptor;
 import java.security.GeneralSecurityException;
 
 /**
- * Created by jasper on 22/05/2017.
+ * CryptoController class
+ * Encrypts and decrypts Strings using the AES-CBC protocol
  */
 
 public class CryptoController {
@@ -37,7 +38,7 @@ public class CryptoController {
     public String encryptString(String data) {
         try {
             return textEncryptor.encrypt(data);
-        }catch (GeneralSecurityException e){
+        } catch (GeneralSecurityException e){
             throw new RuntimeException("Error - Could not encode string: " + e);
         }
     }
@@ -51,7 +52,7 @@ public class CryptoController {
     public String decryptString(String data) {
         try {
             return textEncryptor.decrypt(data);
-        }catch (GeneralSecurityException e){
+        } catch (GeneralSecurityException e){
             throw new RuntimeException("Error - Could not decode string: " + e);
         }
     }
