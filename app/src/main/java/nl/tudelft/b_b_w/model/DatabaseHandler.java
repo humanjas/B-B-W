@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * Class to create and handle the Database.
- * Created by jasper on 30/04/2017.
  */
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -35,12 +34,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_PREV_HASH_SENDER = "previousHashSender";
     private static final String KEY_PUBLIC_KEY = "publicKey";
     private static final String KEY_IBAN_KEY = "iban";
+    private static final String KEY_TRUST_VALUE = "trustValue";
     private static final String KEY_REVOKE = "revoke";
     private static final String KEY_CREATED_AT = "created_at";
 
     // Persistence helpers
     private final String[] _columns = new String[]{
-            KEY_OWNER, KEY_SEQ_NO, KEY_OWN_HASH, KEY_PREV_HASH_CHAIN, KEY_PREV_HASH_SENDER, KEY_PUBLIC_KEY, KEY_IBAN_KEY, KEY_REVOKE
+            KEY_OWNER, KEY_SEQ_NO, KEY_OWN_HASH, KEY_PREV_HASH_CHAIN, KEY_PREV_HASH_SENDER,
+            KEY_PUBLIC_KEY, KEY_IBAN_KEY, KEY_TRUST_VALUE, KEY_REVOKE
     };
 
     /**
@@ -69,6 +70,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_PREV_HASH_SENDER + " TEXT NOT NULL,"
                 + KEY_PUBLIC_KEY + " TEXT NOT NULL,"
                 + KEY_IBAN_KEY + " TEXT NOT NULL,"
+                + KEY_TRUST_VALUE + " INTEGER NOT NULL,"
                 + KEY_REVOKE + " BOOLEAN DEFAULT FALSE NOT NULL,"
                 + KEY_CREATED_AT + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,"
                 + " PRIMARY KEY (owner, publicKey, sequenceNumber)"
@@ -123,6 +125,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_PREV_HASH_SENDER, block.getPreviousHashSender());
         values.put(KEY_IBAN_KEY, block.getIban());
         values.put(KEY_PUBLIC_KEY, block.getPublicKey());
+        values.put(KEY_TRUST_VALUE, block.getTrustValue());
         values.put(KEY_REVOKE, block.isRevoked());
 
         // Inserting Row
@@ -209,9 +212,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         final String blockType = (cursor.getInt(7) > 0) ?  "REVOKE" : "BLOCK";
-
-        Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
-                cursor.getString(4), cursor.getString(5), cursor.getString(6));
+        Block block = BlockFactory.getBlock(
+                blockType,cursor.getString(0),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getString(6),
+                cursor.getInt(7));
 
         // Close database connection
         db.close();
@@ -302,8 +310,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         final String blockType = (cursor.getInt(7) > 0) ?  "REVOKE" : "BLOCK";
-        Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
-                cursor.getString(4), cursor.getString(5), cursor.getString(6));
+        Block block = BlockFactory.getBlock(
+                blockType,cursor.getString(0),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getString(6),
+                cursor.getInt(7));
+
         // Close database connection
         db.close();
 
@@ -337,8 +352,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         final String blockType = (cursor.getInt(7) > 0) ?  "REVOKE" : "BLOCK";
-        Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
-                cursor.getString(4), cursor.getString(5), cursor.getString(6));
+        Block block = BlockFactory.getBlock(
+                blockType,cursor.getString(0),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getString(6),
+                cursor.getInt(7));
 
         // Close database connection
         db.close();
@@ -373,8 +394,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         final String blockType = (cursor.getInt(7) > 0) ?  "REVOKE" : "BLOCK";
-        Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
-                cursor.getString(4), cursor.getString(5), cursor.getString(6));
+        Block block = BlockFactory.getBlock(
+                blockType,cursor.getString(0),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getString(6),
+                cursor.getInt(7));
 
         // Close database connection
         db.close();
@@ -410,8 +437,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
             do {
                 final String blockType = (cursor.getInt(7) > 0) ?  "REVOKE" : "BLOCK";
-                Block block = BlockFactory.getBlock(blockType,cursor.getString(0), cursor.getString(2), cursor.getString(3),
-                        cursor.getString(4), cursor.getString(5), cursor.getString(6));
+                Block block = BlockFactory.getBlock(
+                        blockType,cursor.getString(0),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getInt(7));
                 blocks.add(block);
             } while (cursor.moveToNext());
         }
@@ -423,5 +456,38 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.close();
 
         return blocks;
+    }
+
+    /**
+     * updateBlock function
+     * updates the values of the block
+     * @param block block that needs to be updated
+     * @throws RuntimeException if the block cannot be updated
+     */
+    public void updateBlock(Block block) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_OWNER, block.getOwner());
+        values.put(KEY_SEQ_NO, block.getSequenceNumber());
+        values.put(KEY_OWN_HASH, block.getOwnHash());
+        values.put(KEY_PREV_HASH_CHAIN, block.getPreviousHashChain());
+        values.put(KEY_PREV_HASH_SENDER, block.getPreviousHashSender());
+        values.put(KEY_IBAN_KEY, block.getIban());
+        values.put(KEY_PUBLIC_KEY, block.getPublicKey());
+        values.put(KEY_REVOKE, block.isRevoked());
+        values.put(KEY_TRUST_VALUE, block.getTrustValue());
+
+        // updating row
+        int result = db.update(TABLE_NAME,
+                values,
+                KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ? AND " + KEY_SEQ_NO + " = ?",
+                new String[] {
+                        block.getOwner(),
+                        block.getPublicKey(),
+                        String.valueOf(block.getSequenceNumber()),
+                });
+        if (result == -1) throw new RuntimeException("Block cannot be updated - " + block.toString());
+        db.close(); // Closing database connection
     }
 }
