@@ -48,6 +48,7 @@ matrix:
 before_install:
   - export EMULATOR="system-images;android-${API};${TAG};${ABI}" # Used to install/create emulator
   - echo 'count=0' > /home/travis/.android/repositories.cfg # Avoid warning
+  - pip install --user codecov
 
 install:
   # List and delete unnecessary components to free space
@@ -103,9 +104,14 @@ before_script:
 
 script:
   # Build and run all device checks
-  ./gradlew build connectedCheck
+  - ./gradlew build connectedCheck
+  - ./gradlew check -PdisablePreDex --continue --stacktrace
 
 after_script:
   # Show tests and lint results
   - cat ${TRAVIS_BUILD_DIR}/*/build/outputs/androidTest-results/connected/*
   - cat ${TRAVIS_BUILD_DIR}/*/build/reports/lint-results.xml
+
+after_succes:
+  - ./gradlew jacocoFullReport
+  - codecov
