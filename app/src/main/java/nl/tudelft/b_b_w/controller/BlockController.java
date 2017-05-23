@@ -8,7 +8,6 @@ import java.util.List;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
 import nl.tudelft.b_b_w.model.DatabaseHandler;
-import nl.tudelft.b_b_w.model.User;
 
 /**
  * Performs the actions of the blockchain
@@ -18,7 +17,8 @@ import nl.tudelft.b_b_w.model.User;
 public class BlockController {
 
     private Context context;
-    private User user;
+//    user is not used yet
+//    private User user;
     private DatabaseHandler databaseHandler;
 
     /**
@@ -28,7 +28,7 @@ public class BlockController {
      */
     public BlockController(Context _context) {
         this.context = _context;
-        this.user = new User();
+//        this.user = new User();
         this.databaseHandler = new DatabaseHandler(this.context);
     }
 

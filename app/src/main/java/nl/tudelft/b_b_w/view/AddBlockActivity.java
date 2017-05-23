@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import nl.tudelft.b_b_w.R;
-import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.controller.ConversionController;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.DatabaseHandler;
@@ -22,11 +21,6 @@ public class AddBlockActivity extends Activity {
      * Connection with block database
      */
     private DatabaseHandler handler;
-
-    /**
-     * Controller of blocks
-     */
-    private BlockController blockController;
 
     /**
      * Owner of the block
@@ -48,7 +42,6 @@ public class AddBlockActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addblock);
         handler = new DatabaseHandler(this);
-        blockController = new BlockController(this);
         Bundle extras = getIntent().getExtras();
         ownerName = extras.getString("ownerName");
         publicKey = extras.getString("publicKey");
