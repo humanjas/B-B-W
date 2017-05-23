@@ -78,7 +78,8 @@ public class RevokeBlockActivity extends Activity {
                     previous.getOwnHash(), //  the hash value of the block before in the chain
                     senderHash, // the hash value of the block before of the sender
                     senderPublicKey, // public key of the owner of the block
-                    senderIban //iban of teh sender
+                    senderIban, //iban of the sender
+                    0 // initial trust value
             );
 
 
