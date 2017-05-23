@@ -1,4 +1,4 @@
-package nl.tudelft.b_b_w.model;
+package nl.tudelft.b_b_w.controller;
 
 import android.content.res.Resources;
 
