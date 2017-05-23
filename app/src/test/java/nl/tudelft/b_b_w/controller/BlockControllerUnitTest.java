@@ -39,6 +39,7 @@ public class BlockControllerUnitTest {
     private final String ownHash = "ownHash";
     private final String previousHashChain = "previousHashChain";
     private final String previousHashSender = "previousHashSender";
+    private final String iban = "iban";
     private final String publicKey = "publicKey";
     private Block _block;
     private final String TYPE_BLOCK = "BLOCK";
@@ -52,7 +53,7 @@ public class BlockControllerUnitTest {
     public void setUp() {
         this.bc = new BlockController(RuntimeEnvironment.application);
         this._block = BlockFactory.getBlock(TYPE_BLOCK, owner, sequenceNumber, ownHash,
-                previousHashChain, previousHashSender, publicKey);
+                previousHashChain, previousHashSender, publicKey, iban);
     }
 
     /**
@@ -75,7 +76,7 @@ public class BlockControllerUnitTest {
     public void testAddBlock2() throws Exception {
         String newOwner = owner+"2";
         Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, sequenceNumber, ownHash,
-                previousHashChain, previousHashSender, publicKey);
+                previousHashChain, previousHashSender, publicKey,iban);
         bc.addBlock(_block);
         bc.addBlock(newBlock);
         List<Block> list = new ArrayList<>();
@@ -103,7 +104,7 @@ public class BlockControllerUnitTest {
     @Test(expected=RuntimeException.class)
     public void alreadyRevoked() {
         Block newBlock = BlockFactory.getBlock(TYPE_REVOKE, owner, sequenceNumber, ownHash,
-                previousHashChain, previousHashSender, publicKey);
+                previousHashChain, previousHashSender, publicKey,iban);
         bc.addBlock(newBlock);
         bc.addBlock(_block);
     }
@@ -115,7 +116,7 @@ public class BlockControllerUnitTest {
     public void testEmptyList() {
         bc.addBlock(_block);
         Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, sequenceNumber+1, ownHash,
-                previousHashChain, previousHashSender, publicKey);
+                previousHashChain, previousHashSender, publicKey,iban);
         bc.revokeBlock(newBlock);
         List<Block> list = new ArrayList<>();
         assertEquals(list, bc.getBlocks(owner));
@@ -128,7 +129,7 @@ public class BlockControllerUnitTest {
     public void testRemoveWithNoMatch() throws Resources.NotFoundException{
         bc.addBlock(_block);
         Block blc2 = BlockFactory.getBlock(TYPE_BLOCK, owner+"2", sequenceNumber+1, ownHash,
-                previousHashChain, previousHashSender, publicKey+"2");
+                previousHashChain, previousHashSender, publicKey+"2", iban);
         bc.revokeBlock(blc2);
         List<Block> list = new ArrayList<>();
         list.add(_block);

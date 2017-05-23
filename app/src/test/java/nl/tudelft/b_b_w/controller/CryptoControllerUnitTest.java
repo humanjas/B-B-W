@@ -1,18 +1,29 @@
 package nl.tudelft.b_b_w.controller;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
+public class CryptoControllerUnitTest {
 
-public class EncryptionControllerUnitTest {
+    private CryptoController cryptoController;
 
-    @Test
-    public void hashCheck() throws Exception {
-        EncryptionController encryptionController = new EncryptionController();
-
-        assertEquals(check, co.hashKey());
+    /**
+     * initialize method
+     * Initialized the CryptoController
+     */
+    @Before
+    public void initialize() {
+        this.cryptoController = new CryptoController();
     }
 
-
-
+    /**
+     * EncryptDecryptTest
+     * Checks whether the encryption and decryption method work
+     */
+    @Test
+    public void EncryptDecryptTest() throws Exception {
+        String random = "0CYk67Pt08m7DE9Bumbo";
+        assertEquals(random, this.cryptoController.decryptString(this.cryptoController.encryptString(random)));
+    }
 }
