@@ -74,6 +74,19 @@ public class BlockController {
     }
 
 
+    /**
+     * Get the owner name, given the public kkey
+     *
+     * @return name of owner
+     */
+    public String getOwnerName(String publicKey) {
+
+        return databaseHandler.getOwnerName(publicKey);
+    }
+
+
+
+
 
     /**
      * Get the latest block of a specific owner
