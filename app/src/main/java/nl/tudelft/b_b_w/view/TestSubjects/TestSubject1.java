@@ -33,10 +33,16 @@ public class TestSubject1 extends Activity {
         block3 = BlockFactory.getBlock("BLOCK", "TestSubject1", "HASH3","HASH2","HASHfromContact2","Contact2_PUBKEY","IBANContact2");
         block4 = BlockFactory.getBlock("BLOCK", "TestSubject1", "HASH4","HASH3","HASHfromContact3","Contact3_PUBKEY","IBANContact3");
 
-
+        addTestChainToDatabase();
 
     }
+    public void addTestChainToDatabase() {
+        blockController.addBlock(block1);
+        blockController.addBlock(block2);
+        blockController.addBlock(block3);
+        blockController.addBlock(block4);
 
+    }
 
 
 
