@@ -50,12 +50,12 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Callback for when user clicks on 'add block'. Switch to AddBlockActivity.
+     * Callback for when user clicks on 'add block'. Switch to ContactsActivity.
      *
      * @param view current view, which is always MainActivity
      */
-    public void onAddBlock(View view) {
-        Intent intent = new Intent(this, AddBlockActivity.class);
+    public void onContacts(View view) {
+        Intent intent = new Intent(this, ContactsActivity.class);
         intent.putExtra("ownerName", ownerName);
         intent.putExtra("publicKey", publicKey);
         startActivity(intent);

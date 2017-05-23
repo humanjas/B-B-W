@@ -29,7 +29,7 @@ public class MainActivityTest {
 
     /**
      * Verify the availability and workings of the Add block button.
-     * It should go to the AddBlockActivity.
+     * It should go to the ContactsActivity.
      */
     @Test
     public void buttonAddBlock() {
@@ -41,7 +41,7 @@ public class MainActivityTest {
         // click on the button
         onView(withText("Add block")).perform(click());
 
-        // verify that we switched to AddBlockActivity
+        // verify that we switched to ContactsActivity
         Activity next = getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5000);
         assertNotNull(next);
         next.finish();
