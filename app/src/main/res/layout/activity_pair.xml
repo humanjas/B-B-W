@@ -18,28 +18,28 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pair with:"
-            android:layout_weight="0.13" />
+            android:layout_weight="0.13"
+            android:text="Simulation pairing with:" />
 
         <Button
             android:id="@+id/button10"
             android:layout_width="139dp"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:text="Yusuf" />
+            android:text="TestSubject1" />
 
         <Button
             android:id="@+id/button11"
             android:layout_width="139dp"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:text="Luat" />
+            android:text="TestSubject2" />
 
         <Button
             android:id="@+id/button12"
             android:layout_width="139dp"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:text="Ymte" />
+            android:text="TestSubject3" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

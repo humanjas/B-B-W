@@ -86,6 +86,8 @@ public class MainActivity extends Activity {
 
     public void onPairPage(View view) {
         Intent intent = new Intent(this, PairActivity.class);
+        intent.putExtra("ownerName", ownerName);
+        intent.putExtra("publicKey", publicKey);
         startActivity(intent);
     }
 }
