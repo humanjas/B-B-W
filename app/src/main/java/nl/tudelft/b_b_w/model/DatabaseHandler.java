@@ -117,7 +117,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String owner = block.getOwner();
         values.put(KEY_OWNER, owner);
-        values.put(KEY_SEQ_NO, (lastSeqNumberOfChain(owner) == 0) ? 1 : lastSeqNumberOfChain(owner) + 1);
+        values.put(KEY_SEQ_NO, lastSeqNumberOfChain(owner) + 1);
         values.put(KEY_OWN_HASH, block.getOwnHash());
         values.put(KEY_PREV_HASH_CHAIN, block.getPreviousHashChain());
         values.put(KEY_PREV_HASH_SENDER, block.getPreviousHashSender());
