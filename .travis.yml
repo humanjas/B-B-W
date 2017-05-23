@@ -24,7 +24,7 @@ android:
 
 env:
   global:
-    - "DIR=API=25 TAG=google_apis ABI=armeabi-v7a QEMU_AUDIO_DRV=none GRADLE_USER_HOME=\"${TRAVIS_BUILD_DIR}/gradle\" ANDROID_HOME=/usr/local/android-sdk-24.0.2 TOOLS=${ANDROID_HOME}/tools PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH} ADB_INSTALL_TIMEOUT=20" # Project directory
+#    - "DIR=API=25 TAG=google_apis ABI=armeabi-v7a QEMU_AUDIO_DRV=none GRADLE_USER_HOME=\"${TRAVIS_BUILD_DIR}/gradle\" ANDROID_HOME=/usr/local/android-sdk-24.0.2 TOOLS=${ANDROID_HOME}/tools PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH} ADB_INSTALL_TIMEOUT=20" # Project directory
     - API=25 # Android API level 25 by default
     - TAG=google_apis # Google APIs by default, alternatively use default
     - ABI=armeabi-v7a # ARM ABI v7a by default
@@ -108,3 +108,5 @@ after_script:
   # Show tests and lint results
   - cat ${TRAVIS_BUILD_DIR}/${DIR}/*/build/outputs/androidTest-results/connected/*
   - cat ${TRAVIS_BUILD_DIR}/${DIR}/*/build/reports/lint-results.xml
+
+global_env: "API=25 TAG=google_apis ABI=armeabi-v7a QEMU_AUDIO_DRV=none GRADLE_USER_HOME=\"${TRAVIS_BUILD_DIR}/gradle\" ANDROID_HOME=/usr/local/android-sdk-24.0.2 TOOLS=${ANDROID_HOME}/tools PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH} ADB_INSTALL_TIMEOUT=20",
