@@ -38,10 +38,6 @@ public class TestSubject1 extends Activity {
         block3 = BlockFactory.getBlock("BLOCK", ownerName, "HASH3","HASH2","HASHfromContact2","Contact2_PUBKEY","IBANContact2");
         block4 = BlockFactory.getBlock("BLOCK", ownerName, "HASH4","HASH3","HASHfromContact3","Contact3_PUBKEY","IBANContact3");
 
-        addTestChainToDatabase();
-
-    }
-    public void addTestChainToDatabase() {
         blockController.addBlock(block1);
         blockController.addBlock(block2);
         blockController.addBlock(block3);
@@ -50,10 +46,13 @@ public class TestSubject1 extends Activity {
         List<Block> list = blockController.getBlocks(ownerName);
 
         Toast.makeText(this, list.get(0).getPublicKey() + ", " +
-                            list.get(1).getPublicKey() + ", " +
-                            list.get(2).getPublicKey() + ", " +
-                            list.get(3).getPublicKey(), Toast.LENGTH_SHORT).show();
+                list.get(1).getPublicKey() + ", " +
+                list.get(2).getPublicKey() + ", " +
+                list.get(3).getPublicKey(), Toast.LENGTH_SHORT).show();
+
     }
+
+
 
 
 
