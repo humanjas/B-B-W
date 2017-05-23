@@ -142,6 +142,26 @@ public class DatabaseHandlerUnitTest {
 
     }
 
+
+    /**
+     * getOwnerName test
+     * Test getting the owner name given public key.
+     */
+    @Test
+    public void getOwnerName() {
+        final String owner2 = "testowner";
+        final String publicKey2 = "testpubkey";
+        final Block block2 = BlockFactory.getBlock(blockType, owner2, ownHash,
+                previousHashChain, previousHashSender, publicKey2, iban);
+        databaseHandler.addBlock(block2);
+        databaseHandler.addBlock(_block);
+        assertEquals(owner2, databaseHandler.getOwnerName(publicKey2));
+
+    }
+
+
+
+
     /**
      * getLatestBlock test
      * Tests the latest block

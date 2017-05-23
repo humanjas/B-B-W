@@ -160,8 +160,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     /**
-     * Get the owner name, given the public kkey
-     *
+     * Get the owner name, given the public key
+     * @param  publicKey of the owner we want to search
      * @return name of owner
      */
     public String getOwnerName(String publicKey)
