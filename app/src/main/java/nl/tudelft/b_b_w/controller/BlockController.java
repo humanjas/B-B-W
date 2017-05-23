@@ -76,22 +76,22 @@ public class BlockController {
 
 
     /**
-     * Get athe lastest block
+     * Get the latest block of a specific owner
      *
-     * @return Lastest Block
+     * @return a Block object, which is the newest block of the owner
      */
-    public Block getLastestBlock(String owner) {
+    public Block getLatestBlock(String owner) {
         return databaseHandler.getLatestBlock(owner);
     }
 
 
 
     /**
-     * Get the lastest sequence number of the chain of a specific owner
+     * Get the latest sequence number of the chain of a specific owner
      *
-     * @return Lastest int of chain
+     * @return an integer which is the latest sequence number of the chain
      */
-    public int getLastestSeqNumber(String owner) {
+    public int getLatestSeqNumber(String owner) {
         return databaseHandler.lastSeqNumberOfChain(owner);
     }
 

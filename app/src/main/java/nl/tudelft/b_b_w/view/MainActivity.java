@@ -9,6 +9,7 @@ import android.widget.Toast;
 import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
+import nl.tudelft.b_b_w.model.BlockFactory;
 
 public class MainActivity extends Activity {
     private BlockController blockController;
@@ -24,11 +25,11 @@ public class MainActivity extends Activity {
         publicKey = "demokey";
 
         //test method
-        int n = blockController.getLastestSeqNumber(ownerName);
+        final int n = blockController.getLatestSeqNumber(ownerName);
         Toast.makeText(this, "#" + n, Toast.LENGTH_LONG).show();
 
         // add genesis if we don't have any blocks
-        if (blockController.getLastestSeqNumber(ownerName) == 0)
+        if (blockController.getLatestSeqNumber(ownerName) == 0)
             addGenesis();
     }
 
@@ -38,7 +39,8 @@ public class MainActivity extends Activity {
     private void addGenesis() {
         try {
             if (blockController.getBlocks(ownerName).isEmpty()) {
-                Block block = new Block(ownerName, "ownHash", "previoushash", "senderhash", "senderpubkey","senderIban", false);
+
+                Block block = BlockFactory.getBlock("BLOCK",ownerName, "ownHash", "previoushash", "senderhash", "senderpubkey","senderIban");
                 blockController.addBlock(block);
             }
         } catch (Exception e) {

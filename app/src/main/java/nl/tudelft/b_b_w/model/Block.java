@@ -96,8 +96,8 @@ public class Block {
      *
      * @return the sequence number of the block after initialization
      */
-    public int setSeqNumberTo(int seqnum) {
-        sequenceNumber = seqnum;
+    public int setSeqNumberTo(int seqNum) {
+        sequenceNumber = seqNum;
         return sequenceNumber;
     }
 

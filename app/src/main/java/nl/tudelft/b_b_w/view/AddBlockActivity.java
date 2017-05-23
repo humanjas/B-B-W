@@ -71,7 +71,7 @@ public class AddBlockActivity extends Activity {
 
 
             // create and add the block
-            Block previous = blockController.getLastestBlock(ownerName);
+            Block previous = blockController.getLatestBlock(ownerName);
             int blockSeqNumber = previous.getSequenceNumber()+ 1;
             ConversionController conversionController = new ConversionController(ownerName, blockSeqNumber, senderPublicKey, previous.getOwnHash(), senderHash, senderIban);
             String ownHash = conversionController.hashKey();

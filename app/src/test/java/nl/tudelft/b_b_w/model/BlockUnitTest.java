@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 public class BlockUnitTest {
 
     private Block _block;
-    final String blockType = "BLOCK";
+    private final String blockType = "BLOCK";
     private final String owner = "owner";
     private final int sequenceNumber = 0;
     private final String ownHash = "ownHash";
@@ -151,7 +151,7 @@ public class BlockUnitTest {
      */
     @Test
     public void equalsTest() throws Exception {
-        Block check = BlockFactory.getBlock(blockType, owner, ownHash,
+        final Block check = BlockFactory.getBlock(blockType, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         assertTrue(_block.equals(check));
     }
@@ -165,7 +165,7 @@ public class BlockUnitTest {
     @Test
     public void equalsFalseTest() throws Exception {
         final String _owner = "NOTOWNER";
-        Block check = BlockFactory.getBlock(blockType, _owner, ownHash,
+        final Block check = BlockFactory.getBlock(blockType, _owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban);
         assertFalse(_block.equals(check));
     }
@@ -175,7 +175,7 @@ public class BlockUnitTest {
      */
     @Test
     public void toStringTest() {
-        String result = "Block{" +
+        final String result = "Block{" +
                 "owner='" + owner + '\'' +
                 ", sequenceNumber=" + sequenceNumber +
                 ", ownHash='" + ownHash + '\'' +
@@ -194,8 +194,8 @@ public class BlockUnitTest {
      */
     @Test
     public void testHashCode() {
-        Block x = new Block("owner2", ownHash, previousHashChain, previousHashSender, "pub2", iban, false);
-        Block y = new Block("owner2", ownHash, previousHashChain, previousHashSender, "pub2", iban, false);
+        final Block x = new Block("owner2", ownHash, previousHashChain, previousHashSender, "pub2", iban, false);
+        final Block y = new Block("owner2", ownHash, previousHashChain, previousHashSender, "pub2", iban, false);
         assertTrue(x.equals(y) && y.equals(x));
         assertTrue(x.hashCode() == y.hashCode());
     }
