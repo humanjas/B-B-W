@@ -2,9 +2,6 @@ package nl.tudelft.b_b_w.view;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.controller.BlockController;
@@ -51,6 +48,7 @@ public class FriendsPageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_page);
 
+        /*
         Bundle extra = getIntent().getExtras();
 
         databaseHandler = new DatabaseHandler(this);
@@ -61,13 +59,8 @@ public class FriendsPageActivity extends Activity {
 
         Toast.makeText(this, ownerName + ", " + publicKey + " " + ibanNumber , Toast.LENGTH_SHORT).show();
 
+    */
     }
 
 
-    public void addBlock(View view) {
-
-        EditText senderNameText = (EditText) findViewById(R.id.senderName);
-
-
-    }
 }

@@ -4,13 +4,53 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+
+import java.util.List;
 
 import nl.tudelft.b_b_w.R;
-import nl.tudelft.b_b_w.view.TestSubjects.TestSubject1;
-import nl.tudelft.b_b_w.view.TestSubjects.TestSubject2;
-import nl.tudelft.b_b_w.view.TestSubjects.TestSubject3;
+import nl.tudelft.b_b_w.controller.BlockController;
+import nl.tudelft.b_b_w.model.Block;
+import nl.tudelft.b_b_w.model.BlockFactory;
 
 public class PairActivity extends Activity {
+    /**
+     * The block controller.
+     */
+    private BlockController blockController;
+
+    /**
+     * It's own block.
+     */
+    private Block block1;
+
+    /**
+     * a block.
+     */
+    private Block block2;
+
+    /**
+     * a block.
+     */
+    private Block block3;
+
+    /**
+     * a block.
+     */
+    private Block block4;
+
+    /**
+     * a block.
+     */
+    private Block block5;
+
+
+    /**
+     * The name of the owner of each block in the chain.
+     */
+    private String ownerName;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,19 +60,75 @@ public class PairActivity extends Activity {
 
 
     public void onTestSubject1(View view) {
-        Intent intent = new Intent(this, TestSubject1.class);
-        startActivity(intent);
+        ownerName = "TestSubject1";
+        blockController = new BlockController(this);
+        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","TestSubject_PUBKEY","IBANTestSubject1");
+        block2 = BlockFactory.getBlock("BLOCK", ownerName, "HASH2","HASH1","HASHfromContact1","Contact1_PUBKEY","IBANContact1");
+        block3 = BlockFactory.getBlock("BLOCK", ownerName, "HASH3","HASH2","HASHfromContact2","Contact2_PUBKEY","IBANContact2");
+        block4 = BlockFactory.getBlock("BLOCK", ownerName, "HASH4","HASH3","HASHfromContact3","Contact3_PUBKEY","IBANContact3");
+
+        blockController.addBlock(block1);
+        blockController.addBlock(block2);
+        blockController.addBlock(block3);
+        blockController.addBlock(block4);
+
+        List<Block> list = blockController.getBlocks(ownerName);
+
+        Toast.makeText(this, list.get(0).getPublicKey() + ", " +
+                list.get(1).getPublicKey() + ", " +
+                list.get(2).getPublicKey() + ", " +
+                list.get(3).getPublicKey(), Toast.LENGTH_SHORT).show();
+
+        startActivity(new Intent(this, FriendsPageActivity.class));
     }
 
     public void onTestSubject2(View view) {
-        Intent intent = new Intent(this, TestSubject2.class);
-        startActivity(intent);
+        ownerName = "TestSubject2";
+        blockController = new BlockController(this);
+        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","a","IBANTestSubject1");
+        block2 = BlockFactory.getBlock("BLOCK", ownerName, "HASH2","HASH1","HASHfromContact1","b","IBANContact1");
+        block3 = BlockFactory.getBlock("BLOCK", ownerName, "HASH3","HASH2","HASHfromContact2","c","IBANContact2");
+        block4 = BlockFactory.getBlock("BLOCK", ownerName, "HASH4","HASH3","HASHfromContact3","d","IBANContact3");
+        block5 = BlockFactory.getBlock("BLOCK", ownerName, "HASH5","Hash4","HASHfromContact4","e","IBANContact4");
+
+
+        blockController.addBlock(block1);
+        blockController.addBlock(block2);
+        blockController.addBlock(block3);
+        blockController.addBlock(block4);
+        blockController.addBlock(block5);
+
+        List<Block> list = blockController.getBlocks(ownerName);
+
+        Toast.makeText(this, list.get(0).getPublicKey() + ", " +
+                list.get(1).getPublicKey() + ", " +
+                list.get(2).getPublicKey() + ", " +
+                list.get(3).getPublicKey() + ", " +
+                list.get(4).getPublicKey(), Toast.LENGTH_SHORT).show();
+
+        startActivity(new Intent(this, FriendsPageActivity.class));
     }
 
 
     public void onTestSubject3(View view) {
-        Intent intent = new Intent(this, TestSubject3.class);
-        startActivity(intent);
+        ownerName = "TestSubject2";
+        blockController = new BlockController(this);
+        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","sub3KeyA","IBANTestSubject1");
+        block2 = BlockFactory.getBlock("BLOCK", ownerName, "HASH2","HASH1","HASHfromContact1","sub3KeyB","IBANContact1");
+
+
+        blockController.addBlock(block1);
+        blockController.addBlock(block2);
+
+
+        List<Block> list = blockController.getBlocks(ownerName);
+
+        Toast.makeText(this, list.get(0).getPublicKey() + ", " +
+                list.get(1).getPublicKey() + ", " +
+                list.get(2).getPublicKey(), Toast.LENGTH_SHORT).show();
+
+        startActivity(new Intent(this, FriendsPageActivity.class));
+
     }
 
 }
