@@ -31,7 +31,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-task jacocoTestReport {
+task jacocoTestReport(type: JacocoReport) {
     reports {
         xml.enabled false
         csv.enabled false
