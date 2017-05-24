@@ -11,20 +11,45 @@ import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
 
+/**
+ * This class represents a test subject. All it's values are predefined. It is used to simulate a transaction and
+ * update the friends page.
+ */
 public class TestSubject1 extends Activity {
 
+    /**
+     * The block controller.
+     */
     private BlockController blockController;
-    private Block block1;
-    private Block block2;
-    private Block block3;
-    private Block block4;
-    private String ownerName;
-
-//
 
     /**
-     * String type, String _owner, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban)
-     * @param savedInstanceState
+     * It's own block.
+     */
+    private Block block1;
+
+    /**
+     * a block.
+     */
+    private Block block2;
+
+    /**
+     * a block.
+     */
+    private Block block3;
+
+    /**
+     * a block.
+     */
+    private Block block4;
+
+    /**
+     * The name of the owner of each block in the chain. 
+     */
+    private String ownerName;
+
+
+    /**
+     * On create method of this activity. Should create a chain for test subject 1.
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +64,9 @@ public class TestSubject1 extends Activity {
         block4 = BlockFactory.getBlock("BLOCK", ownerName, "HASH4","HASH3","HASHfromContact3","Contact3_PUBKEY","IBANContact3");
 
         blockController.addBlock(block1);
-        blockController.addBlock(block2);
-        blockController.addBlock(block3);
-        blockController.addBlock(block4);
+        //blockController.addBlock(block2);
+        //blockController.addBlock(block3);
+        //blockController.addBlock(block4);
 
         List<Block> list = blockController.getBlocks(ownerName);
 
