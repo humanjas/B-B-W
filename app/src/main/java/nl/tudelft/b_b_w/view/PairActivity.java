@@ -13,6 +13,9 @@ import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
 
+/**
+ * This activity
+ */
 public class PairActivity extends Activity {
     /**
      * The block controller.
@@ -39,11 +42,6 @@ public class PairActivity extends Activity {
      */
     private Block block4;
 
-    /**
-     * a block.
-     */
-    private Block block5;
-
 
     /**
      * The name of the owner of each block in the chain.
@@ -51,7 +49,10 @@ public class PairActivity extends Activity {
     private String ownerName;
 
 
-
+    /**
+     * The on create method sets up the activity.
+     * @param savedInstanceState brings the variables.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +60,10 @@ public class PairActivity extends Activity {
     }
 
 
+    /**
+     * This method create the first test subject.We do this in order to simulate a transaction.
+     * @param view The view of the program.
+     */
     public void onTestSubject1(View view) {
         ownerName = "TestSubject1";
         blockController = new BlockController(this);
@@ -82,7 +87,15 @@ public class PairActivity extends Activity {
         startActivity(new Intent(this, FriendsPageActivity.class));
     }
 
+    /**
+     * This method creates another test subject(second). It is hardcoded and will be change later on.
+     * We do this to simulate a transaction.
+     * @param view The view of the program.
+     */
     public void onTestSubject2(View view) {
+
+        Block block5;
+
         ownerName = "TestSubject2";
         blockController = new BlockController(this);
         block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","a","IBANTestSubject1");
@@ -109,7 +122,11 @@ public class PairActivity extends Activity {
         startActivity(new Intent(this, FriendsPageActivity.class));
     }
 
-
+    /**
+     * This method creates another test subject (third). It is hardcoded and will be change later on.
+     * We do this to simulate a transaction.
+     * @param view  The view of the program.
+     */
     public void onTestSubject3(View view) {
         ownerName = "TestSubject2";
         blockController = new BlockController(this);
