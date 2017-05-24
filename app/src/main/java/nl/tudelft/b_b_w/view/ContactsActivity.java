@@ -57,7 +57,7 @@ public class ContactsActivity extends Activity {
             TextView nameItemText = (TextView)view.findViewById(R.id.list_item_name);
             nameItemText.setText(bc.getBlocks("GENESIS").get(position).getOwner()); //use function to backtrack owner
             TextView ibanItemText = (TextView)view.findViewById(R.id.list_item_iban);
-            ibanItemText.setText(bc.getBlocks("GENESIS").get(position).getPublicKey()); //change to IBAN
+            ibanItemText.setText(bc.getBlocks("GENESIS").get(position).getIban()); //change to IBAN
 
             Button revokeButton = (Button)view.findViewById(R.id.revoke_btn);
 
