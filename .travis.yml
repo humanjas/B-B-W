@@ -103,7 +103,7 @@ before_script:
 
 script:
   # Build and run all device checks
-  ./gradlew build connectedCheck check
+  ./gradlew build connectedCheck check lint
 
 after_script:
   # Show tests and lint results
