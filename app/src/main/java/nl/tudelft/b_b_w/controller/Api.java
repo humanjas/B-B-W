@@ -49,7 +49,7 @@ public class Api {
 
         // add public key of each block
         for (Block block : blocks)
-            //TODO!!! if (blockController.getContactName(block))
+            if (blockController.getContactName(block.getOwnHash()).equals(user.getName()))
                 keys.add(block.getPublicKey());
 
         return keys;
