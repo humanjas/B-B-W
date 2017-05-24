@@ -41,16 +41,3 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'org.encryptor4j:encryptor4j:0.1.1'
 }
-
-apply plugin: 'checkstyle'
-    checkstyle {
-        configFile rootProject.file('checkstyle.xml')
-        showViolations true
-    }
-apply plugin: 'pmd'
-apply plugin: 'findbugs'
-apply plugin: 'jacoco'
-    jacoco {
-        toolVersion = "0.7.6.201602180812"
-        reportsDir = file("$buildDir/customJacocoReportDir")
-    }
