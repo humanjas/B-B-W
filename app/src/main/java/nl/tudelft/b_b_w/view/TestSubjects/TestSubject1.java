@@ -43,7 +43,7 @@ public class TestSubject1 extends Activity {
     private Block block4;
 
     /**
-     * The name of the owner of each block in the chain. 
+     * The name of the owner of each block in the chain.
      */
     private String ownerName;
 
