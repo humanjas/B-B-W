@@ -25,12 +25,12 @@ public class MainActivity extends Activity {
         publicKey = "demokey";
 
         //test method
-        final int n = blockController.getLatestSeqNumber(ownerName);
-        Toast.makeText(this, "#" + n, Toast.LENGTH_LONG).show();
+        //final int n = blockController.getLatestSeqNumber(ownerName);
+        //Toast.makeText(this, "#" + n, Toast.LENGTH_LONG).show();
 
         // add genesis if we don't have any blocks
-        if (blockController.getLatestSeqNumber(ownerName) == 0)
-            addGenesis();
+        //if (blockController.getLatestSeqNumber(ownerName) == 0)
+        //    addGenesis();
     }
 
     /**
@@ -46,6 +46,10 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void onClearDatabase(View view) {
+        blockController.clearAllBlocks();
     }
 
     /**
