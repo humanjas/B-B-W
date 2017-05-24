@@ -1,4 +1,4 @@
-package nl.tudelft.b_b_w.ControllersUnitTest;
+package nl.tudelft.b_b_w.controller;
 
 import android.content.res.Resources;
 
@@ -16,6 +16,7 @@ import nl.tudelft.b_b_w.BuildConfig;
 import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
+import nl.tudelft.b_b_w.model.TrustValues;
 
 import static org.junit.Assert.assertEquals;
 
@@ -39,8 +40,10 @@ public class BlockControllerUnitTest {
     private final String ownHash = "ownHash";
     private final String previousHashChain = "previousHashChain";
     private final String previousHashSender = "previousHashSender";
+    private final String iban = "iban";
     private final String publicKey = "publicKey";
     private Block _block;
+    private final int trustValue = 0;
     private final String TYPE_BLOCK = "BLOCK";
     private final String TYPE_REVOKE = "REVOKE";
 
@@ -51,8 +54,8 @@ public class BlockControllerUnitTest {
     @Before
     public void setUp() {
         this.bc = new BlockController(RuntimeEnvironment.application);
-        this._block = BlockFactory.getBlock(TYPE_BLOCK, owner, sequenceNumber, ownHash,
-                previousHashChain, previousHashSender, publicKey);
+        this._block = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
     }
 
     /**
@@ -67,15 +70,47 @@ public class BlockControllerUnitTest {
         assertEquals(bc.getBlocks(owner), list);
     }
 
+
+    /**
+     * Tests to return the latest block
+     * @throws Exception RuntimeException
+     */
+    @Test
+    public void testGetLatestBlock() throws Exception {
+        final Block expected = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
+        bc.addBlock(_block);
+        assertEquals(expected, bc.getLatestBlock(owner));
+    }
+
+    /**
+     * Tests returning the latest sequence number of chain
+     * @throws Exception RuntimeException
+     */
+    @Test
+    public void testGetLatestSeqNumber() throws Exception {
+        final String newOwner = owner+"2";
+        final Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
+        bc.addBlock(_block);
+        bc.addBlock(newBlock);
+
+
+        assertEquals(1, bc.getLatestSeqNumber(owner));
+    }
+
+
+
+
     /**
      * Tests adding two blocks
      * @throws Exception RuntimeException
      */
     @Test
     public void testAddBlock2() throws Exception {
-        String newOwner = owner+"2";
-        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, sequenceNumber, ownHash,
-                previousHashChain, previousHashSender, publicKey);
+        final String newOwner = owner+"2";
+        final Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
         bc.addBlock(_block);
         bc.addBlock(newBlock);
         List<Block> list = new ArrayList<>();
@@ -102,8 +137,8 @@ public class BlockControllerUnitTest {
      */
     @Test(expected=RuntimeException.class)
     public void alreadyRevoked() {
-        Block newBlock = BlockFactory.getBlock(TYPE_REVOKE, owner, sequenceNumber, ownHash,
-                previousHashChain, previousHashSender, publicKey);
+        final Block newBlock = BlockFactory.getBlock(TYPE_REVOKE, owner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
         bc.addBlock(newBlock);
         bc.addBlock(_block);
     }
@@ -114,8 +149,8 @@ public class BlockControllerUnitTest {
     @Test
     public void testEmptyList() {
         bc.addBlock(_block);
-        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, sequenceNumber+1, ownHash,
-                previousHashChain, previousHashSender, publicKey);
+        final Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
         bc.revokeBlock(newBlock);
         List<Block> list = new ArrayList<>();
         assertEquals(list, bc.getBlocks(owner));
@@ -127,12 +162,52 @@ public class BlockControllerUnitTest {
     @Test
     public void testRemoveWithNoMatch() throws Resources.NotFoundException{
         bc.addBlock(_block);
-        Block blc2 = BlockFactory.getBlock(TYPE_BLOCK, owner+"2", sequenceNumber+1, ownHash,
-                previousHashChain, previousHashSender, publicKey+"2");
+        final Block blc2 = BlockFactory.getBlock(TYPE_BLOCK, owner+"2", ownHash,
+                previousHashChain, previousHashSender, publicKey+"2", iban, trustValue);
         bc.revokeBlock(blc2);
         List<Block> list = new ArrayList<>();
         list.add(_block);
         assertEquals(list, bc.getBlocks(owner));
+    }
+
+    /**
+     * verifyIBAN test
+     * Tests whether verifying the IBAN updates the trust value
+     */
+    @Test
+    public void testVerifyIBAN() {
+        bc.verifyIBAN(_block);
+        assertEquals(TrustValues.VERIFIED.getValue(), _block.getTrustValue());
+    }
+
+    /**
+     * successfulTransaction test
+     * Tests whether a successful transaction updates the trust value
+     */
+    @Test
+    public void testSuccessfulTransaction() {
+        bc.successfulTransaction(_block);
+        assertEquals(TrustValues.SUCCESFUL_TRANSACTION.getValue(), _block.getTrustValue());
+    }
+
+    /**
+     * failedTransaction test
+     * Tests whether a successful transaction updates the trust value
+     */
+    @Test
+    public void testFailedTransaction() {
+        bc.failedTransaction(_block);
+        assertEquals(TrustValues.FAILED_TRANSACTION.getValue(), _block.getTrustValue());
+    }
+
+    /**
+     * revokedTrustValue test
+     * Tests whether a revoked transaction updates the trust value
+     */
+    @Test
+    public void testRevokedTrustValue() {
+        bc.revokedTrustValue(_block);
+        assertEquals(TrustValues.REVOKED.getValue(), _block.getTrustValue());
     }
 
 }

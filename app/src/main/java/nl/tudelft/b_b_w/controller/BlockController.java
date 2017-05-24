@@ -8,11 +8,11 @@ import java.util.List;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
 import nl.tudelft.b_b_w.model.DatabaseHandler;
+import nl.tudelft.b_b_w.model.TrustValues;
 import nl.tudelft.b_b_w.model.User;
 
 /**
  * Performs the actions of the blockchain
- * Created by jasper on 11/05/2017.
  */
 
 public class BlockController {
@@ -48,7 +48,11 @@ public class BlockController {
         } else if (latest.isRevoked()) {
             throw new RuntimeException("Error - Block is already revoked");
         } else {
-            if (block.isRevoked()) databaseHandler.addBlock(block);
+            if (block.isRevoked()) {
+                revokedTrustValue(latest);
+                databaseHandler.updateBlock(latest);
+                databaseHandler.addBlock(block);
+            }
             else throw new RuntimeException("Error - Block already exists");
         }
 
@@ -74,6 +78,25 @@ public class BlockController {
     }
 
     /**
+     * Get the latest block of a specific owner
+     *
+     * @return a Block object, which is the newest block of the owner
+     */
+    public Block getLatestBlock(String owner) {
+        return databaseHandler.getLatestBlock(owner);
+    }
+
+    /**
+     * Get the latest sequence number of the chain of a specific owner
+     *
+     * @return an integer which is the latest sequence number of the chain
+     */
+    public int getLatestSeqNumber(String owner) {
+        return databaseHandler.lastSeqNumberOfChain(owner);
+    }
+
+    /**
+     *
      * Revoke a block from the blockchain by adding the same
      * block but setting revoked on true
      *
@@ -82,9 +105,9 @@ public class BlockController {
      */
     public List<Block> revokeBlock(Block block) {
         String owner = block.getOwner();
-        Block newBlock = BlockFactory.getBlock("REVOKE", block.getOwner(), block.getSequenceNumber(),
+        Block newBlock = BlockFactory.getBlock("REVOKE", block.getOwner(),
                 block.getOwnHash(), block.getPreviousHashChain(), block.getPreviousHashSender(),
-                block.getPublicKey());
+                block.getPublicKey(), block.getIban(), block.getTrustValue());
         addBlock(newBlock);
         return getBlocks(owner);
     }
@@ -105,5 +128,51 @@ public class BlockController {
         }
         return res;
     }
+
+    /**
+     * verifyIBAN method
+     * updates the trust value of the block to the set trust value for a verified IBAN
+     * @param block given block to update
+     * @return block that is updated
+     */
+    public Block verifyIBAN(Block block) {
+        block.setTrustValue(TrustValues.VERIFIED.getValue());
+        return block;
+    }
+
+    /**
+     * successfulTransaction method
+     * updates the trust value of the block to the set trust value for a succesful transaction
+     * @param block given block to update
+     * @return block that is updated
+     */
+    public Block successfulTransaction(Block block) {
+        block.setTrustValue(block.getTrustValue() + TrustValues.SUCCESFUL_TRANSACTION.getValue());
+        return block;
+    }
+
+    /**
+     * failedTransaction method
+     * updates the trust value of the block to the set trust value for a failed transaction
+     * @param block given block to update
+     * @return block that is updated
+     */
+    public Block failedTransaction(Block block) {
+        block.setTrustValue(block.getTrustValue() + TrustValues.FAILED_TRANSACTION.getValue());
+        return block;
+    }
+
+    /**
+     * revokedTrustValue method
+     * updates the trust value of the block to the set trust value for a revoked block
+     * @param block given block to update
+     * @return block that is updated
+     */
+    public Block revokedTrustValue(Block block) {
+        block.setTrustValue(TrustValues.REVOKED.getValue());
+        return block;
+    }
+
+
 
 }
