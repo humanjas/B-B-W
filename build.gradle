@@ -2,10 +2,6 @@
 apply plugin: 'jacoco'
 
 apply plugin: 'checkstyle'
-checkstyle {
-    configFile rootProject.file('checkstyle.xml')
-    showViolations true
-}
 apply plugin: 'pmd'
 apply plugin: 'findbugs'
 
@@ -27,14 +23,27 @@ allprojects {
     }
 }
 
+check.dependsOn 'checkstyle'
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
 task jacocoTestReport(type: JacocoReport) {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
     reports {
         xml.enabled false
         csv.enabled false
         html.destination "${buildDir}/jacocoHtml"
     }
+}
+
+task checkstyle {
+    configFile rootProject.file('checkstyle.xml')
+    showViolations true
+}
+checkstyle {
+    toolVersion = "7.7"
 }
