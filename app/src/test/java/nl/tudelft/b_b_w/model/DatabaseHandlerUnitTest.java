@@ -151,7 +151,7 @@ public class DatabaseHandlerUnitTest {
                 ownHash, "randomSenderHash", publicKey, iban, trustValue);
         databaseHandler.addBlock(block2);
         databaseHandler.addBlock(_block);
-        assertEquals(owner+"'s friend", databaseHandler.getContactName(hash));
+        assertEquals(owner+"'s friend #" + block2.getSequenceNumber(), databaseHandler.getContactName(hash));
 
     }
 

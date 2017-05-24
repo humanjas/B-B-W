@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
@@ -38,7 +39,7 @@ public class BlockController {
         List<Block> blocks = databaseHandler.getAllBlocks(owner);
 
         for (Block block : blocks) {
-            if (block.getOwner() == owner && block.getPublicKey() == key
+            if (Objects.equals(block.getOwner(), owner) && Objects.equals(block.getPublicKey(), key)
                 && block.isRevoked() == revoked)
                 return true;
         }

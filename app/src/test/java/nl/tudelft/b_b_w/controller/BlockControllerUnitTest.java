@@ -81,10 +81,10 @@ public class BlockControllerUnitTest {
         final String hash = "ownHash2";
         final String randomSenderHash = "Hash44324";
         final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, hash,
-                ownHash, "randomSenderHash", publicKey, iban, trustValue);
+                ownHash, "randomSenderHash", publicKey+"2", iban, trustValue);
         bc.addBlock(block2);
         bc.addBlock(_block);
-        assertEquals(owner+"'s friend", bc.getContactName(hash));
+        assertEquals(owner+"'s friend #" + block2.getSequenceNumber(), bc.getContactName(hash));
 
     }
 

@@ -48,9 +48,13 @@ public class Api {
         List<String> keys = new ArrayList<String>();
 
         // add public key of each block
-        for (Block block : blocks)
-            if (blockController.getContactName(block.getOwnHash()).equals(user.getName()))
+        for (Block block : blocks) {
+            String blockUserName = blockController.getContactName(block.getOwnHash());
+            String targetUserName = user.getName();
+
+            if (targetUserName.equals(blockUserName))
                 keys.add(block.getPublicKey());
+        }
 
         return keys;
 

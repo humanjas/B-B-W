@@ -59,16 +59,18 @@ public class ApiUnitTest {
         userD.addPublicKey("pkd2");
         userD.addPublicKey("pkd3");
 
-        // user A has
+        // user A has pka
+//        public static Block getBlock(String type, String _owner, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban, int _trustValue) throws IllegalArgumentException {
+        bc.addBlock(BlockFactory.getBlock("BLOCK", userA.getName(), "roothash", "prevhashchain", "root", "pkroot", "NL81...", 0));
         bc.addBlock(BlockFactory.getBlock(userA, userA, "prev", "send", "pka", false));
 
-        // user B
+        // user B has pkb
         bc.addBlock(BlockFactory.getBlock(userA, userB, "prev", "send", "pkb", false));
         bc.addBlock(BlockFactory.getBlock(userA, userB, "prev", "send", "pkb", true));
 
         // user C is empty
 
-        // user D
+        // user D has pkd1,2,3
         bc.addBlock(BlockFactory.getBlock(userA, userD, "prev", "send", "pkd1", false));
         bc.addBlock(BlockFactory.getBlock(userA, userD, "prev", "send", "pkd2", false));
         bc.addBlock(BlockFactory.getBlock(userA, userD, "prev", "send", "pkd3", false));
