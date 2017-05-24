@@ -13,6 +13,8 @@ import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
 
+import static android.R.attr.id;
+
 /**
  * This activity
  */
@@ -83,8 +85,9 @@ public class PairActivity extends Activity {
                 list.get(1).getPublicKey() + ", " +
                 list.get(2).getPublicKey() + ", " +
                 list.get(3).getPublicKey(), Toast.LENGTH_SHORT).show();
-
-        startActivity(new Intent(this, FriendsPageActivity.class));
+        Intent intent = new Intent(this, FriendsPageActivity.class);
+        intent.getExtras().putInt("userID", id);
+        startActivity(intent);
     }
 
     /**

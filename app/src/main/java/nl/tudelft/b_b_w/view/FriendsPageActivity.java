@@ -45,6 +45,9 @@ public class FriendsPageActivity extends Activity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+       // int userID = savedInstanceState.getInt("userID");
+        //User user = Api.getUser(userID);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_page);
 
