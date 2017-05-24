@@ -56,6 +56,13 @@ public class BlockController {
     }
 
     /**
+     * Clears all blocks from the database
+     */
+    public void clearAllBlocks() {
+        databaseHandler.clearAllBlocks();
+    }
+
+    /**
      * Get all blocks that are not revoked
      *
      * @return List of all the blocks
