@@ -80,7 +80,6 @@ public class BlockControllerUnitTest {
     public void getContactName() {
         final String hash = "ownHash2";
         final String randomSenderHash = "Hash44324";
-       // final String publicKey2 = "testpubkey";
         final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, hash,
                 ownHash, "randomSenderHash", publicKey, iban, trustValue);
         bc.addBlock(block2);

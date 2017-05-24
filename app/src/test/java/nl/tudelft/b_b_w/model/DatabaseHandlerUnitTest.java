@@ -14,10 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.tudelft.b_b_w.BuildConfig;
-import nl.tudelft.b_b_w.model.Block;
-import nl.tudelft.b_b_w.model.BlockFactory;
-import nl.tudelft.b_b_w.model.DatabaseHandler;
-import nl.tudelft.b_b_w.model.TrustValues;
 
 import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
@@ -76,7 +72,7 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void addBlock2() {
-        final Block newBlock = BlockFactory.getBlock("REVOKE", owner, ownHash,
+        final Block newBlock = BlockFactory.getBlock("BLOCK", owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(newBlock);
@@ -142,19 +138,20 @@ public class DatabaseHandlerUnitTest {
     }
 
 
+
     /**
      * getOwnerName test
-     * Test getting the owner name given public key.
+     * Test getting the owner name given hash key.
      */
     @Test
-    public void getOwnerName() {
-        final String owner2 = "testowner";
-        final String publicKey2 = "testpubkey";
-        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner2, ownHash,
-                previousHashChain, previousHashSender, publicKey2, iban, trustValue);
+    public void getContactName() {
+        final String hash = "ownHash2";
+        final String randomSenderHash = "Hash44324";
+        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, hash,
+                ownHash, "randomSenderHash", publicKey, iban, trustValue);
         databaseHandler.addBlock(block2);
         databaseHandler.addBlock(_block);
-        assertEquals(owner2, databaseHandler.getOwnerName(publicKey2));
+        assertEquals(owner+"'s friend", databaseHandler.getContactName(hash));
 
     }
 
