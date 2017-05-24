@@ -43,8 +43,7 @@ public class MainActivity extends Activity {
     private void addGenesis() {
         try {
             if (blockController.getBlocks(ownerName).isEmpty()) {
-
-                Block block = BlockFactory.getBlock("BLOCK",ownerName, "ownHash", "previoushash", "senderhash", "senderpubkey","senderIban");
+                Block block = BlockFactory.getBlock("BLOCK", ownerName, "ownHash", "previoushash", "senderhash", "senderpubkey","senderIban");
                 blockController.addBlock(block);
             }
         } catch (Exception e) {
