@@ -103,7 +103,7 @@ before_script:
 
 script:
   # Build and run all device checks
-  ./gradlew build connectedCheck check lint jacocoTestReport coveralls
+  ./gradlew build connectedCheck check lint jacocoTestReport
 
 after_script:
   # Show tests and lint results
