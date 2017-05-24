@@ -60,7 +60,7 @@ public class ApiUnitTest {
         userD.addPublicKey("pkd3");
 
         // user A has pka
-//        public static Block getBlock(String type, String _owner, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban, int _trustValue) throws IllegalArgumentException {
+        // genesis block seqno = 1
         bc.addBlock(BlockFactory.getBlock("BLOCK", userA.getName(), "roothash", "prevhashchain", "root", "pkroot", "NL81...", 0));
         bc.addBlock(BlockFactory.getBlock(userA, userA, "prev", "send", "pka", false));
 

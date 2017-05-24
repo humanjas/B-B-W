@@ -203,7 +203,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.close();
 
 
-        return (block.getPreviousHashSender()== "root") ? block.getOwner() : block.getOwner()+"'s friend #" + block.getSequenceNumber();
+        return (block.getSequenceNumber()==1) ? block.getOwner() : block.getOwner()+"'s friend #" + block.getSequenceNumber();
 
     }
 
