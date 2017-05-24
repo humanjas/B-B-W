@@ -79,13 +79,12 @@ public class BlockController {
 
 
     /**
-     * Get the owner name, given the public key
-     * @param publicKey public key of the owner
-     *                  whose name we want to find
+     * Function to backtrace the contact name given the hash that refer to their block
+     * @param hash hash of the block which owner name we want to find from
      * @return name of owner
      */
-    public String getOwnerName(String publicKey) {
-        return databaseHandler.getOwnerName(publicKey);
+    public String getContactName(String hash) {
+        return databaseHandler.getContactName(hash);
     }
 
     /**

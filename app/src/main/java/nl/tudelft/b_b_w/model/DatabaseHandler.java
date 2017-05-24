@@ -163,26 +163,43 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     /**
-     * Get the owner name, given the public key
-     * @param  publicKey of the owner we want to search
+     * Function to backtrace the contact name given the hash that refer to their block
+     * @param hash hash of the block which owner name we want to find from
      * @return name of owner
      */
-    public String getOwnerName(String publicKey)
+    public String getContactName(String hash)
     {
+
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor c = db.query(TABLE_NAME,
-                new String[]{KEY_OWNER},
-                KEY_PUBLIC_KEY + " = ? ",
+        Cursor cursor = db.query(TABLE_NAME,
+                _columns,
+                KEY_OWN_HASH + " = ? ",
                 new String[]{
-                        publicKey
+                        hash
                 }, null, null, null, null);
 
-        try {
-            c.moveToFirst();
-            return c.getString(0);
-        } finally {
-            c.close();
-        }
+        //When returning an exception the whole program crashes,
+        //but we want to preserve the state.
+        if (cursor.getCount() < 1) return null;
+
+        cursor.moveToFirst();
+
+        final String blockType = (cursor.getInt(7) > 0) ?  "REVOKE" : "BLOCK";
+        Block block = BlockFactory.getBlock(
+                blockType,cursor.getString(0),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getString(6),
+                cursor.getInt(7));
+        db.close();
+        cursor.close();
+
+
+        return (block.getPreviousHashSender()== "root") ? block.getOwner() : block.getOwner()+"'s friend";
+
+
     }
 
 
@@ -197,7 +214,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     public Block getBlock(String owner, String publicKey, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
-
         Cursor cursor = db.query(TABLE_NAME,
                 _columns,
                 KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ? AND " + KEY_SEQ_NO + " = ?",
