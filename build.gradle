@@ -37,8 +37,12 @@ task clean(type: Delete) {
 //    }
 //}
 
-task checkstyle {
-    showViolations true
+tasks.withType(Checkstyle) {
+    reports {
+        xml.enabled false
+        html.enabled true
+        html.stylesheet resources.text.fromFile('config/checkstyle/checkstyle.xml')
+    }
 }
 checkstyle {
     toolVersion = "7.7"
