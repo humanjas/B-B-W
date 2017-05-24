@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import nl.tudelft.b_b_w.R;
+import nl.tudelft.b_b_w.controller.Api;
 import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
@@ -31,6 +32,9 @@ public class MainActivity extends Activity {
         // add genesis if we don't have any blocks
         //if (blockController.getLatestSeqNumber(ownerName) == 0)
         //    addGenesis();
+
+        // initialize our api
+        Api.init(this);
     }
 
     /**
