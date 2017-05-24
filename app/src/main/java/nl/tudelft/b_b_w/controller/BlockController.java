@@ -7,7 +7,8 @@ import java.util.List;
 
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
-import nl.tudelft.b_b_w.model.DatabaseHandler;
+import nl.tudelft.b_b_w.model.GetDatabaseHandler;
+import nl.tudelft.b_b_w.model.MutateDatabaseHandler;
 import nl.tudelft.b_b_w.model.TrustValues;
 import nl.tudelft.b_b_w.model.User;
 
@@ -19,7 +20,8 @@ public class BlockController {
 
     private Context context;
     private User user;
-    private DatabaseHandler databaseHandler;
+    private GetDatabaseHandler getDatabaseHandler;
+    private MutateDatabaseHandler mutateDatabaseHandler;
 
     /**
      * contructor to initialize all the involved entities
@@ -29,7 +31,8 @@ public class BlockController {
     public BlockController(Context _context) {
         this.context = _context;
         this.user = new User();
-        this.databaseHandler = new DatabaseHandler(this.context);
+        this.getDatabaseHandler = new GetDatabaseHandler(this.context);
+        this.mutateDatabaseHandler = new MutateDatabaseHandler(this.context);
     }
 
     /**
@@ -41,17 +44,17 @@ public class BlockController {
     public List<Block> addBlock(Block block) {
         // Check if the block already exists
         String owner = block.getOwner();
-        Block latest = databaseHandler.getLatestBlock(owner);
+        Block latest = getDatabaseHandler.getLatestBlock(owner);
 
         if (latest == null) {
-            databaseHandler.addBlock(block);
+            mutateDatabaseHandler.addBlock(block);
         } else if (latest.isRevoked()) {
             throw new RuntimeException("Error - Block is already revoked");
         } else {
             if (block.isRevoked()) {
                 revokedTrustValue(latest);
-                databaseHandler.updateBlock(latest);
-                databaseHandler.addBlock(block);
+                mutateDatabaseHandler.updateBlock(latest);
+                mutateDatabaseHandler.addBlock(block);
             }
             else throw new RuntimeException("Error - Block already exists");
         }
@@ -65,7 +68,7 @@ public class BlockController {
      * @return List of all the blocks
      */
     public List<Block> getBlocks(String owner) {
-        List<Block> blocks = databaseHandler.getAllBlocks(owner);
+        List<Block> blocks = getDatabaseHandler.getAllBlocks(owner);
         List<Block> res = new ArrayList<>();
         for (Block block : blocks) {
             if (block.isRevoked()) {
@@ -83,7 +86,7 @@ public class BlockController {
      * @return a Block object, which is the newest block of the owner
      */
     public Block getLatestBlock(String owner) {
-        return databaseHandler.getLatestBlock(owner);
+        return getDatabaseHandler.getLatestBlock(owner);
     }
 
     /**
@@ -92,7 +95,7 @@ public class BlockController {
      * @return an integer which is the latest sequence number of the chain
      */
     public int getLatestSeqNumber(String owner) {
-        return databaseHandler.lastSeqNumberOfChain(owner);
+        return getDatabaseHandler.lastSeqNumberOfChain(owner);
     }
 
     /**
