@@ -38,7 +38,7 @@ task clean(type: Delete) {
 //}
 
 task checkstyle {
-    configFile rootProject.file('checkstyle.xml')
+    configFile rootProject.file('config/checkstyle.xml')
     showViolations true
 }
 checkstyle {
