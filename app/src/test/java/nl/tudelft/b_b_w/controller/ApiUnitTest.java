@@ -28,13 +28,6 @@ public class ApiUnitTest {
     private BlockController bc;
     private User userA, userB, userC, userD;
 
-    public List<Block> addKeys(User owner, User user) {
-        List<Block> res = new ArrayList<>();
-        for (String key : user.getPublicKeys())
-            res.add(BlockFactory.getBlock(owner, user, "prev", "send", key, false));
-        return res;
-    }
-
     /**
      * User A has one public key, user B two
      * The blockchain of each user:
@@ -62,18 +55,18 @@ public class ApiUnitTest {
         // user A has pka
         // genesis block seqno = 1
         bc.addBlock(BlockFactory.getBlock("BLOCK", userA.getName(), "roothash", "prevhashchain", "root", "pkroot", "NL81...", 0));
-        bc.addBlock(BlockFactory.getBlock(userA, userA, "prev", "send", "pka", false));
+        bc.addBlock(BlockFactory.getBlock(userA, userA, "hashA", "roothash", "send", "pka", false));
 
         // user B has pkb
-        bc.addBlock(BlockFactory.getBlock(userA, userB, "prev", "send", "pkb", false));
-        bc.addBlock(BlockFactory.getBlock(userA, userB, "prev", "send", "pkb", true));
+        bc.addBlock(BlockFactory.getBlock(userA, userB, "hashB1", "hashA", "send", "pkb", false));
+        bc.addBlock(BlockFactory.getBlock(userA, userB, "hashB2", "hashB1", "send", "pkb", true));
 
         // user C is empty
 
         // user D has pkd1,2,3
-        bc.addBlock(BlockFactory.getBlock(userA, userD, "prev", "send", "pkd1", false));
-        bc.addBlock(BlockFactory.getBlock(userA, userD, "prev", "send", "pkd2", false));
-        bc.addBlock(BlockFactory.getBlock(userA, userD, "prev", "send", "pkd3", false));
+        bc.addBlock(BlockFactory.getBlock(userA, userD, "hashD1", "hashB2", "send", "pkd1", false));
+        bc.addBlock(BlockFactory.getBlock(userA, userD, "hashD2", "hashD1", "send", "pkd2", false));
+        bc.addBlock(BlockFactory.getBlock(userA, userD, "hashD3", "hashD2", "send", "pkd3", false));
 
     }
 

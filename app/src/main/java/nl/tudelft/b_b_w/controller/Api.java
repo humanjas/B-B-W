@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.User;
@@ -49,11 +50,19 @@ public class Api {
 
         // add public key of each block
         for (Block block : blocks) {
-            String blockUserName = blockController.getContactName(block.getOwnHash());
-            String targetUserName = user.getName();
+            if (block.getSequenceNumber() > 1) {
 
-            if (targetUserName.equals(blockUserName))
-                keys.add(block.getPublicKey());
+                if (user == owner) {
+                    // our own keys do not have send hashes
+                    if (Objects.equals(block.getPreviousHashSender(), "N/A") || Objects.equals(block.getPreviousHashSender(), "root"))
+                        keys.add(block.getPublicKey());
+                } else {
+                    String blockUserName = blockController.getContactName(block.getPreviousHashSender());
+                    String targetUserName = user.getName();
+                    if (targetUserName.equals(blockUserName))
+                        keys.add(block.getPublicKey());
+                }
+            }
         }
 
         return keys;
