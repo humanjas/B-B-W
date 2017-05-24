@@ -32,27 +32,30 @@ public class BlockController {
         this.databaseHandler = new DatabaseHandler(this.context);
     }
 
-    /**
-     * adding a block to the blockchain
-     *
-     * @param block Block you want to add
-     * @return returns the block you added
-     */
-    public List<Block> addBlock(Block block) {
-        // Check if the block already exists
-        String owner = block.getOwner();
-        Block latest = databaseHandler.getLatestBlock(owner);
+    public boolean blockExists(String owner, String key, boolean revoked) {
+        List<Block> blocks = databaseHandler.getAllBlocks(owner);
 
-        if (latest == null) {
-            databaseHandler.addBlock(block);
-        } else if (latest.isRevoked()) {
-            throw new RuntimeException("Error - Block is already revoked");
-        } else {
-            if (block.isRevoked()) databaseHandler.addBlock(block);
-            else throw new RuntimeException("Error - Block already exists");
+        for (Block block : blocks) {
+            if (block.getOwner() == owner && block.getPublicKey() == key
+                && block.isRevoked() == revoked)
+                return true;
         }
 
-        return getBlocks(owner);
+        return false;
+    }
+
+    /**
+     * Add a block to the database with checking if the (owner,pubkey) pair
+     * is already added to the database
+     *
+     * @param block Block you want to add
+     */
+    public void addBlock(Block block) {
+        // Check if the block already exists
+        if (blockExists(block.getOwner(), block.getPublicKey(), block.isRevoked()))
+            throw new RuntimeException("block already exists");
+
+        databaseHandler.addBlock(block);
     }
 
     /**
