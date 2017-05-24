@@ -23,22 +23,19 @@ allprojects {
     }
 }
 
-check.dependsOn 'checkstyle'
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-task jacocoTestReport(type: JacocoReport) {
-    group = "Reporting"
-    description = "Generate Jacoco coverage reports after running tests."
-    additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
-    reports {
-        xml.enabled false
-        csv.enabled false
-        html.destination "${buildDir}/jacocoHtml"
-    }
-}
+//task jacocoTestReport(type: JacocoReport) {
+//    group = "Reporting"
+//    description = "Generate Jacoco coverage reports after running tests."
+//    reports {
+//        xml.enabled false
+//        csv.enabled false
+//        html.destination "${buildDir}/jacocoHtml"
+//    }
+//}
 
 task checkstyle {
     configFile rootProject.file('checkstyle.xml')
