@@ -63,18 +63,18 @@ public class TestSubject2 extends Activity {
 
         ownerName = "TestSubject2";
         blockController = new BlockController(this);
-        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","TestSubject_PUBKEY","IBANTestSubject1");
-        block2 = BlockFactory.getBlock("BLOCK", ownerName, "HASH2","HASH1","HASHfromContact1","Contact1_PUBKEY","IBANContact1");
-        block3 = BlockFactory.getBlock("BLOCK", ownerName, "HASH3","HASH2","HASHfromContact2","Contact2_PUBKEY","IBANContact2");
-        block4 = BlockFactory.getBlock("BLOCK", ownerName, "HASH4","HASH3","HASHfromContact3","Contact3_PUBKEY","IBANContact3");
-        block5 = BlockFactory.getBlock("BLOCK", ownerName, "HASH5","Hash4","HASHfromContact4","Contact4_PUBKEY","IBANContact4");
+        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","a","IBANTestSubject1");
+        block2 = BlockFactory.getBlock("BLOCK", ownerName, "HASH2","HASH1","HASHfromContact1","b","IBANContact1");
+        block3 = BlockFactory.getBlock("BLOCK", ownerName, "HASH3","HASH2","HASHfromContact2","c","IBANContact2");
+        block4 = BlockFactory.getBlock("BLOCK", ownerName, "HASH4","HASH3","HASHfromContact3","d","IBANContact3");
+        block5 = BlockFactory.getBlock("BLOCK", ownerName, "HASH5","Hash4","HASHfromContact4","e","IBANContact4");
 
 
         blockController.addBlock(block1);
-        //blockController.addBlock(block2);
-        //blockController.addBlock(block3);
-        //blockController.addBlock(block4);
-        //blockController.addBlock(block5);
+        blockController.addBlock(block2);
+        blockController.addBlock(block3);
+        blockController.addBlock(block4);
+        blockController.addBlock(block5);
 
         List<Block> list = blockController.getBlocks(ownerName);
 

@@ -7,6 +7,8 @@ import android.view.View;
 
 import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.view.TestSubjects.TestSubject1;
+import nl.tudelft.b_b_w.view.TestSubjects.TestSubject2;
+import nl.tudelft.b_b_w.view.TestSubjects.TestSubject3;
 
 public class PairActivity extends Activity {
 
@@ -23,13 +25,13 @@ public class PairActivity extends Activity {
     }
 
     public void onTestSubject2(View view) {
-        Intent intent = new Intent(this, TestSubject1.class);
+        Intent intent = new Intent(this, TestSubject2.class);
         startActivity(intent);
     }
 
 
     public void onTestSubject3(View view) {
-        Intent intent = new Intent(this, TestSubject1.class);
+        Intent intent = new Intent(this, TestSubject3.class);
         startActivity(intent);
     }
 
