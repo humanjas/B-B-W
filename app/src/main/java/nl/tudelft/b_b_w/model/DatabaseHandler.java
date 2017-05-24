@@ -78,6 +78,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_BLOCKS_TABLE);
     }
 
+    public void clearAllBlocks() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        onUpgrade(db, 0, 9999);
+    }
+
     /**
      * Called when the database needs to be upgraded. The implementation
      * should use this method to drop tables, add tables, or do anything else it
@@ -106,6 +111,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // TODO: check if the db version is lower than the latest
 
         db.execSQL(upgrade_script);
+        onCreate(db);
     }
 
     /**
@@ -310,6 +316,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public Block getLatestBlock(String owner) {
         int maxSeqNum = this.lastSeqNumberOfChain(owner);
         SQLiteDatabase db = this.getReadableDatabase();
+
+        if (maxSeqNum == 0){return null;}
 
         Cursor cursor = db.query(TABLE_NAME,
                 _columns,
