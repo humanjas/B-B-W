@@ -39,9 +39,9 @@ public class TestSubject1 extends Activity {
         block4 = BlockFactory.getBlock("BLOCK", ownerName, "HASH4","HASH3","HASHfromContact3","Contact3_PUBKEY","IBANContact3");
 
         blockController.addBlock(block1);
-        blockController.addBlock(block2);
-        blockController.addBlock(block3);
-        blockController.addBlock(block4);
+        //blockController.addBlock(block2);
+        //blockController.addBlock(block3);
+        //blockController.addBlock(block4);
 
         List<Block> list = blockController.getBlocks(ownerName);
 
