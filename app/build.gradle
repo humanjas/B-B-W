@@ -37,5 +37,9 @@ dependencies {
 }
 
 apply plugin: 'checkstyle'
+    checkstyle {
+        configFile rootProject.file('checkstyle.xml')
+        showViolations true
+    }
 apply plugin: 'pmd'
 apply plugin: 'findbugs'
