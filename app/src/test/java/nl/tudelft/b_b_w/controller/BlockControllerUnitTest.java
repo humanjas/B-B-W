@@ -37,8 +37,8 @@ public class BlockControllerUnitTest {
     private final String owner = "owner";
     private final int sequenceNumber = 1;
     private final String ownHash = "ownHash";
-    private final String previousHashChain = "previousHashChain";
-    private final String previousHashSender = "previousHashSender";
+    private final String previousHashChain = "root";
+    private final String previousHashSender = "root";
     private final String iban = "iban";
     private final String publicKey = "publicKey";
     private Block _block;
@@ -74,17 +74,18 @@ public class BlockControllerUnitTest {
 
     /**
      * getOwnerName test
-     * Test getting the owner name given public key.
+     * Test getting the owner name given hash key.
      */
     @Test
-    public void getOwnerName() {
-        final String owner2 = "testowner";
-        final String publicKey2 = "testpubkey";
-        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner2, ownHash,
-                previousHashChain, previousHashSender, publicKey2, iban);
+    public void getContactName() {
+        final String hash = "ownHash2";
+        final String randomSenderHash = "Hash44324";
+       // final String publicKey2 = "testpubkey";
+        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, hash,
+                ownHash, "randomSenderHash", publicKey, iban, trustValue);
         bc.addBlock(block2);
         bc.addBlock(_block);
-        assertEquals(owner2, bc.getOwnerName(publicKey2));
+        assertEquals(owner+"'s friend", bc.getContactName(hash));
 
     }
 

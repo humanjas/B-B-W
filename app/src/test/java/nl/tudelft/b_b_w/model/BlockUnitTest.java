@@ -28,7 +28,7 @@ public class BlockUnitTest {
     private final String publicKey = "publicKey";
     private final boolean isRevoked = false;
     private final String iban = "iban";
-
+    private final int trustValue = 0;
 
     /**
      * This method runs before each test to initialize the test object
@@ -38,7 +38,7 @@ public class BlockUnitTest {
     @Before
     public void makeNewBlock() throws Exception {
         _block = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
-                previousHashChain, previousHashSender, publicKey, iban);
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
     }
 
     /**
@@ -171,7 +171,7 @@ public class BlockUnitTest {
     @Test
     public void equalsTest() throws Exception {
         final Block check = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
-                previousHashChain, previousHashSender, publicKey, iban);
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
         assertTrue(_block.equals(check));
     }
 
@@ -185,7 +185,7 @@ public class BlockUnitTest {
     public void equalsFalseTest() throws Exception {
         final String _owner = "NOTOWNER";
         final Block check = BlockFactory.getBlock(TYPE_REVOKE, _owner, ownHash,
-                previousHashChain, previousHashSender, publicKey, iban);
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
         assertFalse(_block.equals(check));
     }
 
@@ -214,8 +214,10 @@ public class BlockUnitTest {
      */
     @Test
     public void testHashCode() {
-        final Block x = new Block("owner2", ownHash, previousHashChain, previousHashSender, "pub2", iban, false);
-        final Block y = new Block("owner2", ownHash, previousHashChain, previousHashSender, "pub2", iban, false);
+        final Block x  = BlockFactory.getBlock(TYPE_BLOCK, "owner2", ownHash,
+                previousHashChain, previousHashSender, "pub2", iban, trustValue);
+        final Block y = BlockFactory.getBlock(TYPE_BLOCK, "owner2", ownHash,
+                        previousHashChain, previousHashSender, "pub2", iban, trustValue);
         assertTrue(x.equals(y) && y.equals(x));
         assertTrue(x.hashCode() == y.hashCode());
     }

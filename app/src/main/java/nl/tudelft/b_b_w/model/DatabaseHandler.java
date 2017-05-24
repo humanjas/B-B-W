@@ -199,7 +199,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         return (block.getPreviousHashSender()== "root") ? block.getOwner() : block.getOwner()+"'s friend";
 
-
     }
 
 
