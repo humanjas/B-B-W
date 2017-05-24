@@ -10,10 +10,9 @@ import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.controller.Api;
 import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
-import nl.tudelft.b_b_w.model.DatabaseHandler;
+import nl.tudelft.b_b_w.model.BlockFactory;
 
 public class MainActivity extends Activity {
-    private DatabaseHandler handler;
     private BlockController blockController;
     private String ownerName;
     private String publicKey;
@@ -22,18 +21,17 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        handler = new DatabaseHandler(this);
         blockController = new BlockController(this);
         ownerName = "GENESIS";
         publicKey = "demokey";
 
         //test method
-        int n = handler.lastSeqNumberOfChain(ownerName);
-        Toast.makeText(this, "#" + n, Toast.LENGTH_LONG).show();
+        //final int n = blockController.getLatestSeqNumber(ownerName);
+        //Toast.makeText(this, "#" + n, Toast.LENGTH_LONG).show();
 
         // add genesis if we don't have any blocks
-        if (handler.lastSeqNumberOfChain(ownerName) == 0)
-            addGenesis();
+        //if (blockController.getLatestSeqNumber(ownerName) == 0)
+        //    addGenesis();
 
         // initialize our api
         Api.init(this);
@@ -44,13 +42,18 @@ public class MainActivity extends Activity {
      */
     private void addGenesis() {
         try {
-            if (handler.getAllBlocks(ownerName).isEmpty()) {
-                Block block = new Block(ownerName, 1, "ownhash", "previoushash", "senderhash", "senderpubkey", false);
+            if (blockController.getBlocks(ownerName).isEmpty()) {
+
+                Block block = BlockFactory.getBlock("BLOCK",ownerName, "ownHash", "previoushash", "senderhash", "senderpubkey","senderIban");
                 blockController.addBlock(block);
             }
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    public void onClearDatabase(View view) {
+        blockController.clearAllBlocks();
     }
 
     /**
@@ -82,6 +85,15 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, DisplayChainActivity.class);
         intent.putExtra("ownerName", ownerName);
         intent.putExtra("publicKey", publicKey);
+        startActivity(intent);
+    }
+
+
+
+    // NEW ADDITIONS REF
+
+    public void onPairPage(View view) {
+        Intent intent = new Intent(this, PairActivity.class);
         startActivity(intent);
     }
 }

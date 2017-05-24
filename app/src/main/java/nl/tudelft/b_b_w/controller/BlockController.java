@@ -11,7 +11,7 @@ import nl.tudelft.b_b_w.model.DatabaseHandler;
 import nl.tudelft.b_b_w.model.User;
 
 /**
- * Performs the actions of the blockchain
+ * Performs the actions of your own blockchain
  * Created by jasper on 11/05/2017.
  */
 
@@ -59,6 +59,13 @@ public class BlockController {
     }
 
     /**
+     * Clears all blocks from the database
+     */
+    public void clearAllBlocks() {
+        databaseHandler.clearAllBlocks();
+    }
+
+    /**
      * Get all blocks that are not revoked
      *
      * @return List of all the blocks
@@ -76,7 +83,30 @@ public class BlockController {
         return res;
     }
 
+
+
     /**
+     * Get the latest block of a specific owner
+     *
+     * @return a Block object, which is the newest block of the owner
+     */
+    public Block getLatestBlock(String owner) {
+        return databaseHandler.getLatestBlock(owner);
+    }
+
+
+
+    /**
+     * Get the latest sequence number of the chain of a specific owner
+     *
+     * @return an integer which is the latest sequence number of the chain
+     */
+    public int getLatestSeqNumber(String owner) {
+        return databaseHandler.lastSeqNumberOfChain(owner);
+    }
+
+    /**
+     *
      * Revoke a block from the blockchain by adding the same
      * block but setting revoked on true
      *
@@ -85,9 +115,9 @@ public class BlockController {
      */
     public List<Block> revokeBlock(Block block) {
         String owner = block.getOwner();
-        Block newBlock = BlockFactory.getBlock("REVOKE", block.getOwner(), block.getSequenceNumber(),
+        Block newBlock = BlockFactory.getBlock("REVOKE", block.getOwner(),
                 block.getOwnHash(), block.getPreviousHashChain(), block.getPreviousHashSender(),
-                block.getPublicKey());
+                block.getPublicKey(), block.getIban());
         addBlock(newBlock);
         return getBlocks(owner);
     }
