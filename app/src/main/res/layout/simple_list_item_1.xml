@@ -27,8 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/revoke_btn"
-        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@id/list_item_name"
+        android:layout_marginLeft="50dp"
         android:textSize="18sp"
         android:textStyle="bold" />
 
