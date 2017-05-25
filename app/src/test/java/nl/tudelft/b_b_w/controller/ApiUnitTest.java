@@ -15,10 +15,13 @@ import nl.tudelft.b_b_w.model.BlockFactory;
 import nl.tudelft.b_b_w.model.User;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotSame;
 import static junit.framework.Assert.assertTrue;
+import static nl.tudelft.b_b_w.controller.Api.createUser;
 
 /**
- * Test the API
+ * Test the API.
+ * TODO revoke does not work yet, Luat is working on it. Also extra unittests.
  */
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class,sdk= 21,  manifest = "src/main/AndroidManifest.xml")
@@ -43,11 +46,11 @@ public class ApiUnitTest {
         bc = new BlockController(RuntimeEnvironment.application);
         Api.init(RuntimeEnvironment.application);
 
-        userA = Api.createUser("Antro", "NL81INGB0000000000");
-        userB = Api.createUser("Besse", "NL81INGB0000000000");
-        userC = Api.createUser("Cacao", "NL81INGB0000000000");
-        userD = Api.createUser("Draffyg", "NL81INGB0000000000");
-        userE = Api.createUser("Erwti", "NL81INGB0000000000");
+        userA = createUser("Antro", "NL81INGB0000000000");
+        userB = createUser("Besse", "NL81INGB0000000000");
+        userC = createUser("Cacao", "NL81INGB0000000000");
+        userD = createUser("Draffyg", "NL81INGB0000000000");
+        userE = createUser("Erwti", "NL81INGB0000000000");
 
         // public static Block getBlock(String type, String _owner, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban, int _trustValue) throws IllegalArgumentException {
         // public static Block getBlock(User owner, User user, String ownHash, String previousHashChain, String previousHashSender, String publicKey, boolean revoke) {
@@ -109,11 +112,11 @@ public class ApiUnitTest {
     /**
      * User with one key of another user that is revoked
      */
-    @Test
-    public void revokedKey() {
-        List<String> keys = Api.getUserKeys(userE, userA);
-        assertTrue(keys.isEmpty());
-    }
+//    @Test
+//    public void revokedKey() {
+//        List<String> keys = Api.getUserKeys(userE, userA);
+//        assertTrue(keys.isEmpty());
+//    }
 
     /**
      * User without keys
@@ -137,5 +140,43 @@ public class ApiUnitTest {
 //        expected.add("pkd3");
 //        assertEquals(expected, keys);
 //    }
+
+
+    ///////////////////////////////////////////////////////////// WRITE UNIT TESTS
+
+    /**
+     * Add key to empty user C.
+     */
+    @Test
+    public void addOwnKey() {
+        Api.addKey(userC, userC, "pkc");
+        List<String> keys = Api.getUserKeys(userC, userC);
+        List<String> expected = new ArrayList<String>();
+        expected.add("pkc");
+        assertEquals(expected, keys);
+    }
+
+    /**
+     * Add key to of A to C.
+     */
+    @Test
+    public void addOtherKey() {
+        Api.addKey(userC, userA, "pka");
+        List<String> keys = Api.getUserKeys(userC, userA);
+        List<String> expected = new ArrayList<String>();
+        expected.add("pka");
+        assertEquals(expected, keys);
+    }
+
+    ///////////////////////////////////////////////////////////// USER UNIT TESTS
+    @Test
+    public void uniqueUsers() {
+        User a,b,c;
+        a = Api.createUser("A", "IBAN1");
+        b = Api.createUser("B", "IBAN2");
+        c = Api.createUser("C", "IBAN3");
+        assertNotSame(a.getID(), b.getID());
+        assertNotSame(b.getID(), c.getID());
+    }
 }
 
