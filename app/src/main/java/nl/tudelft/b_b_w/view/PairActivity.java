@@ -13,8 +13,6 @@ import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
 
-import static android.R.attr.id;
-
 /**
  * This activity
  */
@@ -86,7 +84,10 @@ public class PairActivity extends Activity {
                 list.get(2).getPublicKey() + ", " +
                 list.get(3).getPublicKey(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, FriendsPageActivity.class);
-        intent.getExtras().putInt("userID", id);
+
+      //  FriendsPageActivity.textView.setText("IBANTestSubject1");
+
+        intent.putExtra("IBAN", "IBANTestSubject1");
         startActivity(intent);
     }
 
@@ -121,6 +122,7 @@ public class PairActivity extends Activity {
                 list.get(2).getPublicKey() + ", " +
                 list.get(3).getPublicKey() + ", " +
                 list.get(4).getPublicKey(), Toast.LENGTH_SHORT).show();
+
 
         startActivity(new Intent(this, FriendsPageActivity.class));
     }

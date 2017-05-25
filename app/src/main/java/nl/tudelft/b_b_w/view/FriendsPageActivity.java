@@ -1,7 +1,9 @@
 package nl.tudelft.b_b_w.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.controller.BlockController;
@@ -39,6 +41,10 @@ public class FriendsPageActivity extends Activity {
      */
     private String publicKey;
 
+
+    public static TextView textView;
+
+
     /**
      * On create method, here we request a database connection
      * @param savedInstanceState
@@ -50,6 +56,14 @@ public class FriendsPageActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_page);
+
+        Intent myIntent = getIntent();
+        String iban = myIntent.getStringExtra("IBAN");
+
+
+        textView = (TextView) findViewById(R.id.editIban);
+        textView.setText(iban);
+
 
         /*
         Bundle extra = getIntent().getExtras();
