@@ -52,6 +52,7 @@ public class DatabaseHandlerUnitTest {
         this.databaseHandler = new DatabaseHandler(RuntimeEnvironment.application);
        _block =  BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
+        _block.setSeqNumberTo(sequenceNumber);
 
 
 }
@@ -150,8 +151,8 @@ public class DatabaseHandlerUnitTest {
         final String randomSenderHash = "Hash44324";
         final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, hash,
                 ownHash, "randomSenderHash", publicKey, iban, trustValue);
-        databaseHandler.addBlock(block2);
         databaseHandler.addBlock(_block);
+        databaseHandler.addBlock(block2);
         assertEquals(owner+"'s friend #" + block2.getSequenceNumber(), databaseHandler.getContactName(hash));
 
     }
@@ -172,7 +173,6 @@ public class DatabaseHandlerUnitTest {
         final Block expectBlock = BlockFactory.getBlock(TYPE_BLOCK, "owner2", ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
         expectBlock.setSeqNumberTo(1);
-
         assertEquals(expectBlock, databaseHandler.getLatestBlock("owner2"));
     }
 
