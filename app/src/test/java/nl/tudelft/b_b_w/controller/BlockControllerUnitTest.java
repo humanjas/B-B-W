@@ -74,18 +74,33 @@ public class BlockControllerUnitTest {
 
 
     /**
-     * getOwnerName test
+     * getOwnerName test no 1
      * Test getting the owner name given hash key.
      */
     @Test
-    public void getContactName() {
+    public void getContactNameTest1() {
+
+        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, "ownHash2",
+                ownHash, "Hash44324", publicKey + "2", iban, trustValue);
+        block2.setSeqNumberTo(1);
+        bc.addBlock(_block);
+        bc.addBlock(block2);
+        assertEquals(owner, bc.getContactName(ownHash));
+    }
+
+    /**
+     * getOwnerName test no 2
+     * Test getting the owner name given hash key.
+     */
+    @Test
+    public void getContactNameTest2() {
 
         final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, "ownHash2",
                 ownHash, "Hash44324", publicKey+"2", iban, trustValue);
+        block2.setSeqNumberTo(1);
         bc.addBlock(_block);
         bc.addBlock(block2);
         assertEquals(owner+"'s friend #" + block2.getSequenceNumber(), bc.getContactName("ownHash2"));
-
     }
 
 
