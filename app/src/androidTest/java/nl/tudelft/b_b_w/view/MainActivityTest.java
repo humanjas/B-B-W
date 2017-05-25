@@ -1,4 +1,4 @@
-package nl.tudelft.b_b_w;
+package nl.tudelft.b_b_w.view;
 
 import android.app.Activity;
 import android.app.Instrumentation;
@@ -47,25 +47,6 @@ public class MainActivityTest {
         next.finish();
     }
 
-    /**
-     * Verify the availability and workings of the Revoke block button.
-     * It should go to the RevokeBlockActivity.
-     */
-    @Test
-    public void buttonRevokeBlock() {
-        Instrumentation.ActivityMonitor activityMonitor = getInstrumentation().addMonitor(RevokeBlockActivity.class.getName(), null, false);
-
-        // verify that button exists
-        assertNotNull(withText("Revoke block"));
-
-        // click on the button
-        onView(withText("Revoke block")).perform(click());
-
-        // verify that we switched to RevokeBlockActivity
-        Activity next = getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 5000);
-        assertNotNull(next);
-        next.finish();
-    }
 
     /**
      * Verify the availability and workings of the Display chain button.
