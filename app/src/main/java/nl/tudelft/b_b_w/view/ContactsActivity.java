@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class ContactsActivity extends Activity {
     public class ContactAdapter extends BaseAdapter implements ListAdapter {
         private BlockController bc;
         Context context;
+        private Integer images[] = {R.drawable.pic1, R.drawable.pic2, R.drawable.pic3, R.drawable.pic4, R.drawable.pic5};
 
         public ContactAdapter(BlockController bc, Context context) {
             this.context = context;
@@ -58,6 +60,34 @@ public class ContactsActivity extends Activity {
             nameItemText.setText(bc.getBlocks("GENESIS").get(position).getOwner()); //use function to backtrack owner
             TextView ibanItemText = (TextView)view.findViewById(R.id.list_item_iban);
             ibanItemText.setText(bc.getBlocks("GENESIS").get(position).getIban()); //change to IBAN
+
+            ImageView pic = (ImageView)view.findViewById(R.id.trust_image);
+z            int trust = bc.getBlocks("GENESIS").get(position).getTrustValue();
+
+            switch (trust) {
+                case 100: pic.setImageResource(images[0]);
+                    break;
+                case 90: pic.setImageResource(images[0]);
+                    break;
+                case 80: pic.setImageResource(images[0]);
+                    break;
+                case 70: pic.setImageResource(images[1]);
+                    break;
+                case 60: pic.setImageResource(images[1]);
+                    break;
+                case 50: pic.setImageResource(images[2]);
+                    break;
+                case 40: pic.setImageResource(images[2]);
+                    break;
+                case 30: pic.setImageResource(images[3]);
+                    break;
+                case 20: pic.setImageResource(images[3]);
+                    break;
+                case 10: pic.setImageResource(images[4]);
+                    break;
+                case 0: pic.setImageResource(images[4]);
+                    break;
+            }
 
             Button revokeButton = (Button)view.findViewById(R.id.revoke_btn);
 

@@ -22,6 +22,13 @@
         android:layout_marginRight="5dp"
         android:text="Revoke" />
 
+    <ImageView
+        android:id="@+id/trust_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/revoke_btn" />
+
     <TextView
         android:id="@+id/list_item_iban"
         android:layout_width="wrap_content"
