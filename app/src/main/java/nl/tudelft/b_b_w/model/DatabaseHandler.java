@@ -244,6 +244,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getInt(7));
         block.setSeqNumberTo(sequenceNumber);
 
+        block.setSeqNumberTo(cursor.getInt(1));
+
         // Close database connection
         db.close();
 
@@ -343,7 +345,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(5),
                 cursor.getString(6),
                 cursor.getInt(7));
-
+        block.setSeqNumberTo(cursor.getInt(1));
         // Close database connection
         db.close();
 
@@ -385,7 +387,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(5),
                 cursor.getString(6),
                 cursor.getInt(7));
-
+        block.setSeqNumberTo(cursor.getInt(1));
         // Close database connection
         db.close();
 
@@ -427,7 +429,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 cursor.getString(5),
                 cursor.getString(6),
                 cursor.getInt(7));
-
+        block.setSeqNumberTo(cursor.getInt(1));
         // Close database connection
         db.close();
 

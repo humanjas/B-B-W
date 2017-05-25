@@ -55,6 +55,7 @@ public class BlockControllerUnitTest {
         this.bc = new BlockController(RuntimeEnvironment.application);
         this._block = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
+        _block.setSeqNumberTo(sequenceNumber);
     }
 
     /**
@@ -97,6 +98,7 @@ public class BlockControllerUnitTest {
     public void testGetLatestBlock() throws Exception {
         final Block expected = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
+        expected.setSeqNumberTo(1);
         bc.addBlock(_block);
         assertEquals(expected, bc.getLatestBlock(owner));
     }
@@ -129,6 +131,7 @@ public class BlockControllerUnitTest {
         final String newOwner = owner+"2";
         final Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
+        newBlock.setSeqNumberTo(1);
         bc.addBlock(_block);
         bc.addBlock(newBlock);
         List<Block> list = new ArrayList<>();
@@ -138,7 +141,7 @@ public class BlockControllerUnitTest {
         List<Block> newList = bc.getBlocks(owner);
         newList.addAll(bc.getBlocks(newOwner));
 
-        assertEquals(newList, list);
+        assertEquals(list, newList);
 }
 
     /**
@@ -167,9 +170,7 @@ public class BlockControllerUnitTest {
     @Test
     public void testEmptyList() {
         bc.addBlock(_block);
-        final Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
-                previousHashChain, previousHashSender, publicKey, iban, trustValue);
-        bc.revokeBlock(newBlock);
+        bc.revokeBlock(_block);
         List<Block> list = new ArrayList<>();
         assertEquals(list, bc.getBlocks(owner));
     }

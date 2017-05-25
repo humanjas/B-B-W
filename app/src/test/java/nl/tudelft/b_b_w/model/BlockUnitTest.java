@@ -6,6 +6,7 @@ import org.junit.Test;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
 
+import static org.cyberneko.html.HTMLElements.HEAD;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -29,7 +30,6 @@ public class BlockUnitTest {
     private final boolean isRevoked = false;
     private final String iban = "iban";
     private final int trustValue = 0;
-
     /**
      * This method runs before each test to initialize the test object
      * @throws Exception Catches error when the MessageDigest
@@ -40,6 +40,7 @@ public class BlockUnitTest {
         _block = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
     }
+
 
     /**
      * Test to check whether the getOwner() method returns the owner name
@@ -217,7 +218,7 @@ public class BlockUnitTest {
         final Block x  = BlockFactory.getBlock(TYPE_BLOCK, "owner2", ownHash,
                 previousHashChain, previousHashSender, "pub2", iban, trustValue);
         final Block y = BlockFactory.getBlock(TYPE_BLOCK, "owner2", ownHash,
-                        previousHashChain, previousHashSender, "pub2", iban, trustValue);
+                previousHashChain, previousHashSender, "pub2", iban, trustValue);
         assertTrue(x.equals(y) && y.equals(x));
         assertTrue(x.hashCode() == y.hashCode());
     }
