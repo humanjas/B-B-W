@@ -87,6 +87,10 @@ public class PairActivity extends Activity {
         Intent intent = new Intent(this, FriendsPageActivity.class);
 
         intent.putExtra("IBAN", block1.getIban());
+        intent.putExtra("PUBKEY", block1.getPublicKey());
+        intent.putExtra("OWNER", block1.getOwner());
+
+
         startActivity(intent);
     }
 
@@ -138,9 +142,9 @@ public class PairActivity extends Activity {
      * @param view  The view of the program.
      */
     public void onTestSubject3(View view) {
-        ownerName = "TestSubject2";
+        ownerName = "TestSubject3";
         blockController = new BlockController(this);
-        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","pubKeyTS2","NL33INGB3333333333",0);
+        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","pubKeyTS3","NL33INGB3333333333",0);
         block2 = BlockFactory.getBlock("BLOCK", ownerName, "HASH2","HASH1","HASHfromContact1","sub3KeyB","IBANContact1",0);
 
 
@@ -158,6 +162,10 @@ public class PairActivity extends Activity {
         Intent intent = new Intent(this, FriendsPageActivity.class);
 
         intent.putExtra("IBAN", block1.getIban());
+        intent.putExtra("PUBKEY", block1.getPublicKey());
+        intent.putExtra("OWNER", block1.getOwner());
+
+
         startActivity(intent);
 
 
