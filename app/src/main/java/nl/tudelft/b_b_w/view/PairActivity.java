@@ -54,7 +54,7 @@ public class PairActivity extends Activity {
      * @param savedInstanceState brings the variables.
      */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pair);
     }

@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pair_layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="nl.tudelft.b_b_w.view.PairActivity">
@@ -22,7 +23,7 @@
             android:text="Simulation pairing with:" />
 
         <Button
-            android:id="@+id/button10"
+            android:id="@+id/testSubject1Button"
             android:layout_width="139dp"
             android:layout_height="wrap_content"
             android:onClick="onTestSubject1"
@@ -30,7 +31,7 @@
             android:text="TestSubject1" />
 
         <Button
-            android:id="@+id/button11"
+            android:id="@+id/testSubject2Button"
             android:layout_width="139dp"
             android:layout_height="wrap_content"
             android:onClick="onTestSubject2"
@@ -38,7 +39,7 @@
             android:text="TestSubject2" />
 
         <Button
-            android:id="@+id/button12"
+            android:id="@+id/testSubject3Button"
             android:layout_width="139dp"
             android:layout_height="wrap_content"
             android:onClick="onTestSubject3"
