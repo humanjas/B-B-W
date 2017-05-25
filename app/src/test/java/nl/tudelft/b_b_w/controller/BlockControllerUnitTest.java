@@ -79,13 +79,12 @@ public class BlockControllerUnitTest {
      */
     @Test
     public void getContactName() {
-        final String hash = "ownHash2";
-        final String randomSenderHash = "Hash44324";
-        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, hash,
-                ownHash, "randomSenderHash", publicKey+"2", iban, trustValue);
-        bc.addBlock(block2);
+
+        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, "ownHash2",
+                ownHash, "Hash44324", publicKey+"2", iban, trustValue);
         bc.addBlock(_block);
-        assertEquals(owner+"'s friend #" + block2.getSequenceNumber(), bc.getContactName(hash));
+        bc.addBlock(block2);
+        assertEquals(owner+"'s friend #" + block2.getSequenceNumber(), bc.getContactName("ownHash2"));
 
     }
 

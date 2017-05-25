@@ -151,6 +151,7 @@ public class DatabaseHandlerUnitTest {
         final String randomSenderHash = "Hash44324";
         final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, hash,
                 ownHash, "randomSenderHash", publicKey, iban, trustValue);
+        block2.setSeqNumberTo(1);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
         assertEquals(owner+"'s friend #" + block2.getSequenceNumber(), databaseHandler.getContactName(hash));

@@ -22,7 +22,7 @@ public class BlockUnitTest {
     private final String TYPE_BLOCK = "BLOCK";
     private final String TYPE_REVOKE = "REVOKE";
     private final String owner = "owner";
-    private final int sequenceNumber = 0;
+    private final int sequenceNumber = 1;
     private final String ownHash = "ownHash";
     private final String previousHashChain = "previousHashChain";
     private final String previousHashSender = "previousHashSender";
@@ -94,7 +94,7 @@ public class BlockUnitTest {
      */
     @Test
     public void getSequenceNumberTest() throws Exception {
-        final int check = 0;
+        final int check = 1;
         assertEquals(check, _block.getSequenceNumber());
     }
 
