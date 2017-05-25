@@ -67,7 +67,7 @@ public class PairActivity extends Activity {
     public void onTestSubject1(View view) {
         ownerName = "TestSubject1";
         blockController = new BlockController(this);
-        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","TestSubject_PUBKEY","NL11RABO1111111111",0);
+        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","pubKeyTS1","NL11RABO1111111111",0);
         block2 = BlockFactory.getBlock("BLOCK", ownerName, "HASH2","HASH1","HASHfromContact1","Contact1_PUBKEY","IBANContact1",0);
         block3 = BlockFactory.getBlock("BLOCK", ownerName, "HASH3","HASH2","HASHfromContact2","Contact2_PUBKEY","IBANContact2",0);
         block4 = BlockFactory.getBlock("BLOCK", ownerName, "HASH4","HASH3","HASHfromContact3","Contact3_PUBKEY","IBANContact3",0);
@@ -101,7 +101,7 @@ public class PairActivity extends Activity {
 
         ownerName = "TestSubject2";
         blockController = new BlockController(this);
-        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","a","NL22RABO2222222222",0);
+        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","pubKeyTS2","NL22RABO2222222222",0);
         block2 = BlockFactory.getBlock("BLOCK", ownerName, "HASH2","HASH1","HASHfromContact1","b","IBANContact1",0);
         block3 = BlockFactory.getBlock("BLOCK", ownerName, "HASH3","HASH2","HASHfromContact2","c","IBANContact2",0);
         block4 = BlockFactory.getBlock("BLOCK", ownerName, "HASH4","HASH3","HASHfromContact3","d","IBANContact3",0);
@@ -126,6 +126,9 @@ public class PairActivity extends Activity {
         Intent intent = new Intent(this, FriendsPageActivity.class);
 
         intent.putExtra("IBAN", block1.getIban());
+        intent.putExtra("PUBKEY", block1.getPublicKey());
+        intent.putExtra("OWNER", block1.getOwner());
+
         startActivity(intent);
     }
 
@@ -137,7 +140,7 @@ public class PairActivity extends Activity {
     public void onTestSubject3(View view) {
         ownerName = "TestSubject2";
         blockController = new BlockController(this);
-        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","sub3KeyA","NL33INGB3333333333",0);
+        block1 = BlockFactory.getBlock("BLOCK", ownerName, "HASH1","N/A","N/A","pubKeyTS2","NL33INGB3333333333",0);
         block2 = BlockFactory.getBlock("BLOCK", ownerName, "HASH2","HASH1","HASHfromContact1","sub3KeyB","IBANContact1",0);
 
 

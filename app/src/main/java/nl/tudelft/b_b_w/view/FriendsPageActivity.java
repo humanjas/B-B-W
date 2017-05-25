@@ -37,12 +37,24 @@ public class FriendsPageActivity extends Activity {
     private String ibanNumber;
 
     /**
-     * the public key of the block
+     * The public key of the block
      */
     private String publicKey;
 
+    /**
+     * Text view of the iban number.
+     */
+    private TextView textViewIban;
 
-    public static TextView textView;
+    /**
+     * Text view of the public key.
+     */
+    private TextView textViewPubkey;
+
+    /**
+     * Text view of the owner name.
+     */
+    private TextView textViewOwner;
 
 
     /**
@@ -59,10 +71,18 @@ public class FriendsPageActivity extends Activity {
 
         Intent myIntent = getIntent();
         String iban = myIntent.getStringExtra("IBAN");
+        String pubKey = myIntent.getStringExtra("PUBKEY");
+        String ownerName= myIntent.getStringExtra("OWNER");
 
 
-        textView = (TextView) findViewById(R.id.editIban);
-        textView.setText(iban);
+        textViewIban = (TextView) findViewById(R.id.editIban);
+        textViewPubkey = (TextView) findViewById(R.id.editPubKey);
+        textViewOwner = (TextView) findViewById(R.id.senderName);
+
+
+        textViewIban.setText(iban);
+        textViewPubkey.setText(pubKey);
+        textViewOwner.setText(ownerName);
 
 
         /*
