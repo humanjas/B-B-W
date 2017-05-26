@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.ContactsActivity" />
-        <activity android:name=".view.RevokeBlockActivity" />
+        <activity android:name=".view.FriendsActivity"></activity>
         <activity android:name=".view.DisplayChainActivity"></activity>
     </application>
 
