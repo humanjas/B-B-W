@@ -69,6 +69,14 @@ public class MainActivity extends Activity {
         intent.putExtra("publicKey", publicKey);
         startActivity(intent);
     }
+
+
+    public void onFriends(View view) {
+        Intent intent = new Intent(this, FriendsActivity.class);
+        intent.putExtra("ownerName", ownerName);
+        intent.putExtra("publicKey", publicKey);
+        startActivity(intent);
+    }
 //    public void onAddBlock(View view) {
 //        Intent intent = new Intent(this, AddBlockActivity.class);
 //        intent.putExtra("ownerName", ownerName);
@@ -89,10 +97,10 @@ public class MainActivity extends Activity {
 //        startActivity(intent);
 //    }
 
-//    public void onDisplayChain(View view) {
-//        Intent intent = new Intent(this, DisplayChainActivity.class);
-//        intent.putExtra("ownerName", ownerName);
-//        intent.putExtra("publicKey", publicKey);
-//        startActivity(intent);
-//    }
+    public void onDisplayChain(View view) {
+        Intent intent = new Intent(this, DisplayChainActivity.class);
+        intent.putExtra("ownerName", ownerName);
+        intent.putExtra("publicKey", publicKey);
+        startActivity(intent);
+    }
 }
