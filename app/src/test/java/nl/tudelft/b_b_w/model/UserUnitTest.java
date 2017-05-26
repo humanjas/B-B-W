@@ -1,10 +1,8 @@
 package nl.tudelft.b_b_w.model;
 
+import org.junit.Before;
 import org.junit.Test;
-import nl.tudelft.b_b_w.model.User;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -13,13 +11,41 @@ import static org.junit.Assert.assertNotNull;
  */
 public class UserUnitTest {
 
+    private final String name = "NAME";
+    private final String IBAN = "IBAN";
+    private User _user;
+
     /**
-     * Testing the get User method.
+     * setUp method
+     * Initializes a test user
+     */
+    @Before
+    public void setUp() {
+        this._user = new User(name, IBAN);
+    }
+
+    /**
+     * Testing the getName method.
      */
     @Test
-    public void getUserTest(){
-        User user = new User();
+    public void getName(){
+        assertEquals(name, _user.getName());
+    }
 
-        assertNotNull(user);
+    /**
+     * Testing the getIBAN method.
+     */
+    @Test
+    public void getIBAN(){
+        assertEquals(IBAN, _user.getIBAN());
+    }
+
+    /**
+     * Testing the generatePublicKey method.
+     */
+    @Test
+    public void generatePublicKey(){
+        final String PUBLIC_KEY = "PUBLIC_KEY";
+        assertEquals(PUBLIC_KEY, _user.generatePublicKey());
     }
 }
