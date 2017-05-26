@@ -88,4 +88,11 @@ interface BlockControllerInterface {
      * @return block that is updated
      */
     Block revokedTrustValue(Block block);
+
+    /**
+     * backTrace method
+     * @param block given input block to backtrace
+     * @return block which is the true ancestor
+     */
+    Block backTrace(Block block);
 }

@@ -1,12 +1,9 @@
 package nl.tudelft.b_b_w.model;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources.NotFoundException;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.ContactsContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +32,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
      * @param sequenceNumber The number of the block in the sequence
      * @return The block you were searching for
      */
-    public Block getBlock(String owner, String publicKey, int sequenceNumber) {
+    Block getBlock(String owner, String publicKey, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
@@ -48,20 +45,9 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         //When returning an exception the whole program crashes,
         //but we want to preserve the state.
         if (cursor.getCount() < 1) return null;
-
         cursor.moveToFirst();
 
-        final String blockType = (cursor.getInt(8) > 0) ?  "REVOKE" : "BLOCK";
-        final Block block = BlockFactory.getBlock(
-                blockType,
-                cursor.getString(0),
-                cursor.getInt(1),
-                cursor.getString(2),
-                cursor.getString(3),
-                cursor.getString(4),
-                cursor.getString(5),
-                cursor.getString(6),
-                cursor.getInt(7));
+        final Block returnBlock = cursorToBlock(cursor);
 
         // Close database connection
         db.close();
@@ -70,7 +56,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         cursor.close();
 
         // return block
-        return block;
+        return returnBlock;
     }
 
     /**
@@ -82,20 +68,8 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
      * @param sequenceNumber The number of the block in the sequence
      * @return true if the blockchain contains the specified block, otherwise false
      */
-    public boolean containsBlock(String owner, String publicKey, int sequenceNumber) {
+    boolean containsBlock(String owner, String publicKey, int sequenceNumber) {
         return this.getBlock(owner, publicKey, sequenceNumber) != null;
-    }
-
-    /**
-     * Method to check whether the blockchain contains a specific block,
-     * uses the getBlock method to avoid duplication
-     *
-     * @param owner     the owner of the block you want
-     * @param publicKey the publickey of the block you want
-     * @return true if the blockchain contains the specified block, otherwise false
-     */
-    public boolean containsBlock(String owner, String publicKey) {
-        return this.getLatestBlock(owner) != null;
     }
 
     /**
@@ -106,25 +80,24 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
      * @param publicKey the owner of the sequence number
      * @return the latest sequence number of the specified block
      */
-    public int getLatestSeqNum(String owner, String publicKey) {
+    int getLatestSeqNum(String owner, String publicKey) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor c = db.query(TABLE_NAME,
+        Cursor cursor = db.query(TABLE_NAME,
                 new String[]{"MAX(" + KEY_SEQ_NO + ")"},
                 KEY_OWNER + " = ? AND " + KEY_PUBLIC_KEY + " = ?",
                 new String[]{
                         owner, publicKey
                 }, null, null, null, null);
 
-        if (c.getCount() < 1) return -1;
-        c.moveToFirst();
+        if (cursor.getCount() < 1) return -1;
+        cursor.moveToFirst();
 
-        int result = c.getInt(0);
+        int result = cursor.getInt(0);
         db.close();
-        c.close();
+        cursor.close();
 
         return result;
-
     }
 
     /**
@@ -148,20 +121,9 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         //When returning an exception the whole program crashes,
         //but we want to preserve the state.
         if (cursor.getCount() < 1) return null;
-
         cursor.moveToFirst();
 
-        final String blockType = (cursor.getInt(8) > 0) ?  "REVOKE" : "BLOCK";
-        final Block block = BlockFactory.getBlock(
-                blockType,
-                cursor.getString(0),
-                cursor.getInt(1),
-                cursor.getString(2),
-                cursor.getString(3),
-                cursor.getString(4),
-                cursor.getString(5),
-                cursor.getString(6),
-                cursor.getInt(7));
+        final Block returnBlock = cursorToBlock(cursor);
 
         // Close database connection
         db.close();
@@ -170,7 +132,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         cursor.close();
 
         // return block
-        return block;
+        return returnBlock;
     }
 
     /**
@@ -181,7 +143,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
      * @return the block after the specified one
      */
 
-    public Block getBlockAfter(String owner, int sequenceNumber) {
+    Block getBlockAfter(String owner, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
@@ -192,20 +154,9 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
                 }, null, null, null, null);
 
         if (cursor.getCount() < 1) throw new NotFoundException();
-
         cursor.moveToFirst();
 
-        final String blockType = (cursor.getInt(8) > 0) ?  "REVOKE" : "BLOCK";
-        final Block block = BlockFactory.getBlock(
-                blockType,
-                cursor.getString(0),
-                cursor.getInt(1),
-                cursor.getString(2),
-                cursor.getString(3),
-                cursor.getString(4),
-                cursor.getString(5),
-                cursor.getString(6),
-                cursor.getInt(7));
+        final Block returnBlock = cursorToBlock(cursor);
 
         // Close database connection
         db.close();
@@ -214,7 +165,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         cursor.close();
 
         // return block
-        return block;
+        return returnBlock;
     }
 
     /**
@@ -225,7 +176,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
      * @return the block before the specified one
      */
 
-    public Block getBlockBefore(String owner, int sequenceNumber) {
+    Block getBlockBefore(String owner, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
@@ -236,20 +187,9 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
                 }, null, null, null, null);
 
         if (cursor.getCount() < 1) throw new NotFoundException();
-
         cursor.moveToFirst();
 
-        final String blockType = (cursor.getInt(8) > 0) ?  "REVOKE" : "BLOCK";
-        final Block block = BlockFactory.getBlock(
-                blockType,
-                cursor.getString(0),
-                cursor.getInt(1),
-                cursor.getString(2),
-                cursor.getString(3),
-                cursor.getString(4),
-                cursor.getString(5),
-                cursor.getString(6),
-                cursor.getInt(7));
+        final Block returnBlock = cursorToBlock(cursor);
 
         // Close database connection
         db.close();
@@ -258,7 +198,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         cursor.close();
 
         // return block
-        return block;
+        return returnBlock;
     }
 
     /**
@@ -284,17 +224,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
-                final String blockType = (cursor.getInt(8) > 0) ?  "REVOKE" : "BLOCK";
-                final Block block = BlockFactory.getBlock(
-                        blockType,
-                        cursor.getString(0),
-                        cursor.getInt(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getString(5),
-                        cursor.getString(6),
-                        cursor.getInt(7));
+                final Block block = cursorToBlock(cursor);
                 blocks.add(block);
             } while (cursor.moveToNext());
         }
@@ -306,5 +236,57 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         cursor.close();
 
         return blocks;
+    }
+
+    /**
+     * getByHashOwner function
+     * Gets a block by its hash and owner value
+     * @param hash given hash value
+     * @return block that matches it
+     */
+     public Block getByHashOwner(String hash) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_NAME,
+                _columns,
+                KEY_OWN_HASH + " = ?",
+                new String[]{
+                        hash
+                }, null, null, null, null);
+
+        // Preserves the state
+        if (cursor.getCount() < 1) return null;
+        cursor.moveToFirst();
+
+        Block returnBlock = cursorToBlock(cursor);
+
+        // Close database connection
+        db.close();
+
+        // Close cursor
+        cursor.close();
+
+        // return block
+        return returnBlock;
+    }
+
+    /**
+     * cursorToBlock function
+     * Converts a cursor to a block
+     * @param cursor given cursor
+     * @return generated block
+     */
+    private Block cursorToBlock(Cursor cursor) {
+        final String blockType = (cursor.getInt(8) > 0) ?  "REVOKE" : "BLOCK";
+        return BlockFactory.getBlock(
+                blockType,
+                cursor.getString(0),
+                cursor.getInt(1),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getString(6),
+                cursor.getInt(7));
     }
 }

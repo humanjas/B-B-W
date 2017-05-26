@@ -157,6 +157,21 @@ public class BlockController implements BlockControllerInterface {
         return block;
     }
 
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public Block backTrace(Block block) {
+        String previousHashSender = block.getPreviousHashSender();
+        Block loop_block = block;
+
+        while (!previousHashSender.equals("")) {
+            loop_block = getDatabaseHandler.getByHashOwner(previousHashSender);
+            previousHashSender = loop_block.getPreviousHashSender();
+        }
+
+        return loop_block;
+    }
 
 
 }

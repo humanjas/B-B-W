@@ -96,16 +96,6 @@ public class DatabaseHandlerUnitTest {
     }
 
     /**
-     * containsBlock/2 test
-     * Tests whether a block exists
-     */
-    @Test
-    public void containsBlock2() {
-        mutateDatabaseHandler.addBlock(_block);
-        assertTrue(getDatabaseHandler.containsBlock(owner, publicKey));
-    }
-
-    /**
      * containsBlock/3 test
      * Tests whether a block exists
      */
@@ -221,6 +211,15 @@ public class DatabaseHandlerUnitTest {
         SQLiteDatabase database = getDatabaseHandler.getReadableDatabase();
         getDatabaseHandler.onUpgrade(database, 0, 1);
         assertEquals(getDatabaseHandler.getReadableDatabase(), database);
+    }
+
+    /**
+     * Test to check whether getting a block by its hash value and owner works
+     */
+    @Test
+    public void getByHashOwner() {
+        mutateDatabaseHandler.addBlock(_block);
+        assertEquals(_block, getDatabaseHandler.getByHashOwner(ownHash));
     }
 
     /**
