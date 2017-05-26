@@ -94,7 +94,7 @@ public class DatabaseHandlerUnitTest {
     public void getNullBlock() {
         assertNull(getDatabaseHandler.getLatestBlock("null"));
     }
-    
+
     /**
      * containsBlock/3 test
      * Tests whether a block exists
