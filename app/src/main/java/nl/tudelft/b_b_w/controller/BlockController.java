@@ -103,7 +103,7 @@ public class BlockController {
      * @return List of all the blocks
      */
     public List<Block> getBlocks(String owner) {
-        // retrieve sorted blocks oth
+        // retrieve all blocks in the database and then sort it in order of sequence number
         List<Block> blocks = databaseHandler.getAllBlocks(owner);
         Collections.sort(blocks, new Comparator<Block>() {
                     @Override
