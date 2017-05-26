@@ -14,7 +14,7 @@ public class User {
     private List<String> publicKeys;
 
     /**
-     * Fill in immutable fielsd. Other fields should not be given to the constructor
+     * Fill in immutable fields. Other fields should not be given to the constructor
      * but be calculated directly.
      * @param name
      * @param iban
