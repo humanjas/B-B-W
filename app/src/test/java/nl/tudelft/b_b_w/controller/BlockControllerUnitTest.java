@@ -204,4 +204,18 @@ public class BlockControllerUnitTest {
         assertEquals(TrustValues.REVOKED.getValue(), _block.getTrustValue());
     }
 
+    /**
+     * backTrace test
+     * Tests whether backtracing from previousHashSender works
+     */
+    @Test
+    public void testBackTrace() {
+        final Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, bc.getLatestSeqNumber(owner)+1,
+                ownHash, previousHashChain, "", publicKey, iban, trustValue);
+        final Block newBlock2 = BlockFactory.getBlock(TYPE_BLOCK, owner, bc.getLatestSeqNumber(owner)+1,
+                previousHashSender, previousHashChain, ownHash, publicKey, iban, trustValue);
+        bc.addBlock(newBlock);
+        assertEquals(newBlock, bc.backTrace(newBlock2));
+    }
+
 }

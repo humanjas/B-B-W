@@ -219,7 +219,7 @@ public class DatabaseHandlerUnitTest {
     @Test
     public void getByHashOwner() {
         mutateDatabaseHandler.addBlock(_block);
-        assertEquals(_block, getDatabaseHandler.getByHashOwner(owner, ownHash));
+        assertEquals(_block, getDatabaseHandler.getByHashOwner(ownHash));
     }
 
     /**

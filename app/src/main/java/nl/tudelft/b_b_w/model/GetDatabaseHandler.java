@@ -241,18 +241,17 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
     /**
      * getByHashOwner function
      * Gets a block by its hash and owner value
-     * @param owner given owner value
      * @param hash given hash value
      * @return block that matches it
      */
-     Block getByHashOwner(String owner, String hash) {
+     public Block getByHashOwner(String hash) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
                 _columns,
-                KEY_OWNER + " = ? AND " + KEY_OWN_HASH + " = ?",
+                KEY_OWN_HASH + " = ?",
                 new String[]{
-                        owner, hash
+                        hash
                 }, null, null, null, null);
 
         // Preserves the state
