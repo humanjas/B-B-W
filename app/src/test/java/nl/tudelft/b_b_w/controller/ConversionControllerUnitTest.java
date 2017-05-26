@@ -1,9 +1,8 @@
 package nl.tudelft.b_b_w.controller;
 
 import org.junit.Test;
-import nl.tudelft.b_b_w.controller.ConversionController;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 /**
  * ConversionTest
  */

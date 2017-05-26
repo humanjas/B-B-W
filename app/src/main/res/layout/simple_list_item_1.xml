@@ -10,8 +10,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:paddingLeft="8dp"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textSize="18sp"/>
 
     <Button
         android:id="@+id/revoke_btn"
@@ -24,8 +23,8 @@
 
     <ImageView
         android:id="@+id/trust_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/revoke_btn" />
 
@@ -36,7 +35,6 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/list_item_name"
         android:layout_marginLeft="50dp"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textSize="12sp"/>
 
 </RelativeLayout>

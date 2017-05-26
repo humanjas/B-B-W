@@ -15,39 +15,70 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
+import java.util.List;
+
 import nl.tudelft.b_b_w.R;
 import nl.tudelft.b_b_w.controller.BlockController;
+import nl.tudelft.b_b_w.model.Block;
 
 /**
  * When the user wants to add a block he enters into the ContactsActivity, which contain
  * some entry fields and a button to confirm the addition.
  */
 public class ContactsActivity extends Activity {
+
+    /**
+     * Adapter to add the different blocks dynamically
+     */
     public class ContactAdapter extends BaseAdapter implements ListAdapter {
+
+        //Variables which we use for getting the block information
         private BlockController bc;
         Context context;
+        //Images for displaying trust
         private Integer images[] = {R.drawable.pic1, R.drawable.pic2, R.drawable.pic3, R.drawable.pic4, R.drawable.pic5};
 
+        /**
+         * Default constructor to initiate the Adapter
+         * @param bc BlockController which is passed on
+         * @param context Context which is passed on
+         */
         public ContactAdapter(BlockController bc, Context context) {
             this.context = context;
             this.bc = bc;
         }
 
+        /**
+         *{@inheritDoc}
+         */
         @Override
         public Object getItem(int position) {
             return bc.getBlocks("GENESIS").get(position);
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public long getItemId(int position) {
             return 0;
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public int getCount() {
             return bc.getBlocks("GENESIS").size();
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View view = convertView;
@@ -56,14 +87,18 @@ public class ContactsActivity extends Activity {
                 view = inflater.inflate(R.layout.simple_list_item_1, null);
             }
 
+            //Setting the name field
             TextView nameItemText = (TextView)view.findViewById(R.id.list_item_name);
             nameItemText.setText(bc.getBlocks("GENESIS").get(position).getOwner()); //use function to backtrack owner
+            //Setting the IBAN field
             TextView ibanItemText = (TextView)view.findViewById(R.id.list_item_iban);
             ibanItemText.setText(bc.getBlocks("GENESIS").get(position).getIban()); //change to IBAN
 
+            //Setting the trust image
             ImageView pic = (ImageView)view.findViewById(R.id.trust_image);
-z            int trust = bc.getBlocks("GENESIS").get(position).getTrustValue();
+            int trust = bc.getBlocks("GENESIS").get(position).getTrustValue();
 
+            //Switch case for deciding which image needs be picked for the trust value
             switch (trust) {
                 case 100: pic.setImageResource(images[0]);
                     break;
@@ -89,8 +124,10 @@ z            int trust = bc.getBlocks("GENESIS").get(position).getTrustValue();
                     break;
             }
 
+            //Setting the button to revoke
             Button revokeButton = (Button)view.findViewById(R.id.revoke_btn);
 
+            //Listener for the revoke button
             revokeButton.setOnClickListener(new View.OnClickListener() {
                @Override
                 public void onClick(View v) {
@@ -135,25 +172,25 @@ z            int trust = bc.getBlocks("GENESIS").get(position).getTrustValue();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
+        setTitle("Contacts");
+
 
         // get contacts
         BlockController bc = new BlockController(this);
-//        bc.addBlock(BlockFactory.getBlock("BLOCK", "GENESIS", 2,
-//                "Hash", "prevhash", "prevhashsender",
-//                "pubkey"));
+        List<Block> blocks = bc.getBlocks("GENESIS");
+
+        //Setting up the graph
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        DataPoint[] points = new DataPoint[blocks.size()];
+        for (int i = 0; i < blocks.size(); i++) {
+            points[i] = new DataPoint(i, blocks.get(i).getTrustValue());
+        }
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
+        graph.addSeries(series);
 
         ContactAdapter adapter = new ContactAdapter(bc, this);
         ListView lView = (ListView)findViewById(R.id.contacts);
         lView.setAdapter(adapter);
-
-//        try {
-//            // list
-//            ListView view = (ListView) findViewById(contacts);
-//            ContactAdapter adapter = new ContactAdapter(bc);
-//            view.setAdapter(adapter);
-//        } catch (Exception e) {
-//            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-//        }
     }
 }
 
