@@ -81,7 +81,7 @@ public class BlockControllerUnitTest {
     @Test
     public void getContactNameTest1() {
 
-        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, "ownHash2",
+        Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, "ownHash2",
                 ownHash, "Hash44324", publicKey + "2", iban, trustValue);
         block2.setSeqNumberTo(1);
         bc.addBlock(_block);
@@ -96,7 +96,7 @@ public class BlockControllerUnitTest {
     @Test
     public void getContactNameTest2() {
 
-        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, "ownHash2",
+        Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, "ownHash2",
                 ownHash, "Hash44324", publicKey+"2", iban, trustValue);
         block2.setSeqNumberTo(1);
         bc.addBlock(_block);
@@ -111,7 +111,7 @@ public class BlockControllerUnitTest {
      */
     @Test
     public void testGetLatestBlock() throws Exception {
-        final Block expected = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
+        Block expected = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
         expected.setSeqNumberTo(1);
         bc.addBlock(_block);
@@ -144,7 +144,7 @@ public class BlockControllerUnitTest {
     @Test
     public void testAddBlock2() throws Exception {
         final String newOwner = owner+"2";
-        final Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, ownHash,
+        Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, newOwner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
         newBlock.setSeqNumberTo(1);
         bc.addBlock(_block);
