@@ -12,22 +12,6 @@
     <Button
         android:id="@+id/button7"
         android:layout_width="match_parent"
-<<<<<<< HEAD
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
-
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.58"
-            android:onClick="onAddBlock"
-            android:text="Contacts" />
-
-    </LinearLayout>
-=======
         android:layout_height="159dp"
         android:onClick="onContacts"
         android:text="Contacts"
@@ -40,21 +24,13 @@
         android:onClick="onRevokeBlock"
         android:text="Friends"
         android:textSize="72sp" />
->>>>>>> a0c3d4ac549d98a3a5cdf1cfd032bdc98f8cc3ea
 
     <Button
         android:id="@+id/button5"
         android:layout_width="match_parent"
-<<<<<<< HEAD
         android:layout_height="wrap_content"
         android:onClick="onPairPage"
         android:text="Pair"
-=======
-        android:layout_height="137dp"
-        android:onClick="onDisplayChain"
-        android:text="Pair"
-        android:textSize="72sp"
->>>>>>> a0c3d4ac549d98a3a5cdf1cfd032bdc98f8cc3ea
         tools:layout_editor_absoluteX="100dp"
         tools:layout_editor_absoluteY="400dp" />
 
