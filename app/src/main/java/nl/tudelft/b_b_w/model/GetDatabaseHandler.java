@@ -241,11 +241,11 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
     /**
      * getByHashOwner function
      * Gets a block by its hash and owner value
-     * @param hash given hash value
      * @param owner given owner value
+     * @param hash given hash value
      * @return block that matches it
      */
-     Block getByHashOwner(String hash, String owner) {
+     Block getByHashOwner(String owner, String hash) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
