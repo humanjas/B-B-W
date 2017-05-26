@@ -35,7 +35,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
      * @param sequenceNumber The number of the block in the sequence
      * @return The block you were searching for
      */
-    public Block getBlock(String owner, String publicKey, int sequenceNumber) {
+    Block getBlock(String owner, String publicKey, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
@@ -82,7 +82,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
      * @param sequenceNumber The number of the block in the sequence
      * @return true if the blockchain contains the specified block, otherwise false
      */
-    public boolean containsBlock(String owner, String publicKey, int sequenceNumber) {
+    boolean containsBlock(String owner, String publicKey, int sequenceNumber) {
         return this.getBlock(owner, publicKey, sequenceNumber) != null;
     }
 
@@ -94,7 +94,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
      * @param publicKey the publickey of the block you want
      * @return true if the blockchain contains the specified block, otherwise false
      */
-    public boolean containsBlock(String owner, String publicKey) {
+    boolean containsBlock(String owner, String publicKey) {
         return this.getLatestBlock(owner) != null;
     }
 
@@ -106,7 +106,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
      * @param publicKey the owner of the sequence number
      * @return the latest sequence number of the specified block
      */
-    public int getLatestSeqNum(String owner, String publicKey) {
+    int getLatestSeqNum(String owner, String publicKey) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor c = db.query(TABLE_NAME,
@@ -225,7 +225,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
      * @return the block before the specified one
      */
 
-    public Block getBlockBefore(String owner, int sequenceNumber) {
+    Block getBlockBefore(String owner, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,
