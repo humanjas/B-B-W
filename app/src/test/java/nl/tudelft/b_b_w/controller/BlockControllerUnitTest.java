@@ -2,6 +2,7 @@ package nl.tudelft.b_b_w.controller;
 
 import android.content.res.Resources;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -243,4 +244,13 @@ public class BlockControllerUnitTest {
         assertEquals(TrustValues.REVOKED.getValue(), _block.getTrustValue());
     }
 
+
+    /**
+     * Closes database connection after test
+     */
+    @After
+    public void tearDown() {
+        bc.clearAllBlocks();
+
+    }
 }

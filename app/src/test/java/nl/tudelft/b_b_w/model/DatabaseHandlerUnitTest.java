@@ -254,6 +254,8 @@ public class DatabaseHandlerUnitTest {
      */
     @After
     public void tearDown() {
+        databaseHandler.clearAllBlocks();
         databaseHandler.close();
+
     }
 }
