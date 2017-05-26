@@ -17,7 +17,6 @@ import nl.tudelft.b_b_w.model.User;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotSame;
 import static junit.framework.Assert.assertTrue;
-import static nl.tudelft.b_b_w.controller.Api.createUser;
 
 /**
  * Test the API.
@@ -28,6 +27,7 @@ import static nl.tudelft.b_b_w.controller.Api.createUser;
 public class ApiUnitTest {
     private BlockController bc;
     private User userA, userB, userC, userD, userE;
+    private Api api;
 
     /**
      * User A has one public key, user B two
@@ -44,16 +44,13 @@ public class ApiUnitTest {
     @Before
     public void setUp() {
         bc = new BlockController(RuntimeEnvironment.application);
-        Api.init(RuntimeEnvironment.application);
+        api = new Api(RuntimeEnvironment.application);
 
-        userA = createUser("Antro", "NL81INGB0000000000");
-        userB = createUser("Besse", "NL81INGB0000000000");
-        userC = createUser("Cacao", "NL81INGB0000000000");
-        userD = createUser("Draffyg", "NL81INGB0000000000");
-        userE = createUser("Erwti", "NL81INGB0000000000");
-
-        // public static Block getBlock(String type, String _owner, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban, int _trustValue) throws IllegalArgumentException {
-        // public static Block getBlock(User owner, User user, String ownHash, String previousHashChain, String previousHashSender, String publicKey, boolean revoke) {
+        userA = api.createUser("Antro", "NL81INGB0000000000");
+        userB = api.createUser("Besse", "NL81INGB0000000000");
+        userC = api.createUser("Cacao", "NL81INGB0000000000");
+        userD = api.createUser("Draffyg", "NL81INGB0000000000");
+        userE = api.createUser("Erwti", "NL81INGB0000000000");
 
         // A: add A
         bc.addBlock(BlockFactory.getBlock("BLOCK", userA.getName(), "roothashA", "prevhashchain", "root", "pkroot", "NL81...", 0));
@@ -78,7 +75,7 @@ public class ApiUnitTest {
      */
     @Test
     public void ownKey() {
-        List<String> keysA = Api.getUserKeys(userA, userA);
+        List<String> keysA = api.getUserKeys(userA, userA);
         List<String> expectedA = new ArrayList<String>();
         expectedA.add("pka");
         assertEquals(expectedA, keysA);
@@ -90,13 +87,13 @@ public class ApiUnitTest {
     @Test
     public void otherKey() {
         // is the other key there
-        List<String> keysA = Api.getUserKeys(userB, userA);
+        List<String> keysA = api.getUserKeys(userB, userA);
         List<String> expectedA = new ArrayList<String>();
         expectedA.add("pka");
         assertEquals(expectedA, keysA);
 
         // does it really filter
-        List<String> keysB = Api.getUserKeys(userB, userB);
+        List<String> keysB = api.getUserKeys(userB, userB);
         List<String> expectedB = new ArrayList<String>();
         assertTrue(keysB.isEmpty());
     }
@@ -106,7 +103,7 @@ public class ApiUnitTest {
      */
     @Test
     public void userWithoutKeys() {
-        List<String> keys = Api.getUserKeys(userC, userA);
+        List<String> keys = api.getUserKeys(userC, userA);
         assertTrue(keys.isEmpty());
     }
 
@@ -117,8 +114,8 @@ public class ApiUnitTest {
      */
     @Test
     public void addOwnKey() {
-        Api.addKey(userC, userC, "pkc");
-        List<String> keys = Api.getUserKeys(userC, userC);
+        api.addKey(userC, userC, "pkc");
+        List<String> keys = api.getUserKeys(userC, userC);
         List<String> expected = new ArrayList<String>();
         expected.add("pkc");
         assertEquals(expected, keys);
@@ -129,8 +126,8 @@ public class ApiUnitTest {
      */
     @Test
     public void addOtherKey() {
-        Api.addKey(userC, userA, "pka");
-        List<String> keys = Api.getUserKeys(userC, userA);
+        api.addKey(userC, userA, "pka");
+        List<String> keys = api.getUserKeys(userC, userA);
         List<String> expected = new ArrayList<String>();
         expected.add("pka");
         assertEquals(expected, keys);
@@ -140,9 +137,9 @@ public class ApiUnitTest {
     @Test
     public void uniqueUsers() {
         User a,b,c;
-        a = Api.createUser("A", "IBAN1");
-        b = Api.createUser("B", "IBAN2");
-        c = Api.createUser("C", "IBAN3");
+        a = api.createUser("A", "IBAN1");
+        b = api.createUser("B", "IBAN2");
+        c = api.createUser("C", "IBAN3");
         assertNotSame(a.getID(), b.getID());
         assertNotSame(b.getID(), c.getID());
     }

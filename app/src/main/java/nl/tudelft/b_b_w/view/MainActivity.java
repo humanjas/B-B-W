@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import nl.tudelft.b_b_w.R;
-import nl.tudelft.b_b_w.controller.Api;
 import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
@@ -31,9 +30,6 @@ public class MainActivity extends Activity {
         blockController = new BlockController(this);
         ownerName = "GENESIS";
         publicKey = "demokey";
-
-        // initialize our api
-        Api.init(this);
     }
 
     /**

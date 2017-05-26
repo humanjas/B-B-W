@@ -14,17 +14,17 @@ import nl.tudelft.b_b_w.model.User;
  * the blockchain and database.
  */
 public class Api {
-    private static Context context;
-    private static BlockController blockController;
-    private static ArrayList<User> users = new ArrayList<>();
+    private Context context;
+    private BlockController blockController;
+    private ArrayList<User> users = new ArrayList<>();
 
     /**
      * Initialize the API with a context
      * @param context A context object, needed for the database
      */
-    public static void init(Context context) {
-        Api.context = context;
-        Api.blockController = new BlockController(context);
+    public Api(Context context) {
+        this.context = context;
+        blockController = new BlockController(context);
     }
 
     /**
@@ -33,7 +33,7 @@ public class Api {
      * @param user the user of whom to retrieve non-revoked public keys
      * @return a list of public keys in string form
      */
-    public static List<String> getUserKeys(User owner, User user) {
+    public List<String> getUserKeys(User owner, User user) {
         List<Block> blocks = blockController.getBlocks(owner.getName());
         List<String> keys = new ArrayList<String>();
 
@@ -64,7 +64,7 @@ public class Api {
      * @param user The user who possesses the key
      * @param key The public key we want to add
      */
-    public static void addKey(User owner, User user, String key) {
+    public void addKey(User owner, User user, String key) {
         // find blocks to connect to
         List<Block> senderBlocks = blockController.getBlocks(user.getName());
         Block genesisSender = senderBlocks.get(0);
@@ -90,7 +90,7 @@ public class Api {
      * @param user The user who possessed the key
      * @param key The public key we want to revoke
      */
-    public static void revokeKey(User owner, User user, String key) {
+    public void revokeKey(User owner, User user, String key) {
         // find blocks to connect to
         List<Block> senderBlocks = blockController.getBlocks(user.getName());
         Block genesisSender = senderBlocks.get(0);
@@ -116,7 +116,7 @@ public class Api {
      * @param iban iban of the user
      * @return the freshly created user
      */
-    public static User createUser(String name, String iban) {
+    public User createUser(String name, String iban) {
         User user = new User(users.size(), name, iban);
         users.add(user);
         return user;
