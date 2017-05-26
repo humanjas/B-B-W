@@ -76,7 +76,9 @@ public class Api {
         String prevHashOther = genesisSender.getOwnHash();
         if (owner == user)
             prevHashOther = "N/A";
-        Block fresh = BlockFactory.getBlock(owner, user, hash, prevHashSelf, prevHashOther, key, false);
+
+        // public static Block getBlock(String type, String _owner, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban, int _trustValue) throws IllegalArgumentException {
+        Block fresh = BlockFactory.getBlock("BLOCK", owner.getName(), hash, prevHashSelf, prevHashOther, key, "NL81...", 0);
 
         // add to database
         blockController.addBlock(fresh);
@@ -94,8 +96,15 @@ public class Api {
         Block genesisSender = senderBlocks.get(0);
         Block latest = blockController.getLatestBlock(owner.getName());
 
+        // create our block
+        String hash = "hash@" + user + "@" + key;
+        String prevHashSelf = latest.getOwnHash();
+        String prevHashOther = genesisSender.getOwnHash();
+        if (owner == user)
+            prevHashOther = "N/A";
+
         // create revoke block
-        Block fresh = BlockFactory.getBlock(owner, user, "hash@" + user + "@" + key + "@revoke", latest.getOwnHash(), genesisSender.getOwnHash(), key, true);
+        Block fresh = BlockFactory.getBlock("REVOKE", user.getName(), hash, prevHashSelf, prevHashOther, key, "NL81...", 0);
 
         // add to database
         blockController.addBlock(fresh);

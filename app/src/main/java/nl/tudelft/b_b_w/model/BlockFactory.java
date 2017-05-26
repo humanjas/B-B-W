@@ -32,8 +32,5 @@ public class BlockFactory {
         }
     }
 
-    public static Block getBlock(User owner, User user, String ownHash, String previousHashChain, String previousHashSender, String publicKey, boolean revoke) {
-        return new Block(owner.getName(), ownHash, previousHashChain,
-                previousHashSender, publicKey, user.getIban(), 0, revoke);
-    }
 }
+

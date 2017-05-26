@@ -57,19 +57,19 @@ public class ApiUnitTest {
 
         // A: add A
         bc.addBlock(BlockFactory.getBlock("BLOCK", userA.getName(), "roothashA", "prevhashchain", "root", "pkroot", "NL81...", 0));
-        bc.addBlock(BlockFactory.getBlock(userA, userA, "hashA", "roothash", "N/A", "pka", false));
+        bc.addBlock(BlockFactory.getBlock("BLOCK", userA.getName(), "hashA", "roothash", "N/A", "pka", "NL81...", 0));
 
         // B: add A
         bc.addBlock(BlockFactory.getBlock("BLOCK", userB.getName(), "roothashB", "prevhashchain", "root", "pkroot", "NL81...", 0));
-        bc.addBlock(BlockFactory.getBlock(userB, userA, "hashB", "roothashB", "roothashA", "pka", false));
+        bc.addBlock(BlockFactory.getBlock("BLOCK", userB.getName(), "hashB", "roothashB", "roothashA", "pka", "NL81...", 0));
 
         // C
         bc.addBlock(BlockFactory.getBlock("BLOCK", userC.getName(), "roothashC", "prevhashchain", "root", "pkroot", "NL81...", 0));
 
         // E: add A, revoke A
         bc.addBlock(BlockFactory.getBlock("BLOCK", userE.getName(), "roothashE", "prevhashchain", "root", "pkroot", "NL81...", 0));
-        bc.addBlock(BlockFactory.getBlock(userE, userA, "hashE1", "roothashE", "roothashA", "pka", false));
-        bc.addBlock(BlockFactory.getBlock(userE, userA, "hashE2", "hashE1", "roothashA", "pka", true));
+        bc.addBlock(BlockFactory.getBlock("BLOCK", userE.getName(), "hashE1", "roothashE", "roothashA", "pka", "NL81...", 0));
+        bc.addBlock(BlockFactory.getBlock("REVOKE", userE.getName(), "hashE2", "hashE1", "roothashA", "pka", "NL81...", 0));
     }
 
 
