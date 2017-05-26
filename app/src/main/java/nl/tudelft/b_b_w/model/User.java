@@ -18,7 +18,7 @@ public class User {
      * @param _IBAN given iban
      */
     public User(String _name, String _IBAN) {
-        this.name = name;
+        this.name = _name;
         this.IBAN = _IBAN;
     }
 
