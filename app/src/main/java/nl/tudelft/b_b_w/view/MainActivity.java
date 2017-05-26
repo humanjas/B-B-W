@@ -69,6 +69,7 @@ public class MainActivity extends Activity {
     }
 
     /**
+<<<<<<< HEAD
      * This method clears the database since a limited amount of data can be viewed.
      * @param view  The view of the program.
      */
@@ -80,11 +81,14 @@ public class MainActivity extends Activity {
 
     /**
      * Callback for when user clicks on 'add block'. Switch to AddBlockActivity.
+=======
+     * Callback for when user clicks on 'add block'. Switch to ContactsActivity.
+>>>>>>> a0c3d4ac549d98a3a5cdf1cfd032bdc98f8cc3ea
      *
      * @param view current view, which is always MainActivity
      */
-    public void onAddBlock(View view) {
-        Intent intent = new Intent(this, AddBlockActivity.class);
+    public void onContacts(View view) {
+        Intent intent = new Intent(this, ContactsActivity.class);
         intent.putExtra("ownerName", ownerName);
         intent.putExtra("publicKey", publicKey);
         startActivity(intent);
