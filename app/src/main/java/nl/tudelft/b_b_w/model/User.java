@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Information storage for a user.
+ * Information storage of a user.
  */
 public class User {
     private int id;
