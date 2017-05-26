@@ -463,7 +463,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
-                final String blockType = (cursor.getInt(7) > 0) ?  "REVOKE" : "BLOCK";
+                final String blockType = (cursor.getInt(8) > 0) ?  "REVOKE" : "BLOCK";
                 Block block = BlockFactory.getBlock(
                         blockType,cursor.getString(0),
                         cursor.getString(2),
