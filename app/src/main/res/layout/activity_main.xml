@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="nl.tudelft.b_b_w.view.MainActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="73dp">
+
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="match_parent"
+        android:layout_height="159dp"
+        android:onClick="onContacts"
+        android:text="Contacts"
+        android:textSize="72sp" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:onClick="onFriends"
+        android:text="Friends"
+        android:textSize="72sp" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="match_parent"
+        android:layout_height="137dp"
+        android:onClick="onDisplayChain"
+        android:text="Pair"
+        android:textSize="72sp"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="400dp" />
+
+</android.widget.LinearLayout>
