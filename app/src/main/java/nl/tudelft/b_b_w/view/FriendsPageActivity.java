@@ -45,24 +45,9 @@ public class FriendsPageActivity extends Activity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       // int userID = savedInstanceState.getInt("userID");
-        //User user = Api.getUser(userID);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_page);
 
-        /*
-        Bundle extra = getIntent().getExtras();
-
-        databaseHandler = new DatabaseHandler(this);
-        blockController = new BlockController(this);
-        ownerName   = extra.getString("ownerName");
-        publicKey = extra.getString("publicKey");
-        ibanNumber = extra.getString("ibanNumber");
-
-        Toast.makeText(this, ownerName + ", " + publicKey + " " + ibanNumber , Toast.LENGTH_SHORT).show();
-
-    */
     }
 
 
