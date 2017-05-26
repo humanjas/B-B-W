@@ -2,6 +2,7 @@ package nl.tudelft.b_b_w.controller;
 
 import android.content.res.Resources;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -74,19 +75,33 @@ public class BlockControllerUnitTest {
 
 
     /**
-     * getOwnerName test
+     * getOwnerName test no 1
      * Test getting the owner name given hash key.
      */
     @Test
-    public void getContactName() {
-        final String hash = "ownHash2";
-        final String randomSenderHash = "Hash44324";
-        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, hash,
-                ownHash, "randomSenderHash", publicKey+"2", iban, trustValue);
-        bc.addBlock(block2);
-        bc.addBlock(_block);
-        assertEquals(owner+"'s friend #" + block2.getSequenceNumber(), bc.getContactName(hash));
+    public void getContactNameTest1() {
 
+        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, "ownHash2",
+                ownHash, "Hash44324", publicKey + "2", iban, trustValue);
+        block2.setSeqNumberTo(1);
+        bc.addBlock(_block);
+        bc.addBlock(block2);
+        assertEquals(owner, bc.getContactName(ownHash));
+    }
+
+    /**
+     * getOwnerName test no 2
+     * Test getting the owner name given hash key.
+     */
+    @Test
+    public void getContactNameTest2() {
+
+        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, "ownHash2",
+                ownHash, "Hash44324", publicKey+"2", iban, trustValue);
+        block2.setSeqNumberTo(1);
+        bc.addBlock(_block);
+        bc.addBlock(block2);
+        assertEquals(owner+"'s friend #" + block2.getSequenceNumber(), bc.getContactName("ownHash2"));
     }
 
 
@@ -229,4 +244,13 @@ public class BlockControllerUnitTest {
         assertEquals(TrustValues.REVOKED.getValue(), _block.getTrustValue());
     }
 
+
+    /**
+     * Closes database connection after test
+     */
+    @After
+    public void tearDown() {
+        bc.clearAllBlocks();
+
+    }
 }

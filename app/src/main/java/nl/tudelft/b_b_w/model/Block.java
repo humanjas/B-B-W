@@ -30,7 +30,9 @@ public class Block {
      */
     public Block(String _owner, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban, int _trustvalue, boolean _isRevoked) {
         this.owner = _owner;
-        this.sequenceNumber = 0;
+
+        //starting index 1, no longer 0, the mutable thing will be fixed, this is a quick fix
+        this.sequenceNumber = 1;
         this.ownHash = _ownHash;
         this.previousHashChain = _previousHashChain;
         this.previousHashSender = _previousHashSender;
