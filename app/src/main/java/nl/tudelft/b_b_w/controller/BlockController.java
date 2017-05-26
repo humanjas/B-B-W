@@ -12,7 +12,6 @@ import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
 import nl.tudelft.b_b_w.model.DatabaseHandler;
 import nl.tudelft.b_b_w.model.TrustValues;
-import nl.tudelft.b_b_w.model.User;
 
 /**
 
@@ -22,7 +21,6 @@ import nl.tudelft.b_b_w.model.User;
 public class BlockController {
 
     private Context context;
-    private User user;
     private DatabaseHandler databaseHandler;
 
     /**

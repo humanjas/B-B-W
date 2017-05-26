@@ -8,7 +8,6 @@ import java.util.Objects;
 
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
-import nl.tudelft.b_b_w.model.User;
 
 /** The Api class provides read and write access to our data without having to worry about
  * the blockchain and database.
@@ -16,7 +15,6 @@ import nl.tudelft.b_b_w.model.User;
 public class Api {
     private Context context;
     private BlockController blockController;
-    private ArrayList<User> users = new ArrayList<>();
 
     /**
      * Initialize the API with a context
@@ -33,21 +31,21 @@ public class Api {
      * @param user the user of whom to retrieve non-revoked public keys
      * @return a list of public keys in string form
      */
-    public List<String> getUserKeys(User owner, User user) {
-        List<Block> blocks = blockController.getBlocks(owner.getName());
+    public List<String> getUserKeys(String owner, String user) {
+        List<Block> blocks = blockController.getBlocks(owner);
         List<String> keys = new ArrayList<String>();
 
         // add public key of each block
         for (Block block : blocks) {
             if (block.getSequenceNumber() > 1) {
 
-                if (user == owner) {
+                if (user.equals(owner)) {
                     // our own keys do not have send hashes
-                    if (Objects.equals(block.getPreviousHashSender(), "N/A") || Objects.equals(block.getPreviousHashSender(), "root"))
+                    if (Objects.equals(block.getPreviousHashSender(), "N/A"))
                         keys.add(block.getPublicKey());
                 } else {
                     String blockUserName = blockController.getContactName(block.getPreviousHashSender());
-                    String targetUserName = user.getName();
+                    String targetUserName = user;
                     if (targetUserName.equals(blockUserName))
                         keys.add(block.getPublicKey());
                 }
@@ -64,11 +62,11 @@ public class Api {
      * @param user The user who possesses the key
      * @param key The public key we want to add
      */
-    public void addKey(User owner, User user, String key) {
+    public void addKey(String owner, String user, String key) {
         // find blocks to connect to
-        List<Block> senderBlocks = blockController.getBlocks(user.getName());
+        List<Block> senderBlocks = blockController.getBlocks(user);
         Block genesisSender = senderBlocks.get(0);
-        Block latest = blockController.getLatestBlock(owner.getName());
+        Block latest = blockController.getLatestBlock(owner);
 
         // create our block
         String hash = "hash@" + user + "@" + key;
@@ -77,8 +75,7 @@ public class Api {
         if (owner == user)
             prevHashOther = "N/A";
 
-        // public static Block getBlock(String type, String _owner, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban, int _trustValue) throws IllegalArgumentException {
-        Block fresh = BlockFactory.getBlock("BLOCK", owner.getName(), hash, prevHashSelf, prevHashOther, key, "NL81...", 0);
+        Block fresh = BlockFactory.getBlock("BLOCK", owner, hash, prevHashSelf, prevHashOther, key, "NL81...", 0);
 
         // add to database
         blockController.addBlock(fresh);
@@ -90,11 +87,11 @@ public class Api {
      * @param user The user who possessed the key
      * @param key The public key we want to revoke
      */
-    public void revokeKey(User owner, User user, String key) {
+    public void revokeKey(String owner, String user, String key) {
         // find blocks to connect to
-        List<Block> senderBlocks = blockController.getBlocks(user.getName());
+        List<Block> senderBlocks = blockController.getBlocks(user);
         Block genesisSender = senderBlocks.get(0);
-        Block latest = blockController.getLatestBlock(owner.getName());
+        Block latest = blockController.getLatestBlock(owner);
 
         // create our block
         String hash = "hash@" + user + "@" + key;
@@ -104,22 +101,10 @@ public class Api {
             prevHashOther = "N/A";
 
         // create revoke block
-        Block fresh = BlockFactory.getBlock("REVOKE", user.getName(), hash, prevHashSelf, prevHashOther, key, "NL81...", 0);
+        Block fresh = BlockFactory.getBlock("REVOKE", user, hash, prevHashSelf, prevHashOther, key, "NL81...", 0);
 
         // add to database
         blockController.addBlock(fresh);
-    }
-
-    /**
-     * Add a new user to our list of users.
-     * @param name name of the user
-     * @param iban iban of the user
-     * @return the freshly created user
-     */
-    public User createUser(String name, String iban) {
-        User user = new User(users.size(), name, iban);
-        users.add(user);
-        return user;
     }
 
 }

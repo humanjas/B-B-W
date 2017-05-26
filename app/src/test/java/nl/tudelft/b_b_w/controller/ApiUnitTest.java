@@ -12,10 +12,8 @@ import java.util.List;
 
 import nl.tudelft.b_b_w.BuildConfig;
 import nl.tudelft.b_b_w.model.BlockFactory;
-import nl.tudelft.b_b_w.model.User;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotSame;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -26,8 +24,12 @@ import static junit.framework.Assert.assertTrue;
 @Config(constants = BuildConfig.class,sdk= 21,  manifest = "src/main/AndroidManifest.xml")
 public class ApiUnitTest {
     private BlockController bc;
-    private User userA, userB, userC, userD, userE;
     private Api api;
+    final private String userA = "Antro";
+    final private String userB = "Besse";
+    final private String userC = "Cacao";
+    final private String userD = "Draffyg";
+    final private String userE = "Erwti";
 
     /**
      * User A has one public key, user B two
@@ -46,27 +48,21 @@ public class ApiUnitTest {
         bc = new BlockController(RuntimeEnvironment.application);
         api = new Api(RuntimeEnvironment.application);
 
-        userA = api.createUser("Antro", "NL81INGB0000000000");
-        userB = api.createUser("Besse", "NL81INGB0000000000");
-        userC = api.createUser("Cacao", "NL81INGB0000000000");
-        userD = api.createUser("Draffyg", "NL81INGB0000000000");
-        userE = api.createUser("Erwti", "NL81INGB0000000000");
-
         // A: add A
-        bc.addBlock(BlockFactory.getBlock("BLOCK", userA.getName(), "roothashA", "prevhashchain", "root", "pkroot", "NL81...", 0));
-        bc.addBlock(BlockFactory.getBlock("BLOCK", userA.getName(), "hashA", "roothash", "N/A", "pka", "NL81...", 0));
+        bc.addBlock(BlockFactory.getBlock("BLOCK", "Antro", "roothashA", "prevhashchain", "root", "pkroot", "NL81...", 0));
+        bc.addBlock(BlockFactory.getBlock("BLOCK", "Antro", "hashA", "roothash", "N/A", "pka", "NL81...", 0));
 
         // B: add A
-        bc.addBlock(BlockFactory.getBlock("BLOCK", userB.getName(), "roothashB", "prevhashchain", "root", "pkroot", "NL81...", 0));
-        bc.addBlock(BlockFactory.getBlock("BLOCK", userB.getName(), "hashB", "roothashB", "roothashA", "pka", "NL81...", 0));
+        bc.addBlock(BlockFactory.getBlock("BLOCK", "Besse", "roothashB", "prevhashchain", "root", "pkroot", "NL81...", 0));
+        bc.addBlock(BlockFactory.getBlock("BLOCK", "Besse", "hashB", "roothashB", "roothashA", "pka", "NL81...", 0));
 
         // C
-        bc.addBlock(BlockFactory.getBlock("BLOCK", userC.getName(), "roothashC", "prevhashchain", "root", "pkroot", "NL81...", 0));
+        bc.addBlock(BlockFactory.getBlock("BLOCK", "Cacao", "roothashC", "prevhashchain", "root", "pkroot", "NL81...", 0));
 
         // E: add A, revoke A
-        bc.addBlock(BlockFactory.getBlock("BLOCK", userE.getName(), "roothashE", "prevhashchain", "root", "pkroot", "NL81...", 0));
-        bc.addBlock(BlockFactory.getBlock("BLOCK", userE.getName(), "hashE1", "roothashE", "roothashA", "pka", "NL81...", 0));
-        bc.addBlock(BlockFactory.getBlock("REVOKE", userE.getName(), "hashE2", "hashE1", "roothashA", "pka", "NL81...", 0));
+        bc.addBlock(BlockFactory.getBlock("BLOCK", "Erwti", "roothashE", "prevhashchain", "root", "pkroot", "NL81...", 0));
+        bc.addBlock(BlockFactory.getBlock("BLOCK", "Erwti", "hashE1", "roothashE", "roothashA", "pka", "NL81...", 0));
+        bc.addBlock(BlockFactory.getBlock("REVOKE", "Erwti", "hashE2", "hashE1", "roothashA", "pka", "NL81...", 0));
     }
 
 
@@ -133,15 +129,4 @@ public class ApiUnitTest {
         assertEquals(expected, keys);
     }
 
-    ///////////////////////////////////////////////////////////// USER UNIT TESTS
-    @Test
-    public void uniqueUsers() {
-        User a,b,c;
-        a = api.createUser("A", "IBAN1");
-        b = api.createUser("B", "IBAN2");
-        c = api.createUser("C", "IBAN3");
-        assertNotSame(a.getID(), b.getID());
-        assertNotSame(b.getID(), c.getID());
-    }
 }
-
