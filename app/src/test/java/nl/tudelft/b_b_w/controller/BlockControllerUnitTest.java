@@ -1,5 +1,7 @@
 package nl.tudelft.b_b_w.controller;
 
+import static org.junit.Assert.assertEquals;
+
 import android.content.res.Resources;
 
 import org.junit.Before;
@@ -16,8 +18,6 @@ import nl.tudelft.b_b_w.BuildConfig;
 import nl.tudelft.b_b_w.model.Block;
 import nl.tudelft.b_b_w.model.BlockFactory;
 import nl.tudelft.b_b_w.model.TrustValues;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -52,7 +52,7 @@ public class BlockControllerUnitTest {
         this.bc = new BlockController(RuntimeEnvironment.application);
         this._block = BlockFactory.getBlock(TYPE_BLOCK, owner, bc.getLatestSeqNumber(owner)+1,
                 ownHash, previousHashChain, previousHashSender, publicKey, iban, trustValue);
-    }
+}
 
     /**
      * Tests adding a block

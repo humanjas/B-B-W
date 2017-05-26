@@ -9,36 +9,29 @@
     tools:layout_editor_absoluteY="73dp">
 
 
-    <LinearLayout
+    <Button
+        android:id="@+id/button7"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        android:layout_height="159dp"
+        android:onClick="onContacts"
+        android:text="Contacts"
+        android:textSize="72sp" />
 
-        <Button
-            android:id="@+id/button7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.58"
-            android:onClick="onAddBlock"
-            android:text="Add block" />
-
-        <Button
-            android:id="@+id/button8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="onRevokeBlock"
-            android:text="Revoke block" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:onClick="onFriends"
+        android:text="Friends"
+        android:textSize="72sp" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="137dp"
         android:onClick="onDisplayChain"
-        android:text="Display chain"
+        android:text="Pair"
+        android:textSize="72sp"
         tools:layout_editor_absoluteX="100dp"
         tools:layout_editor_absoluteY="400dp" />
 

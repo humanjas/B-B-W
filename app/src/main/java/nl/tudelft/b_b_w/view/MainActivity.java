@@ -59,10 +59,24 @@ public class MainActivity extends Activity {
     }
 
     /**
-     * Callback for when user clicks on 'add block'. Switch to AddBlockActivity.
+     * Callback for when user clicks on 'add block'. Switch to ContactsActivity.
      *
      * @param view current view, which is always MainActivity
      */
+    public void onContacts(View view) {
+        Intent intent = new Intent(this, ContactsActivity.class);
+        intent.putExtra("ownerName", ownerName);
+        intent.putExtra("publicKey", publicKey);
+        startActivity(intent);
+    }
+
+
+    public void onFriends(View view) {
+        Intent intent = new Intent(this, FriendsActivity.class);
+        intent.putExtra("ownerName", ownerName);
+        intent.putExtra("publicKey", publicKey);
+        startActivity(intent);
+    }
 //    public void onAddBlock(View view) {
 //        Intent intent = new Intent(this, AddBlockActivity.class);
 //        intent.putExtra("ownerName", ownerName);
@@ -83,10 +97,10 @@ public class MainActivity extends Activity {
 //        startActivity(intent);
 //    }
 
-//    public void onDisplayChain(View view) {
-//        Intent intent = new Intent(this, DisplayChainActivity.class);
-//        intent.putExtra("ownerName", ownerName);
-//        intent.putExtra("publicKey", publicKey);
-//        startActivity(intent);
-//    }
+    public void onDisplayChain(View view) {
+        Intent intent = new Intent(this, DisplayChainActivity.class);
+        intent.putExtra("ownerName", ownerName);
+        intent.putExtra("publicKey", publicKey);
+        startActivity(intent);
+    }
 }

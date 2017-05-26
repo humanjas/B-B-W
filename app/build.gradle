@@ -40,4 +40,5 @@ dependencies {
     testCompile 'org.robolectric:robolectric:3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'org.encryptor4j:encryptor4j:0.1.1'
+    compile 'com.jjoe64:graphview:4.2.1'
 }
