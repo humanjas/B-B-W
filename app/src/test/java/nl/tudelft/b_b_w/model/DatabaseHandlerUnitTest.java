@@ -73,7 +73,7 @@ public class DatabaseHandlerUnitTest {
      */
     @Test
     public void addBlock2() {
-        final Block newBlock = BlockFactory.getBlock("BLOCK", owner, ownHash,
+        Block newBlock = BlockFactory.getBlock("BLOCK", owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
         newBlock.setSeqNumberTo(2);
         databaseHandler.addBlock(_block);
@@ -149,7 +149,7 @@ public class DatabaseHandlerUnitTest {
     public void getContactName() {
         final String hash = "ownHash2";
         final String randomSenderHash = "Hash44324";
-        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, hash,
+        Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner, hash,
                 ownHash, "randomSenderHash", publicKey, iban, trustValue);
         block2.setSeqNumberTo(1);
         databaseHandler.addBlock(_block);
@@ -171,7 +171,7 @@ public class DatabaseHandlerUnitTest {
                 previousHashChain, previousHashSender, publicKey, iban,trustValue);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
-        final Block expectBlock = BlockFactory.getBlock(TYPE_BLOCK, "owner2", ownHash,
+        Block expectBlock = BlockFactory.getBlock(TYPE_BLOCK, "owner2", ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
         expectBlock.setSeqNumberTo(1);
         assertEquals(expectBlock, databaseHandler.getLatestBlock("owner2"));
@@ -188,7 +188,7 @@ public class DatabaseHandlerUnitTest {
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
         databaseHandler.addBlock(_block);
         databaseHandler.addBlock(block2);
-        final Block expectBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
+        Block expectBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
         expectBlock.setSeqNumberTo(2);
         assertEquals(expectBlock, databaseHandler.getBlockAfter(owner, sequenceNumber));
@@ -216,7 +216,7 @@ public class DatabaseHandlerUnitTest {
     public void getAllBlocks() {
         final String owner2 = "owner2";
 
-        final Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner2, ownHash,
+        Block block2 = BlockFactory.getBlock(TYPE_BLOCK, owner2, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
         block2.setSeqNumberTo(1);
         databaseHandler.addBlock(_block);
