@@ -1,4 +1,4 @@
-package nl.tudelft.b_b_w.ModelsUnitTest;
+package nl.tudelft.b_b_w.model;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +27,7 @@ public class BlockUnitTest {
     private final String publicKey = "publicKey";
     private final boolean isRevoked = false;
     private final String iban = "iban";
+    private final int trustValue = 0;
 
 
     /**
@@ -37,7 +38,7 @@ public class BlockUnitTest {
     @Before
     public void makeNewBlock() throws Exception {
         _block = BlockFactory.getBlock(blockType, owner, ownHash,
-                previousHashChain, previousHashSender, publicKey, iban);
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
     }
 
     /**
@@ -170,7 +171,7 @@ public class BlockUnitTest {
     @Test
     public void equalsTest() throws Exception {
         final Block check = BlockFactory.getBlock(blockType, owner, ownHash,
-                previousHashChain, previousHashSender, publicKey, iban);
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
         assertTrue(_block.equals(check));
     }
 
@@ -184,7 +185,7 @@ public class BlockUnitTest {
     public void equalsFalseTest() throws Exception {
         final String _owner = "NOTOWNER";
         final Block check = BlockFactory.getBlock(blockType, _owner, ownHash,
-                previousHashChain, previousHashSender, publicKey, iban);
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
         assertFalse(_block.equals(check));
     }
 
@@ -213,8 +214,8 @@ public class BlockUnitTest {
      */
     @Test
     public void testHashCode() {
-        final Block x = new Block("owner2", ownHash, previousHashChain, previousHashSender, "pub2", iban, false);
-        final Block y = new Block("owner2", ownHash, previousHashChain, previousHashSender, "pub2", iban, false);
+        final Block x = new Block("owner2", ownHash, previousHashChain, previousHashSender, "pub2", iban, trustValue, false);
+        final Block y = new Block("owner2", ownHash, previousHashChain, previousHashSender, "pub2", iban, trustValue, false);
         assertTrue(x.equals(y) && y.equals(x));
         assertTrue(x.hashCode() == y.hashCode());
     }

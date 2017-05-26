@@ -20,7 +20,6 @@ import nl.tudelft.b_b_w.model.TrustValues;
 
 import static org.junit.Assert.assertEquals;
 
-
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
@@ -35,7 +34,6 @@ public class BlockControllerUnitTest {
      */
     private BlockController bc;
     private final String owner = "owner";
-    private final int sequenceNumber = 1;
     private final String ownHash = "ownHash";
     private final String previousHashChain = "previousHashChain";
     private final String previousHashSender = "previousHashSender";
