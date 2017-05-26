@@ -16,15 +16,18 @@ import nl.tudelft.b_b_w.model.User;
  * Performs the actions of the blockchain
  */
 
-public class BlockController {
+public class BlockController implements BlockControllerInterface {
 
+    /**
+     * Class attributes
+     */
     private Context context;
     private User user;
     private GetDatabaseHandler getDatabaseHandler;
     private MutateDatabaseHandler mutateDatabaseHandler;
 
     /**
-     * contructor to initialize all the involved entities
+     * Constructor to initialize all the involved entities
      *
      * @param _context the instance
      */
@@ -36,11 +39,9 @@ public class BlockController {
     }
 
     /**
-     * adding a block to the blockchain
-     *
-     * @param block Block you want to add
-     * @return returns the block you added
+     * @inheritDoc
      */
+    @Override
     public List<Block> addBlock(Block block) {
         // Check if the block already exists
         String owner = block.getOwner();
@@ -63,10 +64,9 @@ public class BlockController {
     }
 
     /**
-     * Get all blocks that are not revoked
-     *
-     * @return List of all the blocks
+     * @inheritDoc
      */
+    @Override
     public List<Block> getBlocks(String owner) {
         List<Block> blocks = getDatabaseHandler.getAllBlocks(owner);
         List<Block> res = new ArrayList<>();
@@ -81,31 +81,25 @@ public class BlockController {
     }
 
     /**
-     * Get the latest block of a specific owner
-     *
-     * @return a Block object, which is the newest block of the owner
+     * @inheritDoc
      */
+    @Override
     public Block getLatestBlock(String owner) {
         return getDatabaseHandler.getLatestBlock(owner);
     }
 
     /**
-     * Get the latest sequence number of the chain of a specific owner
-     *
-     * @return an integer which is the latest sequence number of the chain
+     * @inheritDoc
      */
+    @Override
     public int getLatestSeqNumber(String owner) {
         return getDatabaseHandler.lastSeqNumberOfChain(owner);
     }
 
     /**
-     *
-     * Revoke a block from the blockchain by adding the same
-     * block but setting revoked on true
-     *
-     * @param block The block you want to revoke
-     * @return the revoked block
+     * @inheritDoc
      */
+    @Override
     public List<Block> revokeBlock(Block block) {
         String owner = block.getOwner();
         Block newBlock = BlockFactory.getBlock("REVOKE", block.getOwner(),
@@ -116,12 +110,9 @@ public class BlockController {
     }
 
     /**
-     * Method for removing a certain block from a given list
-     *
-     * @param list  The list of all the blocks
-     * @param block The revoke block
-     * @return List without the revoked block
+     * @inheritDoc
      */
+    @Override
     public List<Block> removeBlock(List<Block> list, Block block) {
         List<Block> res = new ArrayList<>();
         for (Block blc : list) {
@@ -133,44 +124,36 @@ public class BlockController {
     }
 
     /**
-     * verifyIBAN method
-     * updates the trust value of the block to the set trust value for a verified IBAN
-     * @param block given block to update
-     * @return block that is updated
+     * @inheritDoc
      */
+    @Override
     public Block verifyIBAN(Block block) {
         block.setTrustValue(TrustValues.VERIFIED.getValue());
         return block;
     }
 
     /**
-     * successfulTransaction method
-     * updates the trust value of the block to the set trust value for a succesful transaction
-     * @param block given block to update
-     * @return block that is updated
+     * @inheritDoc
      */
+    @Override
     public Block successfulTransaction(Block block) {
         block.setTrustValue(block.getTrustValue() + TrustValues.SUCCESFUL_TRANSACTION.getValue());
         return block;
     }
 
     /**
-     * failedTransaction method
-     * updates the trust value of the block to the set trust value for a failed transaction
-     * @param block given block to update
-     * @return block that is updated
+     * @inheritDoc
      */
+    @Override
     public Block failedTransaction(Block block) {
         block.setTrustValue(block.getTrustValue() + TrustValues.FAILED_TRANSACTION.getValue());
         return block;
     }
 
     /**
-     * revokedTrustValue method
-     * updates the trust value of the block to the set trust value for a revoked block
-     * @param block given block to update
-     * @return block that is updated
+     * @inheritDoc
      */
+    @Override
     public Block revokedTrustValue(Block block) {
         block.setTrustValue(TrustValues.REVOKED.getValue());
         return block;
