@@ -20,19 +20,11 @@ import nl.tudelft.b_b_w.model.BlockFactory;
 public class AddBlockActivity extends Activity {
 
     /**
-     * Controller of blocks
-     */
-    private BlockController blockController;
-
-    /**
-     * Owner of the block
+     * Class attributes
      */
     private String ownerName;
-
-    /**
-     * Public key that we want to add
-     */
     private String publicKey;
+    private BlockController blockController;
 
     /**
      * On create we request a database connection

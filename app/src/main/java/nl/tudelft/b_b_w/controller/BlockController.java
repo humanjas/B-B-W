@@ -10,7 +10,6 @@ import nl.tudelft.b_b_w.model.BlockFactory;
 import nl.tudelft.b_b_w.model.GetDatabaseHandler;
 import nl.tudelft.b_b_w.model.MutateDatabaseHandler;
 import nl.tudelft.b_b_w.model.TrustValues;
-import nl.tudelft.b_b_w.model.User;
 
 /**
  * Performs the actions of the blockchain
@@ -22,7 +21,6 @@ public class BlockController implements BlockControllerInterface {
      * Class attributes
      */
     private Context context;
-    private User user;
     private GetDatabaseHandler getDatabaseHandler;
     private MutateDatabaseHandler mutateDatabaseHandler;
 
@@ -33,7 +31,6 @@ public class BlockController implements BlockControllerInterface {
      */
     public BlockController(Context _context) {
         this.context = _context;
-        this.user = new User();
         this.getDatabaseHandler = new GetDatabaseHandler(this.context);
         this.mutateDatabaseHandler = new MutateDatabaseHandler(this.context);
     }

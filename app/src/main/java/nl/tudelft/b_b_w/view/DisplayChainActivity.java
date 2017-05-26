@@ -13,7 +13,6 @@ import nl.tudelft.b_b_w.model.Block;
 public class DisplayChainActivity extends Activity {
     private BlockController controller;
     private String ownerName;
-    private String publicKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +23,6 @@ public class DisplayChainActivity extends Activity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             ownerName = extras.getString("ownerName");
-            publicKey = extras.getString("publicKey");
         }
 
         /*ListView view = (ListView) findViewById(R.id.chain);
