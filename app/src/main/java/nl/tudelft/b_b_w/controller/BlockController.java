@@ -47,6 +47,35 @@ public class BlockController {
         return false;
     }
 
+
+    /**
+     * adding a block to the blockchain
+     *
+     * @param block Block you want to add
+     * @return returns the block you added
+     */
+    public List<Block> addBlockToChain(Block block) {
+        // Check if the block already exists
+        String owner = block.getOwner();
+        Block latest = databaseHandler.getLatestBlock(owner);
+
+        if (latest == null) {
+            databaseHandler.addBlock(block);
+        } else if (latest.isRevoked()) {
+            throw new RuntimeException("Error - Block is already revoked");
+        } else {
+            if (block.isRevoked()) {
+                revokedTrustValue(latest);
+                databaseHandler.updateBlock(latest);
+                databaseHandler.addBlock(block);
+            }
+            else throw new RuntimeException("Error - Block already exists");
+        }
+
+        return getBlocks(owner);
+    }
+
+
     /**
      * Add a block to the database with checking if the (owner,pubkey) pair
      * is already added to the database

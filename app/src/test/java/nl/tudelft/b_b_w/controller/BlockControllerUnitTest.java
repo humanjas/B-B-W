@@ -175,8 +175,8 @@ public class BlockControllerUnitTest {
     public void alreadyRevoked() {
         final Block newBlock = BlockFactory.getBlock(TYPE_REVOKE, owner, ownHash,
                 previousHashChain, previousHashSender, publicKey, iban, trustValue);
-        bc.addBlock(newBlock);
-        bc.addBlock(_block);
+        bc.addBlockToChain(newBlock);
+        bc.addBlockToChain(_block);
     }
 
     /**
