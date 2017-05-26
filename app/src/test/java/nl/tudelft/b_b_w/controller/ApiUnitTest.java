@@ -70,14 +70,6 @@ public class ApiUnitTest {
         bc.addBlock(BlockFactory.getBlock("BLOCK", userE.getName(), "roothashE", "prevhashchain", "root", "pkroot", "NL81...", 0));
         bc.addBlock(BlockFactory.getBlock(userE, userA, "hashE1", "roothashE", "roothashA", "pka", false));
         bc.addBlock(BlockFactory.getBlock(userE, userA, "hashE2", "hashE1", "roothashA", "pka", true));
-
-        // F: add pkf1
-//        bc.addBlock(BlockFactory.getBlock("BLOCK", userE.getName(), "roothash", "prevhashchain", "root", "pkroot", "NL81...", 0));
- //       bc.addBlock(BlockFactory.getBlock(userE, userA, "hashA", "roothash", "N/A", "pka", false));
-  //      bc.addBlock(BlockFactory.getBlock(userE, userA, "hashA", "roothash", "N/A", "pka", true));
-
-        // ERROR IS: ALLES HEEFT N/A MAAR MOET ALLEEN ROOT ZIJN
-        // user A has pka
     }
 
 
@@ -110,15 +102,6 @@ public class ApiUnitTest {
     }
 
     /**
-     * User with one key of another user that is revoked
-     */
-//    @Test
-//    public void revokedKey() {
-//        List<String> keys = Api.getUserKeys(userE, userA);
-//        assertTrue(keys.isEmpty());
-//    }
-
-    /**
      * User without keys
      */
     @Test
@@ -126,21 +109,6 @@ public class ApiUnitTest {
         List<String> keys = Api.getUserKeys(userC, userA);
         assertTrue(keys.isEmpty());
     }
-
-    /**
-     * User with multiple keys
-     */
-//    @Test
-//    public void userMultipleKeys() {
-//        List<String> keys = Api.getUserKeys(userA, userD);
-//        Collections.sort(keys);
-//        List<String> expected = new ArrayList<>();
-//        expected.add("pkd1");
-//        expected.add("pkd2");
-//        expected.add("pkd3");
-//        assertEquals(expected, keys);
-//    }
-
 
     ///////////////////////////////////////////////////////////// WRITE UNIT TESTS
 

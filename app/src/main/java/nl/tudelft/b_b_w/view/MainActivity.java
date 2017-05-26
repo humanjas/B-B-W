@@ -32,14 +32,6 @@ public class MainActivity extends Activity {
         ownerName = "GENESIS";
         publicKey = "demokey";
 
-        //test method
-        //final int n = blockController.getLatestSeqNumber(ownerName);
-        //Toast.makeText(this, "#" + n, Toast.LENGTH_LONG).show();
-
-        // add genesis if we don't have any blocks
-        //if (blockController.getLatestSeqNumber(ownerName) == 0)
-        //    addGenesis();
-
         // initialize our api
         Api.init(this);
     }
@@ -98,19 +90,6 @@ public class MainActivity extends Activity {
      */
     public void onRevokeBlock(View view) {
         Intent intent = new Intent(this, RevokeBlockActivity.class);
-        intent.putExtra("ownerName", ownerName);
-        intent.putExtra("publicKey", publicKey);
-        startActivity(intent);
-    }
-
-
-    /**
-     * Callback for when user clicks on 'Display chain'. Not now necessary but will be used later on.
-     * Switch to DisplayChainActivity.
-     * @param view The view of the program.
-     */
-    public void onDisplayChain(View view) {
-        Intent intent = new Intent(this, DisplayChainActivity.class);
         intent.putExtra("ownerName", ownerName);
         intent.putExtra("publicKey", publicKey);
         startActivity(intent);
