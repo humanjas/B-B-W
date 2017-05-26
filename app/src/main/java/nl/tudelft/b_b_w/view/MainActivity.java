@@ -43,6 +43,7 @@ public class MainActivity extends Activity {
                 Block block = BlockFactory.getBlock(
                         "BLOCK",
                         ownerName,
+                        blockController.getLatestSeqNumber(ownerName)+1,
                         "ownHash",
                         "previoushash",
                         "senderhash",
@@ -62,12 +63,12 @@ public class MainActivity extends Activity {
      *
      * @param view current view, which is always MainActivity
      */
-    public void onAddBlock(View view) {
-        Intent intent = new Intent(this, AddBlockActivity.class);
-        intent.putExtra("ownerName", ownerName);
-        intent.putExtra("publicKey", publicKey);
-        startActivity(intent);
-    }
+//    public void onAddBlock(View view) {
+//        Intent intent = new Intent(this, AddBlockActivity.class);
+//        intent.putExtra("ownerName", ownerName);
+//        intent.putExtra("publicKey", publicKey);
+//        startActivity(intent);
+//    }
 
 
     /**
@@ -75,17 +76,17 @@ public class MainActivity extends Activity {
      *
      * @param view current view, which is always MainActivity
      */
-    public void onRevokeBlock(View view) {
-        Intent intent = new Intent(this, RevokeBlockActivity.class);
-        intent.putExtra("ownerName", ownerName);
-        intent.putExtra("publicKey", publicKey);
-        startActivity(intent);
-    }
+//    public void onRevokeBlock(View view) {
+//        Intent intent = new Intent(this, RevokeBlockActivity.class);
+//        intent.putExtra("ownerName", ownerName);
+//        intent.putExtra("publicKey", publicKey);
+//        startActivity(intent);
+//    }
 
-    public void onDisplayChain(View view) {
-        Intent intent = new Intent(this, DisplayChainActivity.class);
-        intent.putExtra("ownerName", ownerName);
-        intent.putExtra("publicKey", publicKey);
-        startActivity(intent);
-    }
+//    public void onDisplayChain(View view) {
+//        Intent intent = new Intent(this, DisplayChainActivity.class);
+//        intent.putExtra("ownerName", ownerName);
+//        intent.putExtra("publicKey", publicKey);
+//        startActivity(intent);
+//    }
 }
