@@ -1,4 +1,4 @@
-package nl.tudelft.b_b_w;
+package nl.tudelft.b_b_w.view;
 
 import org.junit.Test;
 

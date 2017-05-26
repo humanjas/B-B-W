@@ -1,9 +1,11 @@
-package nl.tudelft.b_b_w;
+package nl.tudelft.b_b_w.view;
 
 //import android.support.test.filters.MediumTest;
 //import android.support.test.runner.AndroidJUnit4;
 
 import android.content.Intent;
+
+import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,10 +13,8 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
-import nl.tudelft.b_b_w.view.FriendsPageActivity;
-import nl.tudelft.b_b_w.view.PairActivity;
+import nl.tudelft.b_b_w.R;
 
-import static junit.framework.Assert.assertEquals;
 import static org.robolectric.Shadows.shadowOf;
 
 //import android.test.mock.MockContext;
@@ -43,7 +43,7 @@ public class PairActivityTest {
 
 
         //does not work
-        assertEquals(R.id.pair_layout_root, shadowOf(pairActivity).getContentView().getId());
+        Assert.assertEquals(R.id.pair_layout_root, shadowOf(pairActivity).getContentView().getId());
 
 
     }
