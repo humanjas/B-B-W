@@ -7,11 +7,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import nl.tudelft.b_b_w.R;
+import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.model.Block;
-import nl.tudelft.b_b_w.model.DatabaseHandler;
 
 public class DisplayChainActivity extends Activity {
-    private DatabaseHandler handler;
+    private BlockController controller;
     private String ownerName;
 
     @Override
@@ -19,7 +19,7 @@ public class DisplayChainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_displaychain);
 
-        handler = new DatabaseHandler(this);
+       controller = new BlockController(this);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             ownerName = extras.getString("ownerName");
@@ -36,7 +36,7 @@ public class DisplayChainActivity extends Activity {
         Genesis:eigen pubkey
         Genesis: sender 1 key*/
 
-        List<Block> blocks = handler.getAllBlocks(ownerName);
+        List<Block> blocks = controller.getBlocks(ownerName);
 
         TextView view = (TextView) findViewById(R.id.chain);
 

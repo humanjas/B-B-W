@@ -15,25 +15,28 @@ public class Block {
     private String publicKey;
     private String iban;
     private boolean isRevoked;
+    private int trustValue;
 
     /**
+     * Constructor for a block
      * @param _owner              owner of a block
-     * @param _sequenceNumber     sequence number of the block
      * @param _ownHash            our own hash
      * @param _previousHashChain  the hash value of the block before in the chain
      * @param _previousHashSender the hash value of the block before of the sender
      * @param _publicKey          public key of the sender
      * @param _iban               IBAN number of a contact
+     * @param _trustvalue         the trust value of the contact
      * @param _isRevoked          boolean to check whether a block is revoked or not
      */
-    public Block(String _owner, int _sequenceNumber, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban, boolean _isRevoked) {
+    public Block(String _owner, String _ownHash, String _previousHashChain, String _previousHashSender, String _publicKey, String _iban, int _trustvalue, boolean _isRevoked) {
         this.owner = _owner;
-        this.sequenceNumber = _sequenceNumber;
+        this.sequenceNumber = 0;
         this.ownHash = _ownHash;
         this.previousHashChain = _previousHashChain;
         this.previousHashSender = _previousHashSender;
         this.publicKey = _publicKey;
         this.iban   = _iban;
+        this.trustValue = _trustvalue;
         this.isRevoked = _isRevoked;
     }
 
@@ -91,6 +94,18 @@ public class Block {
         return sequenceNumber;
     }
 
+
+    /**
+     * Default initializar for sequence number
+     *
+     * @return the sequence number of the block after initialization
+     */
+    public int setSeqNumberTo(int _sequenceNumber) {
+        sequenceNumber = _sequenceNumber;
+        return sequenceNumber;
+    }
+
+
     /**
      * Default getter for sequence number
      *
@@ -111,6 +126,18 @@ public class Block {
     }
 
     /**
+     * Default getter for trustValue
+     * @return the trust value of the block
+     */
+    public int getTrustValue() { return trustValue;}
+
+    /**
+     * Default setter for trustValue
+     * @param setValue trust value to set
+     */
+    public void setTrustValue(int setValue) {this.trustValue = setValue;}
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -127,6 +154,7 @@ public class Block {
         if (!previousHashChain.equals(block.previousHashChain)) return false;
         if (!previousHashSender.equals(block.previousHashSender)) return false;
         if (!iban.equals(block.iban)) return false;
+        if (trustValue != (block.trustValue)) return false;
         return publicKey.equals(block.publicKey);
 
     }
@@ -143,6 +171,7 @@ public class Block {
         result = 31 * result + previousHashSender.hashCode();
         result = 31 * result + publicKey.hashCode();
         result = 31 * result + iban.hashCode();
+        result = 31 * result + trustValue;
         result = 31 * result + (isRevoked ? 1 : 0);
         return result;
     }
@@ -160,6 +189,7 @@ public class Block {
                 ", previousHashSender='" + previousHashSender + '\'' +
                 ", publicKey='" + publicKey + '\'' +
                 ", iban='" + iban + '\'' +
+                ", trustValue='" + trustValue + '\'' +
                 ", isRevoked=" + isRevoked +
                 '}';
     }

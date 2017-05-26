@@ -4,7 +4,6 @@ import java.security.MessageDigest;
 
 /**
  * Class to convert values into a hashed value
- * Created by Ashay on 01/05/2017.
  */
 public class ConversionController {
     // Variables which we need to create a hashed key

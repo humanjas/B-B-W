@@ -8,29 +8,23 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import nl.tudelft.b_b_w.R;
+import nl.tudelft.b_b_w.controller.BlockController;
 import nl.tudelft.b_b_w.controller.ConversionController;
 import nl.tudelft.b_b_w.model.Block;
-import nl.tudelft.b_b_w.model.DatabaseHandler;
+import nl.tudelft.b_b_w.model.BlockFactory;
 
 /**
  * When the user wants to add a block he enters into the AddBlockActivity, which contain
  * some entry fields and a button to confirm the addition.
  */
 public class AddBlockActivity extends Activity {
-    /**
-     * Connection with block database
-     */
-    private DatabaseHandler handler;
 
     /**
-     * Owner of the block
+     * Class attributes
      */
     private String ownerName;
-
-    /**
-     * Public key that we want to add
-     */
     private String publicKey;
+    private BlockController blockController;
 
     /**
      * On create we request a database connection
@@ -41,7 +35,7 @@ public class AddBlockActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addblock);
-        handler = new DatabaseHandler(this);
+        blockController = new BlockController(this);
         Bundle extras = getIntent().getExtras();
         ownerName = extras.getString("ownerName");
         publicKey = extras.getString("publicKey");
@@ -69,21 +63,24 @@ public class AddBlockActivity extends Activity {
 
 
             // create and add the block
-            Block previous = handler.getLatestBlock(ownerName);
+            Block previous = blockController.getLatestBlock(ownerName);
             int blockSeqNumber = previous.getSequenceNumber()+ 1;
             ConversionController conversionController = new ConversionController(ownerName, blockSeqNumber, senderPublicKey, previous.getOwnHash(), senderHash, senderIban);
             String ownHash = conversionController.hashKey();
-            Block block = new Block(
-                    ownerName, // owner of a block
-                    999999, // addBlock will overwrite this, TODO remove from constructor
+
+
+            Block block =  BlockFactory.getBlock(
+                    "BLOCK", // is revoked?
+                    ownerName,// owner of the block
                     ownHash, // our own hash
                     previous.getOwnHash(), //  the hash value of the block before in the chain
                     senderHash, // the hash value of the block before of the sender
                     senderPublicKey, // public key of the owner of the block
-                    senderIban, //iban of teh sender
-                    false // is revoked?
+                    senderIban, //iban of the sender
+                    0 // initial trust value
             );
-            handler.addBlock(block);
+
+            blockController.addBlock(block);
 
             // confirm by showing a small text message
             Toast.makeText(this, "Block added", Toast.LENGTH_SHORT).show();
