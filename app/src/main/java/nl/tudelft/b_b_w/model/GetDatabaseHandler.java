@@ -109,7 +109,6 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         c.close();
 
         return result;
-
     }
 
     /**
@@ -291,5 +290,48 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         cursor.close();
 
         return blocks;
+    }
+
+    /**
+     * getByHashOwner function
+     * Gets a block by its hash and owner value
+     * @param hash given hash value
+     * @param owner given owner value
+     * @return block that matches it
+     */
+    public Block getByHashOwner(String hash, String owner) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_NAME,
+                _columns,
+                KEY_OWNER + " = ? AND " + KEY_OWN_HASH + " = ?",
+                new String[]{
+                        owner, hash
+                }, null, null, null, null);
+
+        if (cursor.getCount() < 1) throw new NotFoundException();
+
+        cursor.moveToFirst();
+
+        final String blockType = (cursor.getInt(8) > 0) ?  "REVOKE" : "BLOCK";
+        final Block block = BlockFactory.getBlock(
+                blockType,
+                cursor.getString(0),
+                cursor.getInt(1),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getString(6),
+                cursor.getInt(7));
+
+        // Close database connection
+        db.close();
+
+        // Close cursor
+        cursor.close();
+
+        // return block
+        return block;
     }
 }
