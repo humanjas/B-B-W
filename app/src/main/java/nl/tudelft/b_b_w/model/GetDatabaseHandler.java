@@ -52,8 +52,10 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         cursor.moveToFirst();
 
         final String blockType = (cursor.getInt(8) > 0) ?  "REVOKE" : "BLOCK";
-        Block block = BlockFactory.getBlock(
-                blockType,cursor.getString(0),
+        final Block block = BlockFactory.getBlock(
+                blockType,
+                cursor.getString(0),
+                cursor.getInt(1),
                 cursor.getString(2),
                 cursor.getString(3),
                 cursor.getString(4),
@@ -150,8 +152,10 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         cursor.moveToFirst();
 
         final String blockType = (cursor.getInt(8) > 0) ?  "REVOKE" : "BLOCK";
-        Block block = BlockFactory.getBlock(
-                blockType,cursor.getString(0),
+        final Block block = BlockFactory.getBlock(
+                blockType,
+                cursor.getString(0),
+                cursor.getInt(1),
                 cursor.getString(2),
                 cursor.getString(3),
                 cursor.getString(4),
@@ -192,8 +196,10 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         cursor.moveToFirst();
 
         final String blockType = (cursor.getInt(8) > 0) ?  "REVOKE" : "BLOCK";
-        Block block = BlockFactory.getBlock(
-                blockType,cursor.getString(0),
+        final Block block = BlockFactory.getBlock(
+                blockType,
+                cursor.getString(0),
+                cursor.getInt(1),
                 cursor.getString(2),
                 cursor.getString(3),
                 cursor.getString(4),
@@ -234,8 +240,10 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
         cursor.moveToFirst();
 
         final String blockType = (cursor.getInt(8) > 0) ?  "REVOKE" : "BLOCK";
-        Block block = BlockFactory.getBlock(
-                blockType,cursor.getString(0),
+        final Block block = BlockFactory.getBlock(
+                blockType,
+                cursor.getString(0),
+                cursor.getInt(1),
                 cursor.getString(2),
                 cursor.getString(3),
                 cursor.getString(4),
@@ -277,8 +285,10 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
             cursor.moveToFirst();
             do {
                 final String blockType = (cursor.getInt(8) > 0) ?  "REVOKE" : "BLOCK";
-                Block block = BlockFactory.getBlock(
-                        blockType,cursor.getString(0),
+                final Block block = BlockFactory.getBlock(
+                        blockType,
+                        cursor.getString(0),
+                        cursor.getInt(1),
                         cursor.getString(2),
                         cursor.getString(3),
                         cursor.getString(4),

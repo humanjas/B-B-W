@@ -2,22 +2,29 @@ package nl.tudelft.b_b_w.model;
 
 import org.junit.Before;
 import org.junit.Test;
-import nl.tudelft.b_b_w.model.Block;
-import nl.tudelft.b_b_w.model.BlockFactory;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
+import org.robolectric.annotation.Config;
+
+import nl.tudelft.b_b_w.BuildConfig;
+import nl.tudelft.b_b_w.controller.BlockController;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
+@RunWith(RobolectricTestRunner.class)
+@Config(constants = BuildConfig.class,sdk= 21,  manifest = "src/main/AndroidManifest.xml")
 public class BlockFactoryUnitTest {
 
     private Block _block;
-    private final String blockType = "BLOCK";
+    private BlockController blockController;
+    private final String TYPE_BLOCK = "BLOCK";
     private final String owner = "owner";
     private final String ownHash = "ownHash";
     private final String previousHashChain = "previousHashChain";
@@ -25,8 +32,6 @@ public class BlockFactoryUnitTest {
     private final String publicKey = "publicKey";
     private final String iban = "iban";
     private final int trustValue = 0;
-    private final boolean isRevoked = false;
-    private BlockFactory blockFactory;
 
     /**
      * This method runs before each test to initialize the test object
@@ -35,9 +40,9 @@ public class BlockFactoryUnitTest {
      */
     @Before
     public void makeNewBlock() throws Exception {
-        _block = BlockFactory.getBlock(blockType, owner, ownHash,
-                previousHashChain, previousHashSender, publicKey, iban, trustValue);
-        blockFactory = new BlockFactory();
+        blockController = new BlockController(RuntimeEnvironment.application);
+        _block = BlockFactory.getBlock(TYPE_BLOCK, owner, blockController.getLatestSeqNumber(owner)+1,
+                ownHash, previousHashChain, previousHashSender, publicKey, iban, trustValue);
     }
 
     /**
@@ -46,8 +51,8 @@ public class BlockFactoryUnitTest {
      */
     @Test
     public void testGetBlock(){
-        final Block newBlock = BlockFactory.getBlock(blockType, owner, ownHash,
-                previousHashChain, previousHashSender, publicKey, iban, trustValue);
+        final Block newBlock = BlockFactory.getBlock(TYPE_BLOCK, owner, blockController.getLatestSeqNumber(owner)+1,
+                ownHash, previousHashChain, previousHashSender, publicKey, iban, trustValue);
         assertEquals(_block, newBlock);
     }
 
@@ -57,9 +62,10 @@ public class BlockFactoryUnitTest {
      */
     @Test
     public void testGetRevokeBlock(){
-        final Block newBlock = BlockFactory.getBlock(blockType, owner, ownHash,
-                previousHashChain, previousHashSender, publicKey, iban, trustValue);
-        assertEquals(_block, newBlock);
+        final String TYPE_REVOKE = "REVOKE";
+        final Block newBlock = BlockFactory.getBlock(TYPE_REVOKE, owner, blockController.getLatestSeqNumber(owner)+1,
+                ownHash, previousHashChain, previousHashSender, publicKey, iban, trustValue);
+        assertNotEquals(_block, newBlock);
     }
 
     /**
@@ -68,8 +74,8 @@ public class BlockFactoryUnitTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testGetBlockEmpty(){
-        BlockFactory.getBlock("", owner, ownHash, previousHashChain, previousHashSender, publicKey,
-                iban, trustValue);
+        BlockFactory.getBlock("", owner, blockController.getLatestSeqNumber(owner), ownHash,
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
     }
 
     /**
@@ -78,8 +84,8 @@ public class BlockFactoryUnitTest {
      */
     @Test(expected=IllegalArgumentException.class)
     public void testGetBlockFaultyString(){
-        BlockFactory.getBlock("block", owner,  ownHash, previousHashChain, previousHashSender,
-                publicKey, iban, trustValue);
+        BlockFactory.getBlock("block", owner, blockController.getLatestSeqNumber(owner), ownHash,
+                previousHashChain, previousHashSender, publicKey, iban, trustValue);
     }
 
 }

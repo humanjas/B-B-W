@@ -37,7 +37,7 @@ public class ContactsActivity extends Activity {
     public class ContactAdapter extends BaseAdapter implements ListAdapter {
 
         //Variables which we use for getting the block information
-        private BlockController bc;
+        private BlockController blcController;
         Context context;
         //Images for displaying trust
         private Integer images[] = {R.drawable.pic1, R.drawable.pic2, R.drawable.pic3, R.drawable.pic4, R.drawable.pic5};
@@ -49,7 +49,7 @@ public class ContactsActivity extends Activity {
          */
         public ContactAdapter(BlockController bc, Context context) {
             this.context = context;
-            this.bc = bc;
+            this.blcController = bc;
         }
 
         /**
@@ -57,7 +57,7 @@ public class ContactsActivity extends Activity {
          */
         @Override
         public Object getItem(int position) {
-            return bc.getBlocks("GENESIS").get(position);
+            return blcController.getBlocks("GENESIS").get(position);
         }
 
         /**
@@ -73,7 +73,7 @@ public class ContactsActivity extends Activity {
          */
         @Override
         public int getCount() {
-            return bc.getBlocks("GENESIS").size();
+            return blcController.getBlocks("GENESIS").size();
         }
 
         /**
@@ -89,14 +89,14 @@ public class ContactsActivity extends Activity {
 
             //Setting the name field
             TextView nameItemText = (TextView)view.findViewById(R.id.list_item_name);
-            nameItemText.setText(bc.getBlocks("GENESIS").get(position).getOwner()); //use function to backtrack owner
+            nameItemText.setText(blcController.getBlocks("GENESIS").get(position).getOwner()); //use function to backtrack owner
             //Setting the IBAN field
             TextView ibanItemText = (TextView)view.findViewById(R.id.list_item_iban);
-            ibanItemText.setText(bc.getBlocks("GENESIS").get(position).getIban()); //change to IBAN
+            ibanItemText.setText(blcController.getBlocks("GENESIS").get(position).getIban());
 
             //Setting the trust image
             ImageView pic = (ImageView)view.findViewById(R.id.trust_image);
-            int trust = bc.getBlocks("GENESIS").get(position).getTrustValue();
+            int trust = blcController.getBlocks("GENESIS").get(position).getTrustValue();
 
             //Switch case for deciding which image needs be picked for the trust value
             switch (trust) {
@@ -134,12 +134,12 @@ public class ContactsActivity extends Activity {
                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
                    builder.setTitle("Confirm");
-                   builder.setMessage("Are you sure you want to revoke "+ bc.getBlocks("GENESIS").get(position).getOwner()+ " IBAN?");
+                   builder.setMessage("Are you sure you want to revoke "+ blcController.getBlocks("GENESIS").get(position).getOwner()+ " IBAN?");
 
                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
                        public void onClick(DialogInterface dialog, int which) {
-                           bc.revokeBlock(bc.getBlocks("GENESIS").get(position));
+                           blcController.revokeBlock(blcController.getBlocks("GENESIS").get(position));
                            notifyDataSetChanged();
                            dialog.dismiss();
                        }
@@ -176,11 +176,15 @@ public class ContactsActivity extends Activity {
 
 
         // get contacts
-        BlockController bc = new BlockController(this);
-        List<Block> blocks = bc.getBlocks("GENESIS");
+        BlockController blcController = new BlockController(this);
+        List<Block> blocks = blcController.getBlocks("GENESIS");
 
         //Setting up the graph
         GraphView graph = (GraphView) findViewById(R.id.graph);
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setMaxX(blocks.size());
+
         DataPoint[] points = new DataPoint[blocks.size()];
         for (int i = 0; i < blocks.size(); i++) {
             points[i] = new DataPoint(i, blocks.get(i).getTrustValue());
@@ -188,7 +192,7 @@ public class ContactsActivity extends Activity {
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
         graph.addSeries(series);
 
-        ContactAdapter adapter = new ContactAdapter(bc, this);
+        ContactAdapter adapter = new ContactAdapter(blcController, this);
         ListView lView = (ListView)findViewById(R.id.contacts);
         lView.setAdapter(adapter);
     }
