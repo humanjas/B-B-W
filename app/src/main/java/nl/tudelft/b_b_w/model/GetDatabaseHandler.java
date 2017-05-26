@@ -1,12 +1,9 @@
 package nl.tudelft.b_b_w.model;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources.NotFoundException;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.ContactsContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,18 +81,6 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
      */
     boolean containsBlock(String owner, String publicKey, int sequenceNumber) {
         return this.getBlock(owner, publicKey, sequenceNumber) != null;
-    }
-
-    /**
-     * Method to check whether the blockchain contains a specific block,
-     * uses the getBlock method to avoid duplication
-     *
-     * @param owner     the owner of the block you want
-     * @param publicKey the publickey of the block you want
-     * @return true if the blockchain contains the specified block, otherwise false
-     */
-    boolean containsBlock(String owner, String publicKey) {
-        return this.getLatestBlock(owner) != null;
     }
 
     /**
@@ -181,7 +166,7 @@ public class GetDatabaseHandler extends AbstractDatabaseHandler {
      * @return the block after the specified one
      */
 
-    public Block getBlockAfter(String owner, int sequenceNumber) {
+    Block getBlockAfter(String owner, int sequenceNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME,

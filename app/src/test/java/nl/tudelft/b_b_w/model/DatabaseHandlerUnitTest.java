@@ -102,7 +102,7 @@ public class DatabaseHandlerUnitTest {
     @Test
     public void containsBlock2() {
         mutateDatabaseHandler.addBlock(_block);
-        assertTrue(getDatabaseHandler.containsBlock(owner, publicKey));
+        assertTrue(getDatabaseHandler.containsBlock(owner));
     }
 
     /**
