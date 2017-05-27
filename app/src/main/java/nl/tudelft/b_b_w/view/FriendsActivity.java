@@ -39,6 +39,11 @@ public class FriendsActivity extends Activity {
         //Variables which we use for getting the block information
         private BlockController blcController;
         Context context;
+        private final int image1 = 0;
+        private final int image2 = 1;
+        private final int image3 = 2;
+        private final int image4 = 3;
+        private final int image5 = 4;
         //Images for displaying trust
         private Integer images[] = {R.drawable.pic1, R.drawable.pic2, R.drawable.pic3, R.drawable.pic4, R.drawable.pic5};
 
@@ -77,58 +82,26 @@ public class FriendsActivity extends Activity {
         }
 
         /**
-         * {@inheritDoc}
+         * Method to get the right image number
+         * @param trust The trust value
+         * @return Image number
          */
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            View view = convertView;
-            if (view == null) {
-                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.simple_list_item_2, null);
-            }
+        public int getImageNo(int trust) {
 
-            //Setting the name field
-            TextView nameItemText = (TextView)view.findViewById(R.id.list_item_name2);
-            nameItemText.setText(blcController.getBlocks("GENESIS").get(position).getOwner()); //use function to backtrack owner
-            //Setting the IBAN field
-            TextView ibanItemText = (TextView)view.findViewById(R.id.list_item_iban2);
-            ibanItemText.setText(blcController.getBlocks("GENESIS").get(position).getIban());
+            if (trust >= 80) return image1;
+            if (trust >= 60) return image2;
+            if (trust >= 40) return image3;
+            if (trust >= 20) return image4;
+            else return image5;
+        }
 
-            //Setting the trust image
-            ImageView pic = (ImageView)view.findViewById(R.id.trust_image2);
-            int trust = blcController.getBlocks("GENESIS").get(position).getTrustValue();
-
-            //Switch case for deciding which image needs be picked for the trust value
-            switch (trust) {
-                case 100: pic.setImageResource(images[0]);
-                    break;
-                case 90: pic.setImageResource(images[0]);
-                    break;
-                case 80: pic.setImageResource(images[0]);
-                    break;
-                case 70: pic.setImageResource(images[1]);
-                    break;
-                case 60: pic.setImageResource(images[1]);
-                    break;
-                case 50: pic.setImageResource(images[2]);
-                    break;
-                case 40: pic.setImageResource(images[2]);
-                    break;
-                case 30: pic.setImageResource(images[3]);
-                    break;
-                case 20: pic.setImageResource(images[3]);
-                    break;
-                case 10: pic.setImageResource(images[4]);
-                    break;
-                case 0: pic.setImageResource(images[4]);
-                    break;
-            }
-
-            //Setting the button to revoke
-            Button addButton = (Button)view.findViewById(R.id.add_btn);
-
-            //Listener for the revoke button
-            addButton.setOnClickListener(new View.OnClickListener() {
+        /**
+         * Method to create a dialog
+         * @param position Current position of the view
+         * @return The listener
+         */
+        public View.OnClickListener createDialog(final int position) {
+            return new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -150,7 +123,6 @@ public class FriendsActivity extends Activity {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
                             // Do nothing
                             dialog.dismiss();
                         }
@@ -159,7 +131,37 @@ public class FriendsActivity extends Activity {
                     AlertDialog alert = builder.create();
                     alert.show();
                 }
-            });
+            };
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            View view = convertView;
+            if (view == null) {
+                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                view = inflater.inflate(R.layout.simple_list_item_2, null);
+            }
+
+            //Setting the name field
+            TextView nameItemText = (TextView)view.findViewById(R.id.list_item_name2);
+            nameItemText.setText(blcController.getBlocks("GENESIS").get(position).getOwner()); //use function to backtrack owner
+            //Setting the IBAN field
+            TextView ibanItemText = (TextView)view.findViewById(R.id.list_item_iban2);
+            ibanItemText.setText(blcController.getBlocks("GENESIS").get(position).getIban());
+
+            //Setting the trust image
+            ImageView pic = (ImageView)view.findViewById(R.id.trust_image2);
+            int picNo = getImageNo(blcController.getBlocks("GENESIS").get(position).getTrustValue());
+            pic.setImageResource(images[picNo]);
+
+            //Setting the button to revoke
+            Button addButton = (Button)view.findViewById(R.id.add_btn);
+
+            //Listener for the revoke button
+            addButton.setOnClickListener(createDialog(position));
 
             return view;
         }

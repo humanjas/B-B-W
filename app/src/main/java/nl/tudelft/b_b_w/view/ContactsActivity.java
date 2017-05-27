@@ -39,6 +39,11 @@ public class ContactsActivity extends Activity {
         //Variables which we use for getting the block information
         private BlockController blcController;
         Context context;
+        private final int image1 = 0;
+        private final int image2 = 1;
+        private final int image3 = 2;
+        private final int image4 = 3;
+        private final int image5 = 4;
         //Images for displaying trust
         private Integer images[] = {R.drawable.pic1, R.drawable.pic2, R.drawable.pic3, R.drawable.pic4, R.drawable.pic5};
 
@@ -76,6 +81,60 @@ public class ContactsActivity extends Activity {
             return blcController.getBlocks("GENESIS").size();
         }
 
+
+        /**
+         * Method to get the right image number
+         * @param trust The trust value
+         * @return Image number
+         */
+        public int getImageNo(int trust) {
+
+            if (trust >= 80) return image1;
+            if (trust >= 60) return image2;
+            if (trust >= 40) return image3;
+            if (trust >= 20) return image4;
+            else return image5;
+        }
+
+        /**
+         * Method to create a dialog
+         * @param position Current position of the view
+         * @return The listener
+         */
+        public View.OnClickListener createDialog(final int position) {
+            return new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                    builder.setTitle("Confirm");
+                    builder.setMessage("Are you sure you want to add "+ blcController.getBlocks("GENESIS").get(position).getOwner()+ " IBAN?");
+
+
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            blcController.revokeBlock(blcController.getBlocks("GENESIS").get(position));
+                            notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                    });
+
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do nothing
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            };
+        }
+
         /**
          * {@inheritDoc}
          */
@@ -86,7 +145,6 @@ public class ContactsActivity extends Activity {
                 LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 view = inflater.inflate(R.layout.simple_list_item_1, null);
             }
-
             //Setting the name field
             TextView nameItemText = (TextView)view.findViewById(R.id.list_item_name);
             nameItemText.setText(blcController.getBlocks("GENESIS").get(position).getOwner()); //use function to backtrack owner
@@ -96,70 +154,15 @@ public class ContactsActivity extends Activity {
 
             //Setting the trust image
             ImageView pic = (ImageView)view.findViewById(R.id.trust_image);
-            int trust = blcController.getBlocks("GENESIS").get(position).getTrustValue();
+            int picNo = getImageNo(blcController.getBlocks("GENESIS").get(position).getTrustValue());
+            pic.setImageResource(images[picNo]);
 
-            //Switch case for deciding which image needs be picked for the trust value
-            switch (trust) {
-                case 100: pic.setImageResource(images[0]);
-                    break;
-                case 90: pic.setImageResource(images[0]);
-                    break;
-                case 80: pic.setImageResource(images[0]);
-                    break;
-                case 70: pic.setImageResource(images[1]);
-                    break;
-                case 60: pic.setImageResource(images[1]);
-                    break;
-                case 50: pic.setImageResource(images[2]);
-                    break;
-                case 40: pic.setImageResource(images[2]);
-                    break;
-                case 30: pic.setImageResource(images[3]);
-                    break;
-                case 20: pic.setImageResource(images[3]);
-                    break;
-                case 10: pic.setImageResource(images[4]);
-                    break;
-                case 0: pic.setImageResource(images[4]);
-                    break;
-            }
 
             //Setting the button to revoke
             Button revokeButton = (Button)view.findViewById(R.id.revoke_btn);
 
             //Listener for the revoke button
-            revokeButton.setOnClickListener(new View.OnClickListener() {
-               @Override
-                public void onClick(View v) {
-                   AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-                   builder.setTitle("Confirm");
-                   builder.setMessage("Are you sure you want to revoke "+ blcController.getBlocks("GENESIS").get(position).getOwner()+ " IBAN?");
-
-                   builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
-                       public void onClick(DialogInterface dialog, int which) {
-                           blcController.revokeBlock(blcController.getBlocks("GENESIS").get(position));
-                           notifyDataSetChanged();
-                           dialog.dismiss();
-                       }
-                   });
-
-                   builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-                       @Override
-                       public void onClick(DialogInterface dialog, int which) {
-
-                           // Do nothing
-                           dialog.dismiss();
-                       }
-                   });
-
-                   AlertDialog alert = builder.create();
-                   alert.show();
-               }
-            });
-
+            revokeButton.setOnClickListener(createDialog(position));
             return view;
         }
     }
