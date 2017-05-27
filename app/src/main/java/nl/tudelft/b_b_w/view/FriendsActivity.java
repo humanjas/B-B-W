@@ -105,29 +105,22 @@ public class FriendsActivity extends Activity {
                 @Override
                 public void onClick(View v) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
                     builder.setTitle("Confirm");
                     builder.setMessage("Are you sure you want to add "+ blcController.getBlocks("GENESIS").get(position).getOwner()+ " IBAN?");
-
-
                     builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-
                         public void onClick(DialogInterface dialog, int which) {
                             blcController.revokeBlock(blcController.getBlocks("GENESIS").get(position));
                             notifyDataSetChanged();
                             dialog.dismiss();
                         }
                     });
-
                     builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             // Do nothing
                             dialog.dismiss();
                         }
                     });
-
                     AlertDialog alert = builder.create();
                     alert.show();
                 }
@@ -145,22 +138,17 @@ public class FriendsActivity extends Activity {
                 view = inflater.inflate(R.layout.simple_list_item_2, null);
             }
 
-            //Setting the name field
             TextView nameItemText = (TextView)view.findViewById(R.id.list_item_name2);
             nameItemText.setText(blcController.getBlocks("GENESIS").get(position).getOwner()); //use function to backtrack owner
-            //Setting the IBAN field
             TextView ibanItemText = (TextView)view.findViewById(R.id.list_item_iban2);
             ibanItemText.setText(blcController.getBlocks("GENESIS").get(position).getIban());
 
-            //Setting the trust image
             ImageView pic = (ImageView)view.findViewById(R.id.trust_image2);
             int picNo = getImageNo(blcController.getBlocks("GENESIS").get(position).getTrustValue());
             pic.setImageResource(images[picNo]);
 
-            //Setting the button to revoke
             Button addButton = (Button)view.findViewById(R.id.add_btn);
 
-            //Listener for the revoke button
             addButton.setOnClickListener(createDialog(position));
 
             return view;
@@ -180,10 +168,19 @@ public class FriendsActivity extends Activity {
 
         // get contacts
         BlockController blcController = new BlockController(this);
-        List<Block> blocks = blcController.getBlocks("GENESIS");
+        setUpGraph(blcController.getBlocks("GENESIS"));
 
-        //Setting up the graph
-        GraphView graph = (GraphView) findViewById(R.id.graph2);
+        ContactAdapter adapter = new ContactAdapter(blcController, this);
+        ListView lView = (ListView)findViewById(R.id.friends);
+        lView.setAdapter(adapter);
+    }
+
+    /**
+     * Setting up the graph
+     * @param blocks The blocks where the values for the graph are extracted from
+     */
+    public void setUpGraph(List<Block> blocks) {
+        GraphView graph = (GraphView) findViewById(R.id.graph);
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(0);
         graph.getViewport().setMaxX(blocks.size());
@@ -194,10 +191,6 @@ public class FriendsActivity extends Activity {
         }
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
         graph.addSeries(series);
-
-        ContactAdapter adapter = new ContactAdapter(blcController, this);
-        ListView lView = (ListView)findViewById(R.id.friends);
-        lView.setAdapter(adapter);
     }
 }
 
