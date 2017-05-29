@@ -1,9 +1,9 @@
 package nl.tudelft.b_b_w.model;
 
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class TrustValuesUnitTest {
 
@@ -41,5 +41,14 @@ public class TrustValuesUnitTest {
     @Test
     public void testTrustValuesFailedTransaction() {
         assertEquals(-10, TrustValues.FAILED_TRANSACTION.getValue());
+    }
+
+    /**
+     * testTrustValuesInitializedTransaction
+     * tests whether the trust value of the failed transaction is correct
+     */
+    @Test
+    public void testTrustValuesInitializedTransaction() {
+        assertEquals(10, TrustValues.INITIALIZED.getValue());
     }
 }
